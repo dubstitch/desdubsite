@@ -84,9 +84,11 @@ body {
 } 
 
 /* Homepage Site Selection Cards */
-.card {
-	height: 100vh;
-	width: 50vw;
+@media screen and (min-width: 856px) and (max-width: 1024px) {
+    .card {
+        height: 100vh;
+        width: 50vw;
+    }
 }
 
 /* About section styles */
