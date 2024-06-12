@@ -57,12 +57,12 @@
 }
 
 /* Homepage Site Selection Cards */
-@media screen and (min-width: 346px) and (max-width: 856px) {
-    .card {
+/* @media screen and (min-width: 346px) and (max-width: 856px) {
+    .card-group {
         height: 100vh;
         width: 50vw;
     }
-}
+} */
 
 
 /* CSS for mobile devices */
