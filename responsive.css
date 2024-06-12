@@ -54,7 +54,15 @@
         width: 35%; 
     } 
 
-} 
+}
+
+/* Homepage Site Selection Cards */
+@media screen and (min-width: 346px) and (max-width: 856px) {
+    .card {
+        height: 100vh;
+        width: 50vw;
+    }
+}
 
 
 /* CSS for mobile devices */
