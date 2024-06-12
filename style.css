@@ -83,13 +83,7 @@ body {
     justify-content: space-evenly; 
 } 
 
-/* Homepage Site Selection Cards */
-@media screen and (min-width: 856px) and (max-width: 1024px) {
-    .card {
-        height: 100vh;
-        width: 50vw;
-    }
-}
+
 
 /* About section styles */
 .about { 
