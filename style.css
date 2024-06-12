@@ -8,9 +8,6 @@ body {
     box-sizing: border-box; 
     font-family: 'Poppins', sans-serif; 
 } 
-* { box-sizing: border-box; }
-
-body { margin: 0; }
 
 /* Header Navbar Styles */
 .navbar { 
