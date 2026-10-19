@@ -75,3 +75,30 @@ html[data-theme="light"] body:has(.role) footer{background:transparent;color:#66
 
 /* Keep the experience switch compact beside navigation on phones */
 @media(max-width:650px){.theme-toggle{width:37px;min-width:37px;height:37px;padding:0;border-radius:50%;flex-shrink:0}.theme-toggle .theme-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.head-actions{gap:7px}.resume-pill{padding:9px 10px;font-size:10px}.mode{padding:9px 10px;font-size:10px}header nav{gap:9px}header nav a{font-size:11px}}
+
+/* Shared signature polish */
+.theme-toggle{width:44px;height:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;padding:0 10px!important;position:relative;line-height:1}
+.theme-toggle .theme-icon{font-family:Georgia,serif;display:grid;place-items:center;width:20px;height:20px;line-height:1;font-size:19px;transform:none}
+.theme-toggle .theme-label{position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);overflow:hidden;white-space:nowrap}
+.resume-pill,.mode{height:44px!important;min-height:44px!important;display:inline-flex!important;align-items:center;justify-content:center;padding:0 17px!important;box-sizing:border-box}
+html[data-theme="light"] .constellation-arc .star-path{stroke:#955b95}
+html[data-theme="light"] .constellation-arc #constellation-active-line{stroke:#8d4182}
+html[data-theme="light"] .case-grid-nav .nav-star{color:#8b427b}
+html[data-theme="light"] .case-grid-nav .nav-star[aria-current="step"]{color:#5c2a61}
+html[data-theme="light"] .work-panel{color:#392647}
+html[data-theme="light"] .work-panel .panel-intro,html[data-theme="light"] .work-panel p{color:#49354e}
+html[data-theme="light"] .work-panel .artifact-placeholder{color:#614c68;background:#fffafdc4;border-color:#b67fb1}
+html[data-theme="light"] .work-panel .panel-pill{background:linear-gradient(125deg,#ffe0ef,#e7cdf3);color:#5c285c;border-color:#b963a3}
+html[data-theme="light"] .gallery-action{color:#5b2a5a;background:linear-gradient(135deg,#fce0ef,#e8d0ef);border-color:#b76da8}
+html[data-theme="light"] .gallery-arrow{background:#fff9fc;border-color:#ae6da7;color:#643067}
+html[data-theme="light"] .gallery-arrow:hover{background:#f6daec}
+html[data-theme="light"] .gallery-shell{background:#fbf4fb}
+html[data-theme="light"] .gallery-hero{background:radial-gradient(ellipse at 82% 30%,#e9c8ef,transparent 55%),linear-gradient(140deg,#fff6fc,#eedcf2)}
+html[data-theme="light"] .gallery-hero p,html[data-theme="light"] .gallery-hero h1{color:#412a4b}
+html[data-theme="light"] .gallery-hero em{color:#963d7a}
+html[data-theme="light"] .gallery-hero .eyebrow{color:#74376f}
+html[data-theme="light"] .work-panel:nth-child(1){background:linear-gradient(145deg,#fff3fa,#eddcf6)}
+html[data-theme="light"] .work-panel:nth-child(2){background:linear-gradient(145deg,#f6e6f7,#fce4ef)}
+html[data-theme="light"] .work-panel:nth-child(3){background:linear-gradient(145deg,#fbe5f1,#e5dff7)}
+html[data-theme="light"] .work-panel:nth-child(4){background:linear-gradient(145deg,#f0e5fa,#ffe6f1)}
+@media(max-width:650px){.theme-toggle{width:38px;height:38px;min-height:38px;padding:0!important}.resume-pill,.mode{height:38px!important;min-height:38px!important;padding:0 10px!important}}
