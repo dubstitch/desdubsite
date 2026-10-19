@@ -72,3 +72,6 @@ html[data-theme="light"] body:has(.role) section{border-color:#99749a55}
 html[data-theme="light"] body:has(.role) footer{background:transparent;color:#66536e}
 @media(max-width:650px){.theme-toggle{font-size:10px;padding:9px 10px}.theme-toggle .theme-icon{font-size:14px}}
 @media print{.theme-toggle{display:none!important}html[data-theme="light"] body:has(.role){background:white!important}}
+
+/* Keep the experience switch compact beside navigation on phones */
+@media(max-width:650px){.theme-toggle{width:37px;min-width:37px;height:37px;padding:0;border-radius:50%;flex-shrink:0}.theme-toggle .theme-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.head-actions{gap:7px}.resume-pill{padding:9px 10px;font-size:10px}.mode{padding:9px 10px;font-size:10px}header nav{gap:9px}header nav a{font-size:11px}}
