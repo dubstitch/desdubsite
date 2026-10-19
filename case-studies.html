@@ -6,8 +6,6 @@ html{scroll-snap-type:y mandatory;scroll-padding-top:var(--gallery-header-height
 .gallery-shell{height:calc(100dvh - var(--gallery-header-height));scroll-snap-align:start;scroll-snap-stop:always;scroll-margin-top:var(--gallery-header-height)}
 .gallery-footer{min-height:calc(100dvh - var(--gallery-header-height));scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center}
 .gallery-frame,.panel-scroller{overscroll-behavior-y:contain}
-.panel-scroller{touch-action:pan-y}
-.panels{touch-action:pan-x}
 .gallery-hero,.gallery-shell,.gallery-footer{overflow-anchor:none}
 @media(max-width:700px){:root{--gallery-header-height:65px}.gallery-hero{padding-top:50px;padding-bottom:40px}.gallery-hero h1{font-size:clamp(3.4rem,11.5vw,5.6rem)}.gallery-hero p{font-size:clamp(.98rem,3.8vw,1.2rem)}}
 @media(max-height:670px){.gallery-hero{padding-top:32px;padding-bottom:28px}.gallery-hero h1{font-size:clamp(3rem,8vh,5.5rem);margin:12px 0}.gallery-hero p{font-size:.94rem;line-height:1.5}}
