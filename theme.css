@@ -1,0 +1,74 @@
+/* Des Wade portfolio — accessible dusk/daylight modes */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;min-height:40px;padding:10px 13px;border:1px solid rgba(255,226,248,.5);background:rgba(255,255,255,.1);border-radius:999px;color:#fff2fa;font-family:inherit;font-weight:700;font-size:11px;letter-spacing:.055em;cursor:pointer;transition:background .25s,transform .25s,border-color .25s}
+.theme-toggle:hover{transform:translateY(-1px);background:rgba(255,255,255,.2)}
+.theme-toggle:focus-visible{outline:3px solid #e996d0;outline-offset:3px}
+.theme-toggle .theme-icon{font-size:15px;line-height:1}
+html[data-theme="light"]{color-scheme:light;--ink:#322341;--muted:#655270;--accent:#893d76;--bg:#fcf4fa}
+html[data-theme="light"] body{color:#322341;background:#fcf4fa}
+html[data-theme="light"] .theme-toggle{background:#ffffffa9;border-color:#996a9577;color:#42264a}
+html[data-theme="light"] .theme-toggle:hover{background:#fff}
+html[data-theme="light"] a:focus-visible,html[data-theme="light"] button:focus-visible{outline-color:#8f3973}
+html[data-theme="light"] header{background:linear-gradient(180deg,rgba(255,248,255,.97),rgba(255,248,255,.76));border-bottom:1px solid #7e59802b}
+html[data-theme="light"] header a,html[data-theme="light"] .brand,html[data-theme="light"] .plain-link{color:#42274e}
+html[data-theme="light"] header .brand span{color:#9e4683}
+html[data-theme="light"] .backdrop{background:radial-gradient(ellipse at 76% 18%,#ecd0f9,transparent 63%),#fcf5fa}
+html[data-theme="light"] .chapter:nth-child(odd){background:radial-gradient(ellipse at 86% 22%,#d9c3f18c,transparent 65%),linear-gradient(130deg,#fff7fb,#f0e7fb 53%,#fce9f1)}
+html[data-theme="light"] .chapter:nth-child(even){background:radial-gradient(ellipse at 82% 28%,#f9c8e48c,transparent 62%),linear-gradient(135deg,#fff7fb,#f4dbe8 50%,#ede0f7)}
+html[data-theme="light"] .chapter:nth-child(3n){background:radial-gradient(ellipse at 80% 70%,#d8c9efb5,transparent 65%),linear-gradient(135deg,#fdf4fc,#ebdff5 56%,#f9e6ee)}
+html[data-theme="light"] .chapter:nth-child(4n){background:radial-gradient(ellipse at 84% 20%,#edbfdba3,transparent 60%),linear-gradient(125deg,#fff8fa,#f1dded 50%,#eae0fa)}
+html[data-theme="light"] .chapter .eyebrow,html[data-theme="light"] .eyebrow{color:#713a68}
+html[data-theme="light"] .chapter h1,html[data-theme="light"] .chapter h2,html[data-theme="light"] .chapter h1 .accent,html[data-theme="light"] .chapter h2 .accent{color:#3d264b;text-shadow:none}
+html[data-theme="light"] .chapter .accent{color:#964375}
+html[data-theme="light"] .chapter p,html[data-theme="light"] .chapter:nth-child(even) p{color:#46354f}
+html[data-theme="light"] .chapter .chip{border-color:#8a678884;color:#483450;background:#ffffff70}
+html[data-theme="light"] .glass,html[data-theme="light"] .chapter:nth-child(even) .glass{background:#fffaf9c9;border:1px solid #a373a476;box-shadow:0 10px 32px #77537f14}
+html[data-theme="light"] .work strong,html[data-theme="light"] .work small{color:#382342}
+html[data-theme="light"] .work small{color:#745276}
+html[data-theme="light"] .work .arrow{color:#70345f;background:#f2d7e7;border-color:#a8739c}
+html[data-theme="light"] .work:hover,html[data-theme="light"] .work.is-lit,html[data-theme="light"] .work:focus-visible{background:#fff;border-color:#b36b9e;box-shadow:0 8px 38px #c57dac54}
+html[data-theme="light"] .work:before{background:radial-gradient(circle,#dc95ca4d,transparent 44%)}
+html[data-theme="light"] .cta{color:#fff;background:#873c72}
+html[data-theme="light"] .cta:hover{background:#673053}
+html[data-theme="light"] .mode,html[data-theme="light"] .resume-pill{color:#42274e;background:#ffffff99;border-color:#8b679684}
+html[data-theme="light"] .mode span,html[data-theme="light"] .resume-pill span{color:#8d3b79}
+html[data-theme="light"] .next-section,html[data-theme="light"] .chapter:nth-child(even) .next-section{color:#4c2d53}
+html[data-theme="light"] .next-section span{border-color:#965c90;background:#f3e2ef}
+html[data-theme="light"] .next-section:hover span{background:#eed3e6}
+html[data-theme="light"] .chapter .footer-links a{color:#6f3866}
+html[data-theme="light"] .constellation-track button{border-color:#8f538c;background:#9a689a;box-shadow:0 0 7px #b785bb88}
+html[data-theme="light"] .constellation-track button[aria-current="step"]{background:#512656;border-color:#512656;box-shadow:0 0 13px #bd80bd}
+html[data-theme="light"] .constellation-current{color:#533158}
+html[data-theme="light"] .constellation-lines path:first-child{stroke:#9f729a}
+html[data-theme="light"] #constellation-active-line{stroke:#83417c}
+html[data-theme="light"] .universe{background:radial-gradient(ellipse at center,#f3d7ed,#e7dff8 65%,#fdf5fa)}
+html[data-theme="light"] .universe-title{color:#613866}
+html[data-theme="light"] .close{background:#fff8;border-color:#985a91;color:#4a2c52}
+html[data-theme="light"] .hex{color:#43264c;background:linear-gradient(150deg,#fff,#ead2ee 22%,#bd96d0 49%,#efcde1 75%,#fff 100%);box-shadow:inset 4px 4px 9px #fff,inset -7px -9px 16px #9c69a688,0 8px 25px #7d588955}
+html[data-theme="light"] .hex:before{background:linear-gradient(140deg,#fff7,#f1ddf4ac)}
+html[data-theme="light"] .hex strong{color:#3d264d;text-shadow:none}
+html[data-theme="light"] .hex small{color:#634067}
+html[data-theme="light"] #stardust{opacity:.4;mix-blend-mode:multiply}
+/* Case studies */
+html[data-theme="light"] .intro{background:radial-gradient(ellipse at 82% 28%,#edd1f0,transparent 57%),#fbf1fa}
+html[data-theme="light"] .intro h1,html[data-theme="light"] .case h2{color:#392647}
+html[data-theme="light"] .intro .accent,html[data-theme="light"] .case .accent{color:#8e4176}
+html[data-theme="light"] .intro p,html[data-theme="light"] .case p{color:#4b3a53}
+html[data-theme="light"] .case:nth-of-type(even){background:radial-gradient(ellipse at 88% 48%,#ebbbd965,transparent 58%),#fff8fc}
+html[data-theme="light"] .case:nth-of-type(odd){background:radial-gradient(ellipse at 88% 28%,#d8c8ef88,transparent 58%),#f2eafa}
+html[data-theme="light"] .case{border-color:#af88ad55}
+html[data-theme="light"] .case .chip,html[data-theme="light"] .case-links a{border-color:#9c7599;color:#47334c}
+html[data-theme="light"] .case .cta{background:#863d74;color:#fff}
+html[data-theme="light"] footer{background:#f8eef7;color:#54425f}
+html[data-theme="light"] footer a{color:#78346c}
+/* Resume */
+html[data-theme="light"] body:has(.role){background:radial-gradient(ellipse at 89% 0%,#e9c5e7,transparent 48%),radial-gradient(ellipse at 15% 70%,#d9cef0,transparent 55%),#fff8fb}
+html[data-theme="light"] body:has(.role) h1,html[data-theme="light"] body:has(.role) h2{color:#392647}
+html[data-theme="light"] body:has(.role) .meta{color:#765373}
+html[data-theme="light"] body:has(.role) .role{background:#ffffffaa;border-color:#ac85ab6a}
+html[data-theme="light"] body:has(.role) .chip{border-color:#997b99;color:#432a4a}
+html[data-theme="light"] body:has(.role) .button{color:#663457;border-color:#9c7399}
+html[data-theme="light"] body:has(.role) .button.primary{color:white;background:#873c72}
+html[data-theme="light"] body:has(.role) section{border-color:#99749a55}
+html[data-theme="light"] body:has(.role) footer{background:transparent;color:#66536e}
+@media(max-width:650px){.theme-toggle{font-size:10px;padding:9px 10px}.theme-toggle .theme-icon{font-size:14px}}
+@media print{.theme-toggle{display:none!important}html[data-theme="light"] body:has(.role){background:white!important}}
