@@ -102,3 +102,7 @@ html[data-theme="light"] .work-panel:nth-child(2){background:linear-gradient(145
 html[data-theme="light"] .work-panel:nth-child(3){background:linear-gradient(145deg,#fbe5f1,#e5dff7)}
 html[data-theme="light"] .work-panel:nth-child(4){background:linear-gradient(145deg,#f0e5fa,#ffe6f1)}
 @media(max-width:650px){.theme-toggle{width:38px;height:38px;min-height:38px;padding:0!important}.resume-pill,.mode{height:38px!important;min-height:38px!important;padding:0 10px!important}}
+
+/* Consistent luminous capsule language across résumé and project storytelling */
+body:has(.role) .chip,.case .chip,.panel-pill{border:1px solid #ee92ce!important;background:linear-gradient(120deg,#c0439b55,#8c3cac66)!important;color:#ffe8f7!important;box-shadow:inset 0 1px 0 #ffffff25,0 0 15px #b84d9a55!important;border-radius:999px;font-weight:700}
+html[data-theme="light"] body:has(.role) .chip,html[data-theme="light"] .case .chip,html[data-theme="light"] .panel-pill{border-color:#b45d9d!important;background:linear-gradient(125deg,#ffdbed,#e5c8f3)!important;color:#542954!important;box-shadow:0 0 14px #e58ac259!important}
