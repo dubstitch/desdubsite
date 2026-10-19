@@ -133,6 +133,58 @@ html[data-theme="light"] .constellation-arc .constellation-current{color:#4d2852
 @media(max-width:650px){.chapter{padding-right:45px!important}.constellation-track.constellation-arc{width:153px!important;height:123px!important;right:0!important;bottom:5px!important}.constellation-arc button,.constellation-arc button:nth-of-type(n){width:26px!important;height:26px!important}.constellation-arc button span{font-size:17px}.constellation-arc button[aria-current="step"] span{font-size:22px}.chapter .next-section{bottom:17px!important}.contact-actions{gap:8px}.contact-actions a{padding:9px 13px;font-size:11px}.philosophy-link{padding:10px 13px;font-size:11px}.chapter#approach .steps{margin-top:10px}.chapter#approach p{max-width:520px}}
 @media(max-height:700px){.constellation-track.constellation-arc{width:135px!important;height:108px!important;bottom:0!important}.chapter#approach .philosophy-link{margin-top:6px}}
 @media(prefers-reduced-motion:reduce){.constellation-arc button span{animation:none}}
+
+/* Starlit chapter entrances: animation only activates with JS */
+html.reveal-ready .chapter .hero-identity,
+html.reveal-ready .chapter > .eyebrow,
+html.reveal-ready .chapter > h1,
+html.reveal-ready .chapter > h2,
+html.reveal-ready .chapter > p,
+html.reveal-ready .chapter > .chips,
+html.reveal-ready .chapter > .work-grid,
+html.reveal-ready .chapter > .steps,
+html.reveal-ready .chapter > .cta,
+html.reveal-ready .chapter > .philosophy-link,
+html.reveal-ready .chapter > .footer-links{
+opacity:0;transform:translate3d(0,24px,0) scale(.985);filter:blur(6px);
+transition:opacity .84s ease,transform .97s cubic-bezier(.18,.85,.2,1),filter .88s ease;
+}
+html.reveal-ready .chapter.is-revealed .hero-identity,
+html.reveal-ready .chapter.is-revealed > .eyebrow,
+html.reveal-ready .chapter.is-revealed > h1,
+html.reveal-ready .chapter.is-revealed > h2,
+html.reveal-ready .chapter.is-revealed > p,
+html.reveal-ready .chapter.is-revealed > .chips,
+html.reveal-ready .chapter.is-revealed > .work-grid,
+html.reveal-ready .chapter.is-revealed > .steps,
+html.reveal-ready .chapter.is-revealed > .cta,
+html.reveal-ready .chapter.is-revealed > .philosophy-link,
+html.reveal-ready .chapter.is-revealed > .footer-links{opacity:1;transform:none;filter:none}
+html.reveal-ready .chapter.is-revealed > :is(.hero-identity,.eyebrow){transition-delay:.07s}
+html.reveal-ready .chapter.is-revealed > :is(h1,h2){transition-delay:.17s}
+html.reveal-ready .chapter.is-revealed > p{transition-delay:.31s}
+html.reveal-ready .chapter.is-revealed > :is(.chips,.work-grid,.steps){transition-delay:.42s}
+html.reveal-ready .chapter.is-revealed > :is(.cta,.philosophy-link,.footer-links){transition-delay:.54s}
+html.reveal-ready .chapter.is-revealed .work{animation:card-constellation .8s both}
+html.reveal-ready .chapter.is-revealed .work:nth-child(1){animation-delay:.38s}
+html.reveal-ready .chapter.is-revealed .work:nth-child(2){animation-delay:.49s}
+html.reveal-ready .chapter.is-revealed .work:nth-child(3){animation-delay:.60s}
+html.reveal-ready .chapter.is-revealed .work:nth-child(4){animation-delay:.71s}
+@keyframes card-constellation{from{opacity:0;filter:blur(4px);transform:translateY(14px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+html.reveal-ready .chapter .hero-identity,
+html.reveal-ready .chapter > .eyebrow,
+html.reveal-ready .chapter > h1,
+html.reveal-ready .chapter > h2,
+html.reveal-ready .chapter > p,
+html.reveal-ready .chapter > .chips,
+html.reveal-ready .chapter > .work-grid,
+html.reveal-ready .chapter > .steps,
+html.reveal-ready .chapter > .cta,
+html.reveal-ready .chapter > .philosophy-link,
+html.reveal-ready .chapter > .footer-links{opacity:1;transform:none;filter:none;transition:none!important}
+html.reveal-ready .chapter.is-revealed .work{animation:none}
+}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
@@ -156,12 +208,16 @@ html[data-theme="light"] .constellation-arc .constellation-current{color:#4d2852
 const pages=[...document.querySelectorAll('.chapter')],surface=document.getElementById('chapters'),universe=document.getElementById('universe'),opener=document.getElementById('open-universe'),closer=document.getElementById('close-universe'),hexes=[...document.querySelectorAll('.hex')],reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let current=0,locked=false,universeBusy=false,lastFocus=null,gestureStart=null,wheelTotal=0,wheelTimer=0;
 const position=()=>Math.max(0,Math.min(pages.length-1,Math.round(surface.scrollTop/Math.max(1,surface.clientHeight))));
+
+// Reveal on every chapter change, using the same active state as snapping.
+const revealChapter=(index)=>{pages.forEach((page,i)=>page.classList.toggle('is-revealed',i===index))};
+document.documentElement.classList.add('reveal-ready');
 let animFrame=0;
 const progress=document.getElementById('chapter-count');const starStops=[...document.querySelectorAll('.constellation-track button')];function updateConstellation(i){starStops.forEach((b,k)=>{if(k===i)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});const p=document.getElementById('constellation-active-line');if(p)p.style.strokeDashoffset=String(100-i*25)}
 function goTo(index,{instant=false}={}){
 index=Math.max(0,Math.min(pages.length-1,index));
 if(locked&&!instant)return;
-locked=true;current=index;wheelTotal=0;clearTimeout(wheelTimer);cancelAnimationFrame(animFrame);
+locked=true;current=index;revealChapter(index);wheelTotal=0;clearTimeout(wheelTimer);cancelAnimationFrame(animFrame);
 progress.textContent=String(index+1).padStart(2,'0')+' / '+String(pages.length).padStart(2,'0');updateConstellation(index);
 const from=surface.scrollTop,to=pages[index].offsetTop;
 history.replaceState(null,'','#'+pages[index].id);
@@ -191,7 +247,7 @@ function closeUniverse(){universe.classList.remove('open');universe.setAttribute
 starStops.forEach(b=>b.addEventListener('click',()=>goTo(pages.findIndex(p=>p.id===b.dataset.section))));opener.addEventListener('click',openUniverse);closer.addEventListener('click',closeUniverse);
 hexes.forEach(h=>h.addEventListener('click',()=>{if(universeBusy)return;if(h.dataset.href){location.href=h.dataset.href;return}universeBusy=true;hexes.forEach(other=>other.classList.add(other===h?'go':'fade'));const index=pages.findIndex(p=>p.id===h.dataset.target);setTimeout(()=>{closeUniverse();locked=false;goTo(index<0?0:index,{instant:true});universeBusy=false},reduced?0:600)}));
 window.addEventListener('resize',()=>{clearTimeout(window.__portfolioResize);window.__portfolioResize=setTimeout(()=>surface.scrollTop=pages[current].offsetTop,80)});
-const initial=pages.findIndex(p=>p.id===decodeURIComponent(location.hash.slice(1)));if(initial>=0){current=initial;surface.scrollTop=pages[current].offsetTop;}progress.textContent=String(current+1).padStart(2,'0')+' / '+String(pages.length).padStart(2,'0');updateConstellation(current);
+const initial=pages.findIndex(p=>p.id===decodeURIComponent(location.hash.slice(1)));if(initial>=0){current=initial;surface.scrollTop=pages[current].offsetTop;}progress.textContent=String(current+1).padStart(2,'0')+' / '+String(pages.length).padStart(2,'0');updateConstellation(current);revealChapter(current);
 
 // Calm ambient oil-and-glitter particle field. Pointer forces are soft and spring back.
 const canvas=document.getElementById('stardust'),ctx=canvas.getContext('2d',{alpha:true});
