@@ -791,6 +791,101 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
  #chapters .chapter .next-section{bottom:40px!important}
 }
 @media(prefers-reduced-motion:reduce){#chapters #home .cta{transition:none!important}}
+
+/* Short landscape viewport: compose content across the screen, never crop portrait content */
+@media(orientation:landscape) and (max-height:680px){
+ #chapters .chapter{
+   height:100svh!important;
+   padding:clamp(61px,14svh,83px) clamp(115px,18.5vw,182px) 24px 24px!important;
+   align-items:stretch!important;justify-content:center!important;
+ }
+ #chapters .chapter-content{
+   width:100%!important;height:100%!important;min-height:0!important;
+   max-height:100%!important;display:flex!important;
+ }
+ #chapters .chapter-content-inner{
+   width:100%!important;min-height:0!important;max-height:100%!important;
+   display:grid!important;align-content:center!important;align-items:center!important;
+   grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)!important;
+   grid-template-rows:auto auto auto!important;
+   column-gap:clamp(16px,2.9vw,30px)!important;
+   row-gap:clamp(5px,1.1svh,9px)!important;
+ }
+ #chapters .chapter-content-inner > *{min-width:0!important;max-width:100%!important}
+ #chapters .chapter-content-inner > .eyebrow{grid-area:1 / 1 / 2 / 2;align-self:end}
+ #chapters .chapter-content-inner > h2{
+   grid-area:2 / 1 / 4 / 2;align-self:center;
+   font-size:clamp(1.8rem,6svh,3rem)!important;line-height:1.02!important;
+ }
+ #chapters .chapter-content-inner > p{
+   grid-area:1 / 2 / 3 / 3;align-self:center;
+   font-size:clamp(.82rem,2.35svh,1rem)!important;line-height:1.3!important;
+ }
+ #chapters #home .hero-identity{grid-area:1 / 1 / 2 / 2;align-self:end;gap:3px!important}
+ #chapters #home .hero-name{font-size:clamp(1.6rem,6svh,2.4rem)!important}
+ #chapters #home .hero-role{font-size:9px!important;line-height:1.15!important;letter-spacing:.05em!important}
+ #chapters #home .chapter-content-inner > h1{
+   grid-area:2 / 1 / 4 / 2;
+   font-size:clamp(2.6rem,10svh,5rem)!important;
+ }
+ #chapters #home .chapter-content-inner > p{grid-area:1 / 2 / 2 / 3;align-self:end}
+ #chapters #home .chips{grid-area:2 / 2 / 3 / 3;gap:6px!important;display:flex!important}
+ #chapters #home .chip{font-size:9px!important;padding:4px 7px!important}
+ #chapters #home .cta{grid-area:3 / 2 / 4 / 3;min-height:36px!important;padding:7px 12px!important}
+ #chapters #work .chapter-content-inner > .eyebrow{grid-area:1 / 1 / 2 / 2}
+ #chapters #work .chapter-content-inner > h2{
+   grid-area:2 / 1 / 4 / 2;
+   font-size:clamp(1.9rem,6.5svh,3.1rem)!important;
+ }
+ #chapters #work .work-grid{
+   grid-area:1 / 2 / 3 / 3;
+   width:100%!important;align-self:center;
+   padding:4px 1px 9px!important;overflow-y:hidden!important;
+ }
+ #chapters #work .work-grid .work{
+   flex:0 0 clamp(164px,78%,260px)!important;
+   min-height:clamp(95px,27svh,138px)!important;
+   padding:12px!important;
+ }
+ #chapters #work .work-grid .work strong{font-size:clamp(15px,4svh,20px)!important}
+ #chapters #work .work-grid .work small{font-size:9px!important}
+ #chapters #work .work-grid .work .arrow{min-height:30px!important;width:30px!important;height:30px!important;min-width:30px!important}
+ #chapters #work .work-controls{grid-area:3 / 2 / 4 / 3;gap:9px!important;min-height:35px!important}
+ #chapters #work .work-instruction{display:none!important}
+ #chapters #story .chapter-content-inner > h2{grid-area:2 / 1 / 4 / 2}
+ #chapters #story .chapter-content-inner > p{grid-area:1 / 2 / 3 / 3}
+ #chapters #story .chips{grid-area:3 / 2 / 4 / 3;gap:6px!important;display:flex!important}
+ #chapters #story .chip{font-size:9px!important;padding:4px 7px!important}
+ #chapters #approach .chapter-content-inner{display:grid!important;grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr)!important;grid-template-rows:auto auto auto!important}
+ #chapters #approach .chapter-content-inner > h2{
+   grid-area:2 / 1 / 4 / 2;font-size:clamp(1.65rem,5.9svh,3rem)!important
+ }
+ #chapters #approach .chapter-content-inner > p{grid-area:1 / 2 / 3 / 3;align-self:end;font-size:clamp(.8rem,2.25svh,.95rem)!important}
+ #chapters #approach .philosophy-link{grid-area:3 / 2 / 4 / 3;align-self:start!important;min-height:36px!important;margin-top:0!important}
+ #chapters #contact .chapter-content-inner > h2{grid-area:2 / 1 / 4 / 2}
+ #chapters #contact .chapter-content-inner > p{grid-area:1 / 2 / 3 / 3}
+ #chapters #contact .footer-links{grid-area:3 / 2 / 4 / 3;gap:6px!important}
+ #chapters #contact .contact-actions a{font-size:10px!important;padding:7px 9px!important}
+ .constellation-track.constellation-arc{
+   width:clamp(95px,13vw,132px)!important;
+   height:clamp(76px,10.5vw,106px)!important;
+   right:clamp(22px,3.5vw,42px)!important;
+   bottom:clamp(22px,5svh,34px)!important;
+ }
+ .constellation-current{display:none!important}
+ #chapters .chapter .next-section{left:24px!important;bottom:13px!important}
+ #chapters .chapter .next-section span{height:30px!important;width:30px!important}
+}
+@media(orientation:landscape) and (max-height:425px){
+ #chapters .chapter{padding-top:clamp(52px,13svh,66px)!important;padding-right:clamp(110px,17vw,157px)!important;padding-bottom:20px!important}
+ #chapters .chapter-content-inner{column-gap:14px!important;row-gap:4px!important}
+ #chapters #home .hero-name{font-size:clamp(1.5rem,5.2svh,1.9rem)!important}
+ #chapters #home .chapter-content-inner > h1{font-size:clamp(2.3rem,8.4svh,3.7rem)!important}
+ #chapters #work .chapter-content-inner > h2{font-size:clamp(1.7rem,5.8svh,2.4rem)!important}
+ #chapters #work .work-grid .work{min-height:94px!important}
+ #chapters #story .chips{display:none!important}
+ .constellation-track.constellation-arc{width:93px!important;height:74px!important;right:23px!important;bottom:21px!important}
+}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
