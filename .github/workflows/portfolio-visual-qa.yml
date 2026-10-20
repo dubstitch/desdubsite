@@ -25,7 +25,7 @@ jobs:
       - name: Install browser QA
         run: |
           npm install --no-save --no-package-lock playwright@1.56.1 @axe-core/playwright@4.11.0
-          npx playwright install chromium --with-deps
+          npx playwright install chromium webkit --with-deps
       - name: Serve portfolio
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/portfolio-http.log 2>&1 &
