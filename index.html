@@ -256,19 +256,164 @@ color:#fff!important;text-shadow:0 0 4px #632c85,0 0 10px #823a94,0 0 22px #d36b
 @media(prefers-reduced-motion:reduce){
 .constellation-arc button[aria-current="step"]::before,.constellation-arc button[aria-current="step"]::after,.constellation-arc button[aria-current="step"] span{animation:none!important}
 }
+
+/* Permanent chapter layout: a reserved constellation zone with no content overlap */
+:root{--chapter-header-clearance:108px;--chapter-bottom-clearance:90px}
+#chapters.chapters{height:100svh!important;max-height:100svh;overscroll-behavior:contain}
+#chapters .chapter{
+  box-sizing:border-box;min-height:0;height:100svh!important;
+  padding:var(--chapter-header-clearance) clamp(320px,29.5vw,430px) var(--chapter-bottom-clearance) clamp(28px,6vw,100px)!important;
+  display:flex!important;flex-direction:column;justify-content:stretch;
+  overflow:hidden!important;
+}
+#chapters .chapter-content{
+  box-sizing:border-box;display:block;flex:1;min-height:0;width:100%;
+  overflow-y:auto;overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  scrollbar-width:thin;scrollbar-color:#cf91c17a transparent;
+  position:relative;z-index:4;
+}
+#chapters .chapter-content-inner{
+  box-sizing:border-box;width:100%;min-height:100%;
+  display:flex;flex-direction:column;justify-content:center;
+  align-items:stretch;padding:5px 4px 12px 0;
+}
+#chapters .chapter-content-inner > .eyebrow,
+#chapters .chapter-content-inner > h1,
+#chapters .chapter-content-inner > h2,
+#chapters .chapter-content-inner > p,
+#chapters .chapter-content-inner > .chips,
+#chapters .chapter-content-inner > .steps,
+#chapters .chapter-content-inner > .work-grid,
+#chapters .chapter-content-inner > .work-controls{flex-shrink:0}
+#chapters .chapter-content-inner > :is(.cta,.philosophy-link){margin-right:auto;flex-shrink:0}
+#chapters .chapter-content:focus-visible{outline:2px solid #ffe0f6;outline-offset:-3px;border-radius:8px}
+#chapters .chapter-content-inner > h2{font-size:clamp(2.8rem,5.5vw,5.4rem);line-height:1.06;margin:17px 0}
+#chapters #story .chapter-content-inner > p,
+#chapters #approach .chapter-content-inner > p{font-size:clamp(.96rem,1.35vw,1.17rem);line-height:1.58}
+#chapters #approach .steps{margin-top:18px}
+#chapters #approach .step{padding:13px}
+#chapters #approach .step b{font-size:1.35rem}
+#chapters #approach .step small{font-size:12px}
+#chapters .chapter .next-section{left:clamp(28px,6vw,100px)!important;bottom:35px!important;z-index:55}
+.constellation-track.constellation-arc{
+  width:clamp(280px,25vw,355px)!important;
+  height:clamp(224px,20vw,284px)!important;
+  right:clamp(25px,3vw,65px)!important;
+  bottom:25px!important;
+  pointer-events:none;
+}
+#work .work-grid{
+  box-sizing:border-box;
+  display:flex!important;flex-direction:row!important;
+  gap:13px!important;
+  width:100%!important;max-width:none!important;
+  min-width:0;min-height:0;
+  overflow-x:auto;overflow-y:hidden;
+  padding:9px 4px 17px!important;
+  margin:12px 0 0!important;
+  scroll-snap-type:x mandatory;scroll-padding-left:4px;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+#work .work-grid::-webkit-scrollbar{display:none}
+#work .work-grid .work{
+  box-sizing:border-box;flex:0 0 clamp(225px,43%,335px);width:auto!important;
+  min-height:168px!important;
+  max-height:none;min-width:0;
+  scroll-snap-align:start;scroll-snap-stop:always;
+  border-radius:19px;
+  padding:18px!important;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+#work .work-grid .work strong{font-size:clamp(18px,2vw,25px)}
+#work .work-grid .work small{font-size:10px;line-height:1.45}
+#work .work-controls{display:flex;align-items:center;justify-content:flex-start;gap:15px;margin:5px 0 0;min-height:39px;color:#f4cfe7}
+#work .work-controls button{
+  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:0 0 34px;
+  border:1px solid #f2bfdf8c;color:inherit;background:#ffffff15;cursor:pointer;
+}
+#work .work-controls button:disabled{opacity:.4;cursor:default}
+#work .work-controls button svg{width:17px;height:17px}
+#work .work-back svg{transform:rotate(180deg)}
+#work .work-position{font-size:11px;letter-spacing:.18em;font-weight:700;min-width:55px;text-align:center}
+#work .work-instruction{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:inherit;opacity:.78}
+#work .work-grid .work .arrow{z-index:1}
+#chapters .chapter-content-inner > .work-grid{margin-bottom:0!important}
+#chapters .chapter .work.is-lit{transform:translateY(-3px)}
+#chapters .chapter-content-inner .footer-links{margin-top:18px}
+#chapters .chapter-content-inner .philosophy-link{margin-top:14px}
+/* Previously direct child reveal rules no longer apply after the semantic scroll wrappers. */
+html.reveal-ready #chapters .chapter:not(.is-revealed) .chapter-content-inner > :is(.hero-identity,.eyebrow,h1,h2,p,.chips,.work-grid,.steps,.philosophy-link,.cta,.footer-links,.work-controls){opacity:0;filter:blur(5px);transform:translateY(12px)}
+html.reveal-ready #chapters .chapter.is-revealed .chapter-content-inner > :is(.hero-identity,.eyebrow,h1,h2,p,.chips,.work-grid,.steps,.philosophy-link,.cta,.footer-links,.work-controls){opacity:1;filter:none;transform:none}
+html.reveal-ready #chapters .chapter-content-inner > :is(.hero-identity,.eyebrow,h1,h2,p,.chips,.work-grid,.steps,.philosophy-link,.cta,.footer-links,.work-controls){transition:opacity .75s,filter .8s,transform .85s}
+@media(max-width:900px){
+ :root{--chapter-header-clearance:95px;--chapter-bottom-clearance:176px}
+ #chapters .chapter{
+  padding:var(--chapter-header-clearance) 27px var(--chapter-bottom-clearance)!important;
+ }
+ #chapters .chapter-content-inner{padding:5px 6px 8px 0}
+ #chapters .chapter-content-inner > h2{font-size:clamp(2.7rem,7vw,4.2rem)}
+ #chapters .chapter .next-section{left:27px!important;bottom:128px!important}
+ .constellation-track.constellation-arc{
+   width:clamp(170px,26vw,235px)!important;
+   height:clamp(136px,21vw,188px)!important;
+   right:17px!important;bottom:11px!important;
+ }
+ #work .work-grid .work{flex-basis:clamp(215px,43vw,310px);min-height:165px!important}
+ #chapters .chapter-content-inner > p{max-width:700px}
+}
+@media(max-width:650px){
+ :root{--chapter-header-clearance:91px;--chapter-bottom-clearance:166px}
+ #chapters .chapter{padding:var(--chapter-header-clearance) 22px var(--chapter-bottom-clearance)!important}
+ #chapters .chapter-content-inner > h1{font-size:clamp(3.6rem,15vw,5.8rem)}
+ #chapters .chapter-content-inner > h2{font-size:clamp(2.45rem,10vw,4rem);line-height:1.08}
+ #chapters .chapter-content-inner > p{font-size:clamp(.9rem,3.7vw,1.03rem);line-height:1.48}
+ #chapters #story .chapter-content-inner > p,#chapters #approach .chapter-content-inner > p{font-size:clamp(.9rem,3.5vw,1.02rem);line-height:1.5}
+ #chapters .chapter .next-section{bottom:124px!important;left:22px!important}
+ .constellation-track.constellation-arc{
+   width:min(186px,52vw)!important;height:min(149px,41.5vw)!important;
+   right:13px!important;bottom:10px!important;
+ }
+ #work .work-grid .work{flex-basis:clamp(214px,70vw,280px);min-height:157px!important}
+ #chapters .chapter-content-inner > .work-grid{margin-top:12px!important}
+ #work .work-controls{margin-top:4px;gap:12px}
+ #chapters #approach .steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}
+ #chapters #approach .step{padding:9px}
+ #chapters #approach .step b{font-size:1.13rem}
+ #chapters #approach .step small{font-size:10px;line-height:1.35}
+ #chapters #approach .philosophy-link{margin-top:13px}
+}
+@media(max-width:380px){
+ #chapters .chapter{padding-top:84px!important;padding-bottom:166px!important}
+ #chapters .chapter-content-inner > h2{font-size:clamp(2.35rem,9.3vw,3.6rem)}
+ .constellation-track.constellation-arc{width:165px!important;height:132px!important;right:10px!important}
+ #work .work-grid .work{flex-basis:220px}
+}
+@media(max-height:620px){
+ :root{--chapter-header-clearance:76px;--chapter-bottom-clearance:148px}
+ #chapters .chapter{padding-top:var(--chapter-header-clearance)!important;padding-bottom:var(--chapter-bottom-clearance)!important}
+ #chapters .chapter-content-inner > h1{font-size:clamp(3rem,11vw,5.2rem)}
+ .constellation-track.constellation-arc{width:155px!important;height:124px!important;right:10px!important;bottom:5px!important}
+ #chapters .chapter .next-section{bottom:119px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ html.reveal-ready #chapters .chapter-content-inner > *{transition:none!important;animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
+}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
 <canvas id="stardust" aria-hidden="true"></canvas><main class="chapters" id="chapters">
-<section class="chapter" id="home"><div class="hero-identity"><span class="hero-name">Des Wade<span class="hero-star" aria-hidden="true">✧</span></span><span class="hero-role">Front-End Developer &amp; Web Content Strategist</span></div><h1>Make it<br><span class="accent">make sense.</span></h1><p>I turn complicated content, platforms and digital experiences into something intuitive, beautiful and genuinely useful.</p><div class="chips"><span class="chip">Content Strategy</span><span class="chip">Enterprise CMS</span><span class="chip">Experience Design</span><span class="chip">Accessibility</span></div><a class="cta" href="#work">Explore my work <svg class="orbital-arrow" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="17" stroke="currentColor" stroke-opacity=".48"/><path d="M12 25 27 12M15 12h12v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m10 9 1.5-3L13 9l3 1.5L13 12l-1.5 3-1.5-3-3-1.5L10 9Z" fill="currentColor" opacity=".8"/></svg></a><span class="meta">01 / 05 &nbsp; ↓ Explore</span></section>
-<section class="chapter" id="work"><div class="eyebrow">01 / Selected work</div><h2>Good ideas.<br><span class="accent">Actually shipped.</span></h2><div class="work-grid"><a class="glass work" href="case-studies.html?project=anniversary#gallery"><small>01 / CMS & Campaign Ecosystem</small><strong>ASCE 175th Anniversary Toolkit</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=collaborate#gallery"><small>02 / Platform Transformation</small><strong>Collaborate Migration</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=asce2027#gallery"><small>03 / Digital Experience</small><strong>ASCE 2027</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=optimization#gallery"><small>04 / Content & Optimization</small><strong>Member Advantages</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a></div><span class="meta">02 / 05</span></section>
+<section class="chapter" id="home"><div class="chapter-content" tabindex="0" role="region" aria-label="Arrival chapter content"><div class="chapter-content-inner"><div class="hero-identity"><span class="hero-name">Des Wade<span class="hero-star" aria-hidden="true">✧</span></span><span class="hero-role">Front-End Developer &amp; Web Content Strategist</span></div><h1>Make it<br><span class="accent">make sense.</span></h1><p>I turn complicated content, platforms and digital experiences into something intuitive, beautiful and genuinely useful.</p><div class="chips"><span class="chip">Content Strategy</span><span class="chip">Enterprise CMS</span><span class="chip">Experience Design</span><span class="chip">Accessibility</span></div><a class="cta" href="#work">Explore my work <svg class="orbital-arrow" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="17" stroke="currentColor" stroke-opacity=".48"/><path d="M12 25 27 12M15 12h12v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m10 9 1.5-3L13 9l3 1.5L13 12l-1.5 3-1.5-3-3-1.5L10 9Z" fill="currentColor" opacity=".8"/></svg></a></div></div><span class="meta">01 / 05 &nbsp; ↓ Explore</span></section>
+<section class="chapter" id="work"><div class="chapter-content" tabindex="0" role="region" aria-label="Selected work chapter content"><div class="chapter-content-inner"><div class="eyebrow">01 / Selected work</div><h2>Good ideas.<br><span class="accent">Actually shipped.</span></h2><div class="work-grid"><a class="glass work" href="case-studies.html?project=anniversary#gallery"><small>01 / CMS & Campaign Ecosystem</small><strong>ASCE 175th Anniversary Toolkit</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=collaborate#gallery"><small>02 / Platform Transformation</small><strong>Collaborate Migration</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=asce2027#gallery"><small>03 / Digital Experience</small><strong>ASCE 2027</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=optimization#gallery"><small>04 / Content & Optimization</small><strong>Member Advantages</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a></div><div class="work-controls" role="group" aria-label="Featured project carousel controls"><button type="button" class="work-back" aria-label="Previous featured project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="work-position" aria-live="off">01 / 04</span><button type="button" class="work-forward" aria-label="Next featured project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="work-instruction">Swipe to explore</span></div></div></div><span class="meta">02 / 05</span></section>
 
 
 
 
-<section class="chapter" id="story"><div class="eyebrow">02 / My story</div><h2>I didn’t follow a line.<br><span class="accent">I connected the stars.</span></h2><p>My career grew through connections, not a single prescribed path. Development taught me how things work. Content strategy taught me how they fit together. Creativity and curiosity help me see possibilities between them. Every skill I’ve gained becomes part of the way I build experiences people can understand, use and maintain.</p><div class="chips"><span class="chip">Sitefinity</span><span class="chip">SiteExecutive</span><span class="chip">Finalsite</span><span class="chip">Drupal</span><span class="chip">Sitecore</span><span class="chip">Higher Logic</span></div><span class="meta">03 / 05</span></section>
-<section class="chapter" id="approach"><div class="eyebrow">03 / How I think</div><h2>Structure is a love language.<br><span class="accent">It makes room for magic.</span></h2><p>Structure is how I show care for the people using an experience and for the people who maintain it. But structure alone isn’t the whole picture. I bring development, content, design and everything I’ve learned together, so the pieces work beautifully as one. The system should be thoughtful enough to support the human experience, not get in its way.</p><div class="steps"><div class="step"><b>Understand</b><small>Find the user problem and the business need.</small></div><div class="step"><b>Organize</b><small>Give complexity a usable structure.</small></div><div class="step"><b>Implement</b><small>Make the experience real within the platform.</small></div><div class="step"><b>Refine</b><small>Test, measure and improve what matters.</small></div></div><a class="philosophy-link" href="philosophy.html">The philosophy behind my work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="meta">04 / 05</span></section>
-<section class="chapter" id="contact"><div class="eyebrow">04 / The invitation</div><h2>Let's make<br><span class="accent">something make sense.</span></h2><p>I'm interested in remote opportunities in web content strategy, enterprise CMS management and digital experience ownership. The best work happens when thoughtful strategy meets real implementation.</p><div class="footer-links contact-actions"><a href="mailto:desireewade5@gmail.com">Let's talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="resume.html">View résumé <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="philosophy.html">My philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div><span class="meta">05 / 05</span></section>
+<section class="chapter" id="story"><div class="chapter-content" tabindex="0" role="region" aria-label="My story chapter content"><div class="chapter-content-inner"><div class="eyebrow">02 / My story</div><h2>I didn’t follow a line.<br><span class="accent">I connected the stars.</span></h2><p>My career grew through connections, not a single prescribed path. Development taught me how things work. Content strategy taught me how they fit together. Creativity and curiosity help me see possibilities between them. Every skill I’ve gained becomes part of the way I build experiences people can understand, use and maintain.</p><div class="chips"><span class="chip">Sitefinity</span><span class="chip">SiteExecutive</span><span class="chip">Finalsite</span><span class="chip">Drupal</span><span class="chip">Sitecore</span><span class="chip">Higher Logic</span></div></div></div><span class="meta">03 / 05</span></section>
+<section class="chapter" id="approach"><div class="chapter-content" tabindex="0" role="region" aria-label="My approach chapter content"><div class="chapter-content-inner"><div class="eyebrow">03 / How I think</div><h2>Structure is a love language.<br><span class="accent">It makes room for magic.</span></h2><p>Structure is how I show care for the people using an experience and for the people who maintain it. But structure alone isn’t the whole picture. I bring development, content, design and everything I’ve learned together, so the pieces work beautifully as one. The system should be thoughtful enough to support the human experience, not get in its way.</p><div class="steps"><div class="step"><b>Understand</b><small>Find the user problem and the business need.</small></div><div class="step"><b>Organize</b><small>Give complexity a usable structure.</small></div><div class="step"><b>Implement</b><small>Make the experience real within the platform.</small></div><div class="step"><b>Refine</b><small>Test, measure and improve what matters.</small></div></div><a class="philosophy-link" href="philosophy.html">The philosophy behind my work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div><span class="meta">04 / 05</span></section>
+<section class="chapter" id="contact"><div class="chapter-content" tabindex="0" role="region" aria-label="Contact chapter content"><div class="chapter-content-inner"><div class="eyebrow">04 / The invitation</div><h2>Let's make<br><span class="accent">something make sense.</span></h2><p>I'm interested in remote opportunities in web content strategy, enterprise CMS management and digital experience ownership. The best work happens when thoughtful strategy meets real implementation.</p><div class="footer-links contact-actions"><a href="mailto:desireewade5@gmail.com">Let's talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="resume.html">View résumé <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="philosophy.html">My philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div><span class="meta">05 / 05</span></section>
 </main><nav class="constellation-track constellation-arc" aria-label="Navigate the five chapters">
 <svg class="constellation-lines" viewBox="0 0 300 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><filter id="starshine"><feGaussianBlur stdDeviation="3.5"/></filter></defs><path class="star-halo" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24" fill="none" stroke="#e8addf" stroke-width="8" opacity=".22" filter="url(#starshine)"/><path class="star-path" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24" fill="none" stroke="#fbd3f4" stroke-width="1.6" stroke-dasharray="2 7" stroke-linecap="round"/><path id="constellation-active-line" pathLength="100" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24" fill="none" stroke="#ffdcf4" stroke-width="2" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100"/></svg>
 <button data-section="home" aria-label="Arrival" title="Arrival"><span aria-hidden="true">✦</span></button><button data-section="work" aria-label="Selected work" title="Selected work"><span aria-hidden="true">✦</span></button><button data-section="story" aria-label="My story" title="My story"><span aria-hidden="true">✦</span></button><button data-section="approach" aria-label="My approach" title="My approach"><span aria-hidden="true">✦</span></button><button data-section="contact" aria-label="Contact" title="Contact"><span aria-hidden="true">✦</span></button>
@@ -307,10 +452,10 @@ pages.forEach((page,i)=>{
 
 if(i<pages.length-1){const link=page.querySelector('.next-section')||document.createElement('a');link.className='next-section';link.href='#'+pages[i+1].id;link.setAttribute('aria-label','Go to next section');link.innerHTML='Explore next <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></span>';if(!link.isConnected)page.append(link)}
 });
-surface.addEventListener('wheel',e=>{if(universe.classList.contains('open'))return;if(e.target.closest('button,input,textarea,select'))return;e.preventDefault();if(locked)return;wheelTotal+=e.deltaY;clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>wheelTotal=0,170);if(Math.abs(wheelTotal)>=15){step(Math.sign(wheelTotal));wheelTotal=0}},{passive:false});
-surface.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;gestureStart={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
-surface.addEventListener('touchmove',e=>{if(!gestureStart||locked)return;const dy=e.touches[0].clientY-gestureStart.y;if(Math.abs(dy)>7){e.preventDefault();const desired=pages[current].offsetTop-dy*.28;surface.scrollTop=Math.min(pages.at(-1).offsetTop,Math.max(0,desired));}},{passive:false});
-surface.addEventListener('touchend',e=>{if(!gestureStart)return;const dx=e.changedTouches[0].clientX-gestureStart.x,dy=e.changedTouches[0].clientY-gestureStart.y;gestureStart=null;if(Math.abs(dy)>35&&Math.abs(dy)>Math.abs(dx)*1.2)step(dy<0?1:-1);else if(!locked)goTo(current)},{passive:true});
+surface.addEventListener('wheel',e=>{if(universe.classList.contains('open'))return;if(e.target.closest('button,input,textarea,select'))return;const scroller=e.target.closest('.chapter-content');if(scroller&&scroller.scrollHeight>scroller.clientHeight+2){const end=scroller.scrollHeight-scroller.clientHeight;if(e.deltaY>0&&scroller.scrollTop<end-2)return;if(e.deltaY<0&&scroller.scrollTop>2)return}if(e.target.closest('.work-grid')&&Math.abs(e.deltaX)>Math.abs(e.deltaY))return;e.preventDefault();if(locked)return;wheelTotal+=e.deltaY;clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>wheelTotal=0,170);if(Math.abs(wheelTotal)>=15){step(Math.sign(wheelTotal));wheelTotal=0}},{passive:false});
+surface.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;gestureStart={x:e.touches[0].clientX,y:e.touches[0].clientY,origin:e.target,scroller:e.target.closest('.chapter-content'),horizontal:!!e.target.closest('.work-grid')}},{passive:true});
+surface.addEventListener('touchmove',e=>{if(!gestureStart||locked||gestureStart.horizontal)return;const dy=e.touches[0].clientY-gestureStart.y;const inner=gestureStart.scroller;if(inner&&inner.scrollHeight>inner.clientHeight+2){const end=inner.scrollHeight-inner.clientHeight;if(dy<0&&inner.scrollTop<end-2)return;if(dy>0&&inner.scrollTop>2)return}if(Math.abs(dy)>7){e.preventDefault();const desired=pages[current].offsetTop-dy*.28;surface.scrollTop=Math.min(pages.at(-1).offsetTop,Math.max(0,desired));}},{passive:false});
+surface.addEventListener('touchend',e=>{if(!gestureStart)return;const starting=gestureStart,dx=e.changedTouches[0].clientX-starting.x,dy=e.changedTouches[0].clientY-starting.y;gestureStart=null;if(starting.horizontal&&Math.abs(dx)>Math.abs(dy))return;const inner=starting.scroller;if(inner&&inner.scrollHeight>inner.clientHeight+2){const end=inner.scrollHeight-inner.clientHeight;if(dy<0&&inner.scrollTop<end-2)return;if(dy>0&&inner.scrollTop>2)return}if(Math.abs(dy)>35&&Math.abs(dy)>Math.abs(dx)*1.2)step(dy<0?1:-1);else if(!locked)goTo(current)},{passive:true});
 document.addEventListener('keydown',e=>{if(universe.classList.contains('open')){if(e.key==='Escape'){closeUniverse();return}if(e.key==='Tab'){const focusable=[closer,...hexes];const idx=focusable.indexOf(document.activeElement);if(e.shiftKey&&idx===0){e.preventDefault();focusable.at(-1).focus()}else if(!e.shiftKey&&idx===focusable.length-1){e.preventDefault();focusable[0].focus()}}return}if(e.target.closest('input,textarea,select,[contenteditable]'))return;if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();step(1)}else if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();step(-1)}else if(e.key==='Home'){e.preventDefault();goTo(0)}else if(e.key==='End'){e.preventDefault();goTo(pages.length-1)}});
 document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',e=>{const id=link.getAttribute('href').slice(1);const index=pages.findIndex(p=>p.id===id);if(index<0)return;e.preventDefault();goTo(index)}));
 function openUniverse(){if(universeBusy)return;lastFocus=document.activeElement;universe.classList.add('open');universe.setAttribute('aria-hidden','false');opener.setAttribute('aria-expanded','true');surface.inert=true;closer.focus()}
@@ -328,6 +473,37 @@ sizeStars();addEventListener('resize',sizeStars);
 function push(x,y){px=x;py=y;lastInput=performance.now();}
 addEventListener('pointermove',e=>push(e.clientX,e.clientY),{passive:true});addEventListener('touchmove',e=>{if(e.touches[0])push(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
 let t=0;function draw(){ctx.clearRect(0,0,W,H);t+=.008;for(const s of stars){if(!reduced){const dx=s.x-px,dy=s.y-py,dist=Math.hypot(dx,dy)||1;if(performance.now()-lastInput<450&&dist<125){const power=(1-dist/125)*.42;s.vx+=dx/dist*power;s.vy+=dy/dist*power;}s.vx=s.vx*.94+Math.sin(t+s.seed)*.008;s.vy=s.vy*.94+Math.cos(t*.75+s.seed)*.007;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;}ctx.beginPath();ctx.fillStyle='rgba(255,223,244,.58)';ctx.shadowBlur=8;ctx.shadowColor='#f4b6e4';ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}if(!reduced)requestAnimationFrame(draw)}draw()}
+
+const featured=document.querySelector('#work .work-grid'),featuredCards=featured?[...featured.querySelectorAll('.work')]:[],featuredControls=document.querySelector('#work .work-controls');
+if(featured&&featuredCards.length&&featuredControls){
+ const prev=featuredControls.querySelector('.work-back'),next=featuredControls.querySelector('.work-forward'),status=featuredControls.querySelector('.work-position');
+ let item=0,pausedUntil=0,autoTimer=null,frame=0;
+ const select=(i,manual=false)=>{
+  item=(i+featuredCards.length)%featuredCards.length;
+  const p=featuredCards[item],base=featured.getBoundingClientRect(),rect=p.getBoundingClientRect();
+  const x=featured.scrollLeft+rect.left-base.left-4;
+  featured.scrollTo({left:x,behavior:reduced?'instant':'smooth'});
+  status.textContent=String(item+1).padStart(2,'0')+' / '+String(featuredCards.length).padStart(2,'0');
+  prev.disabled=item===0;next.disabled=item===featuredCards.length-1;
+  if(manual)pausedUntil=Date.now()+8000;
+ };
+ prev.addEventListener('click',()=>select(Math.max(0,item-1),true));
+ next.addEventListener('click',()=>select(Math.min(featuredCards.length-1,item+1),true));
+ featured.addEventListener('pointerdown',()=>{pausedUntil=Date.now()+9000},{passive:true});
+ featured.addEventListener('focusin',()=>{pausedUntil=Date.now()+9000});
+ featured.addEventListener('mouseenter',()=>{pausedUntil=Date.now()+8000});
+ featured.addEventListener('scroll',()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{
+  const pos=featured.scrollLeft+4;let idx=0,dist=Infinity;
+  featuredCards.forEach((card,i)=>{const d=Math.abs(card.offsetLeft-pos);if(d<dist){dist=d;idx=i}});
+  if(idx!==item){item=idx;status.textContent=String(item+1).padStart(2,'0')+' / '+String(featuredCards.length).padStart(2,'0');prev.disabled=item===0;next.disabled=item===featuredCards.length-1}
+ })},{passive:true});
+ select(0);
+ if(!reduced){autoTimer=setInterval(()=>{
+  if(current!==1||document.hidden||universe.classList.contains('open')||Date.now()<pausedUntil||featured.matches(':focus-within')||featured.matches(':hover'))return;
+  select(item+1===featuredCards.length?0:item+1);
+ },4800)}
+}
+
 const cards=[...document.querySelectorAll('.work')];if(cards.length&&!reduced){let light=0;setInterval(()=>{cards.forEach((c,i)=>c.classList.toggle('is-lit',i===light));light=(light+1)%cards.length},2800)}
 })();
 </script><script src="theme.js" defer></script></body></html>
