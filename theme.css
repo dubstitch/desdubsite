@@ -401,3 +401,61 @@ html[data-theme="light"] .case-grid-nav .nav-star[aria-current="step"] svg{
     animation:none!important;
   }
 }
+
+/* Unified signature card surfaces, with contrast in both themes.
+   Cards should read as clearly separate surfaces, not tinted holes in the page. */
+:root{--card-deep:#392540;--card-deep-alt:#33243c;--card-light:#fffafd;--card-light-alt:#fff5fa}
+html:not([data-theme="light"]) #work .work,
+html:not([data-theme="light"]) .glass.work,
+html:not([data-theme="light"]) .resume-highlights article,
+html:not([data-theme="light"]) .resume-section .role,
+html:not([data-theme="light"]) .resume-section .role.featured-role,
+html:not([data-theme="light"]) .skill-group,
+html:not([data-theme="light"]) .interest {
+  background:linear-gradient(150deg,var(--card-deep),var(--card-deep-alt))!important;
+  border:1px solid #dda7d48c!important;
+  box-shadow:0 9px 25px #0d071b40,inset 0 1px 0 #ffe3fa10!important;
+}
+html:not([data-theme="light"]) .resume-highlights article h3,
+html:not([data-theme="light"]) .resume-section .role h3,
+html:not([data-theme="light"]) .skill-group h3,
+html:not([data-theme="light"]) .interest b,
+html:not([data-theme="light"]) #work .work strong{color:#fff0fa!important}
+html:not([data-theme="light"]) .resume-highlights article p,
+html:not([data-theme="light"]) .resume-section .role li,
+html:not([data-theme="light"]) .skill-group p,
+html:not([data-theme="light"]) .interest p{color:#efdbeb!important}
+html[data-theme="light"] #work .work,
+html[data-theme="light"] .glass.work,
+html[data-theme="light"] .resume-highlights article,
+html[data-theme="light"] .resume-section .role,
+html[data-theme="light"] .resume-section .role.featured-role,
+html[data-theme="light"] .skill-group,
+html[data-theme="light"] .interest {
+  background:linear-gradient(145deg,var(--card-light),var(--card-light-alt))!important;
+  border:1px solid #bd8caf9c!important;
+  box-shadow:0 9px 24px #8e649026,inset 0 1px 0 #fff!important;
+}
+html[data-theme="light"] #work .work small,
+html[data-theme="light"] #work .work strong,
+html[data-theme="light"] .resume-highlights article h3,
+html[data-theme="light"] .resume-section .role h3,
+html[data-theme="light"] .skill-group h3,
+html[data-theme="light"] .interest b{color:#412b4a!important}
+html[data-theme="light"] .resume-highlights article p,
+html[data-theme="light"] .resume-section .role li,
+html[data-theme="light"] .skill-group p,
+html[data-theme="light"] .interest p{color:#4c3a53!important}
+html[data-theme="light"] #work .work:hover,
+html[data-theme="light"] #work .work:focus-visible,
+html[data-theme="light"] #work .work.is-lit{
+  background:#ffffff!important;
+  border-color:#a85a93!important;
+  box-shadow:0 8px 26px #bf75a63e,0 0 21px #e1a1ce60!important;
+}
+html:not([data-theme="light"]) #work .work:hover,
+html:not([data-theme="light"]) #work .work:focus-visible,
+html:not([data-theme="light"]) #work .work.is-lit{
+  border-color:#f5bee7!important;
+  box-shadow:0 8px 30px #0d071b60,0 0 22px #db8fc86b!important;
+}
