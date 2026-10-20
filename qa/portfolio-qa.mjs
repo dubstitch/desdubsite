@@ -4,14 +4,19 @@ import fs from 'node:fs/promises';
 
 const origin='http://127.0.0.1:8765';
 const sizes=[
+ {name:'iphone-mini',width:320,height:568},
  {name:'iphone-se',width:375,height:667},
+ {name:'iphone-compact',width:360,height:640},
  {name:'iphone',width:390,height:844},
  {name:'iphone-large',width:430,height:932},
  {name:'phone-landscape',width:844,height:390},
  {name:'phone-landscape-short',width:667,height:375},
+ {name:'phone-landscape-wide',width:896,height:414},
  {name:'tablet',width:768,height:1024},
  {name:'tablet-landscape',width:1024,height:768},
- {name:'desktop',width:1440,height:900}
+ {name:'short-laptop',width:1024,height:600},
+ {name:'desktop',width:1440,height:900},
+ {name:'large-desktop',width:1920,height:1080}
 ];
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const issues=[];
@@ -44,11 +49,21 @@ for(const theme of ['light','dark']){
     if(m.docWidth>m.windowWidth+2)issues.push('HORIZONTAL PAGE OVERFLOW '+theme+' '+size.name+' '+id+' '+m.docWidth+'/'+m.windowWidth);
     for(const control of m.controls)if(control.width>0&&(control.y<m.viewport.y-5||control.bottom>m.viewport.bottom+5))issues.push('CONTROL OUTSIDE '+theme+' '+size.name+' '+id+' '+control.name);
     summary.push({theme,screen:size.name,page:id,clipped,extraHeight:Math.round(m.inner.height-m.viewport.height),widthOver:Math.max(0,m.docWidth-m.windowWidth)});
-    if((theme==='light'&&size.name==='iphone'&&['home','work'].includes(id))||(theme==='light'&&size.name==='phone-landscape'&&id==='work')||(theme==='dark'&&size.name==='desktop'&&id==='home')){
+    if((theme==='light'&&size.name==='iphone'&&['home','work'].includes(id))||(theme==='light'&&size.name==='phone-landscape'&&id==='work')||(theme==='light'&&size.name==='iphone-mini'&&id==='home')||(theme==='dark'&&size.name==='desktop'&&id==='home')){
       const name=theme+'-'+size.name+'-'+id;
       const file=output+'/'+name+'.jpeg';
       await page.screenshot({path:file,type:'jpeg',quality:56,fullPage:false});
       capture[name]=file;
+    }
+  }
+  if(['iphone','desktop'].includes(size.name)){
+    for(const section of ['home','work']){
+      await page.goto(origin+'/index.html#'+section,{waitUntil:'domcontentloaded'});
+      await page.waitForTimeout(170);
+      try{
+        const violations=(await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze()).violations;
+        for(const v of violations)issues.push('AXE '+theme+' '+size.name+' homepage-'+section+' '+v.id+' ('+v.impact+') '+v.nodes.length+' '+v.nodes.slice(0,2).map(n=>n.target.join(' ')).join(','));
+      }catch(e){issues.push('AXE ERROR '+theme+' '+size.name+' homepage-'+section+' '+e.message)}
     }
   }
   await page.goto(origin+'/resume.html',{waitUntil:'domcontentloaded'});
@@ -60,6 +75,12 @@ for(const theme of ['light','dark']){
   });
   if(footer.docWidth>footer.windowWidth+2)issues.push('RESUME HORIZONTAL OVERFLOW '+theme+' '+size.name+' '+footer.docWidth);
   if(footer.links.some(l=>l.height>80))issues.push('RESUME FOOTER STRETCHED '+theme+' '+size.name+' '+JSON.stringify(footer.links));
+  if(['iphone','desktop'].includes(size.name)){
+    try{
+      const violations=(await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze()).violations;
+      for(const v of violations)issues.push('AXE '+theme+' '+size.name+' résumé '+v.id+' ('+v.impact+') '+v.nodes.length+' '+v.nodes.slice(0,2).map(n=>n.target.join(' ')).join(','));
+    }catch(e){issues.push('AXE ERROR '+theme+' '+size.name+' résumé '+e.message)}
+  }
   if(theme==='dark'&&size.name==='iphone'){
    const file=output+'/resume-footer-dark-iphone.jpeg';
    await page.locator('.resume-footer').screenshot({path:file,type:'jpeg',quality:55});
