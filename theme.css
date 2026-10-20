@@ -283,3 +283,121 @@ html[data-theme="light"] .case-grid-nav .nav-star[aria-current="step"]::before{b
     animation:none!important;transition:none!important
   }
 }
+
+/* Final mobile carousel repair. Prevent the grid's min-content width
+   from expanding the viewport beyond the device width. */
+body:has(.gallery-shell){overflow-x:hidden}
+.gallery-shell{
+  box-sizing:border-box;
+  width:100%!important;
+  max-width:100vw!important;
+  overflow:hidden!important;
+  min-width:0!important;
+  grid-template-columns:minmax(0,1fr)!important;
+}
+.gallery-frame{
+  box-sizing:border-box;
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:100%!important;
+  overflow:hidden!important;
+}
+#project-track.panels{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:100%!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  scroll-snap-type:x mandatory;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+}
+#project-track.panels::-webkit-scrollbar{display:none}
+.work-panel{
+  box-sizing:border-box;
+  min-width:0!important;
+  overflow:hidden;
+  scroll-snap-align:center;
+}
+.work-panel .panel-scroller{box-sizing:border-box;min-width:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain}
+.work-panel .panel-scroller > *{opacity:1;visibility:visible}
+.gallery-controls{
+  box-sizing:border-box;
+  width:100%!important;
+  max-width:100vw!important;
+  min-width:0;
+  margin:0 auto!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  overflow:visible!important;
+}
+.gallery-arrow{flex-shrink:0}
+.case-grid-nav{
+  flex-shrink:0;
+  margin:0!important;
+}
+.case-grid-nav .nav-star svg{
+  width:18px!important;height:18px!important;
+  fill:none!important;stroke:#fff!important;stroke-width:1.2;
+  filter:drop-shadow(0 0 4px #fff9) drop-shadow(0 0 8px #ef9fd8) drop-shadow(0 0 14px #a76fec);
+  animation:thin-star-twinkle 3.4s ease-in-out infinite!important;
+}
+.case-grid-nav .nav-star:nth-child(2) svg{animation-delay:.45s!important}
+.case-grid-nav .nav-star:nth-child(3) svg{animation-delay:.9s!important}
+.case-grid-nav .nav-star:nth-child(4) svg{animation-delay:1.35s!important}
+.case-grid-nav .nav-star[aria-current="step"] svg{
+  width:23px!important;height:23px!important;
+  fill:none!important;stroke:#fff!important;
+  animation:thin-star-spin 4.7s linear infinite!important;
+  filter:drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px #ffa9e7) drop-shadow(0 0 20px #a773f5)!important;
+}
+.case-grid-nav .nav-star[aria-current="step"]::before{
+  animation:gallery-star-halo 2.3s ease-in-out infinite!important;
+  background:radial-gradient(circle,#ffffff9c 0%,#f6a9ed73 25%,#a764da43 55%,transparent 75%)!important;
+}
+.case-grid-nav .nav-star[aria-current="step"]::after{
+  animation:gallery-star-ring 2.3s ease-out infinite!important;
+}
+@keyframes thin-star-twinkle{
+  0%,100%{opacity:.93;transform:scale(.94) rotate(-3deg)}
+  45%{opacity:1;transform:scale(1.16) rotate(3deg)}
+  70%{opacity:.86;transform:scale(1.02) rotate(-1deg)}
+}
+@keyframes thin-star-spin{
+  0%{transform:rotate(0deg) scale(1.12)}
+  50%{transform:rotate(180deg) scale(1.3)}
+  100%{transform:rotate(360deg) scale(1.12)}
+}
+html[data-theme="light"] .case-grid-nav .nav-star svg,
+html[data-theme="light"] .case-grid-nav .nav-star[aria-current="step"] svg{
+  stroke:#fff!important;
+  filter:drop-shadow(0 0 2px #4f245f) drop-shadow(0 0 7px #aa5bac) drop-shadow(0 0 14px #9c74d0)!important;
+}
+@media(max-width:700px){
+  .gallery-shell{grid-template-columns:minmax(0,1fr)!important}
+  #project-track.panels{
+    padding-left:2.5vw!important;
+    padding-right:2.5vw!important;
+    scroll-padding-left:2.5vw!important;
+    scroll-padding-right:2.5vw!important;
+  }
+  .work-panel{
+    flex:0 0 95vw!important;
+    width:95vw!important;
+    max-width:95vw!important;
+  }
+  .gallery-controls{gap:clamp(4px,1.5vw,12px)!important;padding-left:8px!important;padding-right:8px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .case-grid-nav .nav-star svg,
+  .case-grid-nav .nav-star[aria-current="step"] svg,
+  .case-grid-nav .nav-star[aria-current="step"]::before,
+  .case-grid-nav .nav-star[aria-current="step"]::after{
+    animation:none!important;
+  }
+}
