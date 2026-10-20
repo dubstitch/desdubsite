@@ -428,6 +428,113 @@ html.reveal-ready #chapters .chapter-content-inner > :is(.hero-identity,.eyebrow
  }
  #chapters .chapter .next-section span{font-size:19px!important}
 }
+
+/* Readable project cards: intentionally high contrast in both modes */
+#work .work-grid .work{
+  isolation:isolate;
+  overflow:hidden;
+  align-items:stretch;
+  text-decoration:none!important;
+}
+#work .work-grid .work small,
+#work .work-grid .work strong{
+  display:block;
+  position:relative;z-index:2;
+  opacity:1!important;
+  text-shadow:none!important;
+  max-width:100%;
+  overflow-wrap:break-word;
+}
+html:not([data-theme="light"]) #work .work-grid .work small{color:#ffe1f5!important;font-size:clamp(10px,1vw,12px)!important;font-weight:700;letter-spacing:.09em}
+html:not([data-theme="light"]) #work .work-grid .work strong{color:#ffffff!important;font-weight:600;text-shadow:0 2px 12px #150e2260!important}
+#work .work-grid .work .arrow{
+  display:grid!important;place-items:center!important;
+  align-self:flex-end!important;
+  width:43px!important;height:43px!important;min-width:43px!important;min-height:43px!important;
+  border-radius:50%!important;
+  position:relative;z-index:4;
+  opacity:1!important;
+  background:#f6c0e3!important;
+  color:#382044!important;
+  border:1px solid #fff2fc!important;
+  box-shadow:0 3px 14px #15091f66,0 0 11px #e9a0db88!important;
+  transition:transform .3s,box-shadow .3s;
+}
+#work .work-grid .work .arrow svg{
+  width:22px!important;height:22px!important;
+  stroke:currentColor!important;stroke-width:2.2!important;
+  opacity:1!important;display:block;
+}
+#work .work-grid .work:is(:hover,:focus-visible) .arrow{transform:translate(2px,-2px) scale(1.07);box-shadow:0 4px 17px #d58dc8a0!important}
+html[data-theme="light"] #work .work-grid .work small{color:#66335d!important;font-size:clamp(10px,1vw,12px)!important;font-weight:700;letter-spacing:.08em}
+html[data-theme="light"] #work .work-grid .work strong{color:#312139!important;font-weight:600}
+html[data-theme="light"] #work .work-grid .work .arrow{color:white!important;background:#71356e!important;border-color:#71356e!important;box-shadow:0 3px 12px #906b9c4d!important}
+html[data-theme="light"] #work .work-grid .work .arrow svg{stroke:#fff!important}
+#work .work-grid .work:focus-visible{outline:3px solid #f7c6e6!important;outline-offset:3px}
+/* Approach is a single intentional chapter. No internal scrolling and no cut-off content. */
+#chapters #approach .chapter-content{overflow:visible!important;scrollbar-width:none!important}
+#chapters #approach .chapter-content-inner{
+  min-height:100%;
+  justify-content:center;
+  gap:clamp(10px,1.8vh,19px);
+  padding:0!important;
+}
+#chapters #approach .chapter-content-inner > *{flex:0 0 auto;max-width:100%;margin:0!important}
+#chapters #approach .chapter-content-inner > h2{
+  font-size:clamp(2.4rem,4.85vw,5.2rem)!important;
+  line-height:1.06!important;
+  letter-spacing:-.055em;
+}
+#chapters #approach .chapter-content-inner > p{
+  font-size:clamp(.93rem,1.3vw,1.12rem)!important;
+  line-height:1.47!important;
+  max-width:610px!important;
+}
+#chapters #approach .approach-pill-row{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:8px;
+  margin-top:2px!important;
+}
+#chapters #approach .approach-pill-row span{
+  padding:8px 12px;border:1px solid #dba7d6a0;
+  border-radius:50px;
+  background:#e6acd225;
+  color:#f9e1f1;
+  font-size:clamp(11px,1vw,13px);
+  font-weight:700;
+}
+html[data-theme="light"] #chapters #approach .approach-pill-row span{color:#65355e;background:#fffafd;border-color:#b88ab4}
+#chapters #approach .philosophy-link{align-self:flex-start!important;padding:10px 15px!important;font-size:12px!important;min-height:41px}
+@media(max-width:900px){
+ #chapters #approach .chapter-content-inner{gap:clamp(7px,1.6vh,14px)}
+ #chapters #approach .chapter-content-inner > h2{font-size:clamp(2.25rem,5.5vw,4rem)!important}
+ #chapters #approach .chapter-content-inner > p{font-size:clamp(.9rem,1.7vw,1.05rem)!important}
+}
+@media(max-width:650px){
+ #chapters #approach .chapter-content-inner{gap:clamp(7px,1.6vh,12px)}
+ #chapters #approach .chapter-content-inner > h2{font-size:clamp(2rem,8.35vw,3.25rem)!important;line-height:1.06!important}
+ #chapters #approach .chapter-content-inner > p{font-size:clamp(.88rem,3.45vw,.99rem)!important;line-height:1.4!important}
+ #chapters #approach .approach-pill-row{gap:6px}
+ #chapters #approach .approach-pill-row span{padding:5px 9px;font-size:11px}
+ #chapters #approach .philosophy-link{font-size:11px!important;padding:8px 12px!important;min-height:36px}
+}
+@media(max-height:650px){
+ #chapters #approach .chapter-content-inner{gap:6px!important}
+ #chapters #approach .chapter-content-inner > h2{font-size:clamp(1.78rem,5.8vh,3.35rem)!important;line-height:1.03!important}
+ #chapters #approach .chapter-content-inner > p{font-size:clamp(.84rem,2.4vh,.97rem)!important;line-height:1.3!important}
+ #chapters #approach .approach-pill-row span{padding:4px 8px}
+ #chapters #approach .philosophy-link{padding:7px 10px!important;min-height:32px}
+}
+@media(max-height:510px){
+ #chapters #approach .approach-pill-row{display:none!important}
+ #chapters #approach .chapter-content-inner > h2{font-size:clamp(1.6rem,5.1vh,2.4rem)!important}
+}
+/* Wrap content only on extreme widths; no horizontal viewport overflow */
+@media(max-width:350px){
+ #chapters #approach .chapter-content-inner > h2{font-size:1.85rem!important}
+ #chapters #approach .chapter-content-inner > p{font-size:.82rem!important}
+ #work .work-grid .work .arrow{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important}
+}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
@@ -439,7 +546,13 @@ html.reveal-ready #chapters .chapter-content-inner > :is(.hero-identity,.eyebrow
 
 
 <section class="chapter" id="story"><div class="chapter-content" tabindex="0" role="region" aria-label="My story chapter content"><div class="chapter-content-inner"><div class="eyebrow">02 / My story</div><h2>I didn’t follow a line.<br><span class="accent">I connected the stars.</span></h2><p>My career grew through connections, not a single prescribed path. Development taught me how things work. Content strategy taught me how they fit together. Creativity and curiosity help me see possibilities between them. Every skill I’ve gained becomes part of the way I build experiences people can understand, use and maintain.</p><div class="chips"><span class="chip">Sitefinity</span><span class="chip">SiteExecutive</span><span class="chip">Finalsite</span><span class="chip">Drupal</span><span class="chip">Sitecore</span><span class="chip">Higher Logic</span></div></div></div><span class="meta">03 / 05</span></section>
-<section class="chapter" id="approach"><div class="chapter-content" tabindex="0" role="region" aria-label="My approach chapter content"><div class="chapter-content-inner"><div class="eyebrow">03 / How I think</div><h2>Structure is a love language.<br><span class="accent">It makes room for magic.</span></h2><p>Structure is how I show care for the people using an experience and for the people who maintain it. But structure alone isn’t the whole picture. I bring development, content, design and everything I’ve learned together, so the pieces work beautifully as one. The system should be thoughtful enough to support the human experience, not get in its way.</p><div class="steps"><div class="step"><b>Understand</b><small>Find the user problem and the business need.</small></div><div class="step"><b>Organize</b><small>Give complexity a usable structure.</small></div><div class="step"><b>Implement</b><small>Make the experience real within the platform.</small></div><div class="step"><b>Refine</b><small>Test, measure and improve what matters.</small></div></div><a class="philosophy-link" href="philosophy.html">The philosophy behind my work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div><span class="meta">04 / 05</span></section>
+<section class="chapter" id="approach"><div class="chapter-content" tabindex="0" role="region" aria-label="My approach chapter content"><div class="chapter-content-inner">
+<div class="eyebrow">03 / How I think</div>
+<h2>Structure is a love language.<br><span class="accent">It makes room for magic.</span></h2>
+<p>I bring code, content and care together. Clear structure makes the experience work. Creativity makes it feel human.</p>
+<div class="approach-pill-row" role="list" aria-label="My approach"><span role="listitem">Understand</span><span role="listitem">Organize</span><span role="listitem">Build</span><span role="listitem">Refine</span></div>
+<a class="philosophy-link" href="philosophy.html">Explore my philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+</div></div><span class="meta">04 / 05</span></section>
 <section class="chapter" id="contact"><div class="chapter-content" tabindex="0" role="region" aria-label="Contact chapter content"><div class="chapter-content-inner"><div class="eyebrow">04 / The invitation</div><h2>Let's make<br><span class="accent">something make sense.</span></h2><p>I'm interested in remote opportunities in web content strategy, enterprise CMS management and digital experience ownership. The best work happens when thoughtful strategy meets real implementation.</p><div class="footer-links contact-actions"><a href="mailto:desireewade5@gmail.com">Let's talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="resume.html">View résumé <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="philosophy.html">My philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div><span class="meta">05 / 05</span></section>
 </main><nav class="constellation-track constellation-arc" aria-label="Navigate the five chapters">
 <svg class="constellation-lines" viewBox="0 0 300 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><filter id="starshine"><feGaussianBlur stdDeviation="3.5"/></filter></defs><path class="star-halo" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24" fill="none" stroke="#e8addf" stroke-width="8" opacity=".22" filter="url(#starshine)"/><path class="star-path" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24" fill="none" stroke="#fbd3f4" stroke-width="1.6" stroke-dasharray="2 7" stroke-linecap="round"/><path id="constellation-active-line" pathLength="100" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24" fill="none" stroke="#ffdcf4" stroke-width="2" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="100"/></svg>
