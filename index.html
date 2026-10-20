@@ -204,6 +204,58 @@ html[data-theme="light"] #home .chip{background:linear-gradient(130deg,#f7d4ec,#
 html[data-theme="light"] #home .cta{background:linear-gradient(110deg,#9a4d88,#7b4a96)!important;color:white!important;border-color:#6d467f!important}
 html[data-theme="light"] .constellation-arc button span,html[data-theme="light"] .constellation-arc button[aria-current="step"] span{color:#fff!important;text-shadow:0 0 3px #fff,0 0 9px #8e4d9b,0 0 22px #b461b4,0 0 30px #e58dc8!important}
 @media(max-width:650px){#story h2,#approach h2{font-size:clamp(2.5rem,10.3vw,4.2rem);line-height:1.08}#approach p,#story p{font-size:clamp(.86rem,3.4vw,1rem);line-height:1.48}#home .cta{padding:10px 17px;gap:9px}.orbital-arrow{width:25px;height:25px}}
+
+/* Constellation polish: more breathing room and a living active star */
+.constellation-track.constellation-arc{width:350px!important;height:280px!important;right:34px!important;bottom:22px!important;opacity:1!important}
+.constellation-arc .constellation-lines{filter:drop-shadow(0 0 4px rgba(245,173,236,.5))}
+.constellation-arc .star-path{stroke:#fce2ff;stroke-width:2;opacity:1;filter:drop-shadow(0 0 6px #eeb7ff)}
+.constellation-arc .star-halo{opacity:.52;stroke:#e6a3ea}
+.constellation-arc button,.constellation-arc button:nth-of-type(n){width:42px!important;height:42px!important;isolation:isolate}
+.constellation-arc button span{position:relative;z-index:1;display:inline-block;color:white!important;text-shadow:0 0 5px #fff,0 0 13px #ffb9ea,0 0 25px #aa6bde!important}
+.constellation-arc button[aria-current="step"]::before{
+content:"";position:absolute;inset:1px;border-radius:50%;
+background:radial-gradient(circle,#fff9 0%,#f3b6ec99 24%,#b45ad34d 45%,transparent 74%);
+box-shadow:0 0 18px #f4b4f2,0 0 32px #b973ff80;
+animation:star-orbit-halo 2.7s ease-in-out infinite;pointer-events:none
+}
+.constellation-arc button[aria-current="step"]::after{
+content:"";position:absolute;inset:1px;border:1px solid #ffe5faad;border-radius:50%;
+animation:star-orbit-ring 2.7s ease-out infinite;pointer-events:none
+}
+.constellation-arc button[aria-current="step"] span{
+color:#fff!important;
+animation:active-star-twinkle 2.7s ease-in-out infinite!important;
+text-shadow:0 0 7px #fff,0 0 15px #fff,0 0 28px #ff91da,0 0 48px #a56aea!important
+}
+@keyframes active-star-twinkle{
+0%,100%{transform:scale(1.12) rotate(0deg);filter:brightness(1.12)}
+45%{transform:scale(1.38) rotate(8deg);filter:brightness(1.75)}
+70%{transform:scale(1.2) rotate(-4deg);filter:brightness(1.3)}
+}
+@keyframes star-orbit-halo{0%,100%{opacity:.55;transform:scale(.9)}50%{opacity:1;transform:scale(1.27)}}
+@keyframes star-orbit-ring{0%{opacity:.9;transform:scale(.68)}75%,100%{opacity:0;transform:scale(1.85)}}
+html[data-theme="light"] .constellation-arc button[aria-current="step"]::before{
+background:radial-gradient(circle,#fff 0%,#ed9ed7a8 24%,#9c51c066 46%,transparent 74%);
+box-shadow:0 0 17px #b668b4,0 0 32px #ab68cb88
+}
+html[data-theme="light"] .constellation-arc button[aria-current="step"] span{
+color:#fff!important;text-shadow:0 0 4px #632c85,0 0 10px #823a94,0 0 22px #d36ba5,0 0 32px #8540ad!important
+}
+@media(max-width:900px){
+.constellation-track.constellation-arc{width:260px!important;height:208px!important;right:24px!important;bottom:18px!important}
+.constellation-arc button,.constellation-arc button:nth-of-type(n){width:37px!important;height:37px!important}
+}
+@media(max-width:650px){
+.constellation-track.constellation-arc{width:202px!important;height:162px!important;right:17px!important;bottom:19px!important}
+.constellation-arc button,.constellation-arc button:nth-of-type(n){width:34px!important;height:34px!important}
+.constellation-arc button span{font-size:19px}
+.constellation-arc button[aria-current="step"] span{font-size:23px}
+.constellation-arc .constellation-current{right:10px;bottom:2px}
+}
+@media(max-width:390px){.constellation-track.constellation-arc{width:180px!important;height:144px!important;right:11px!important;bottom:14px!important}}
+@media(prefers-reduced-motion:reduce){
+.constellation-arc button[aria-current="step"]::before,.constellation-arc button[aria-current="step"]::after,.constellation-arc button[aria-current="step"] span{animation:none!important}
+}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
