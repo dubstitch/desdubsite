@@ -504,7 +504,7 @@ let t=0;function draw(){ctx.clearRect(0,0,W,H);t+=.008;for(const s of stars){if(
 const featured=document.querySelector('#work .work-grid'),featuredCards=featured?[...featured.querySelectorAll('.work')]:[],featuredControls=document.querySelector('#work .work-controls');
 if(featured&&featuredCards.length&&featuredControls){
  const prev=featuredControls.querySelector('.work-back'),next=featuredControls.querySelector('.work-forward'),status=featuredControls.querySelector('.work-position');
- let item=0,pausedUntil=0,autoTimer=null,frame=0;
+ let item=0,pausedUntil=0,autoTimer=null,frame=0,direction=1;
  const select=(i,manual=false)=>{
   item=(i+featuredCards.length)%featuredCards.length;
   const p=featuredCards[item],base=featured.getBoundingClientRect(),rect=p.getBoundingClientRect();
@@ -527,7 +527,7 @@ if(featured&&featuredCards.length&&featuredControls){
  select(0);
  if(!reduced){autoTimer=setInterval(()=>{
   if(current!==1||document.hidden||universe.classList.contains('open')||Date.now()<pausedUntil||featured.matches(':focus-within')||featured.matches(':hover'))return;
-  select(item+1===featuredCards.length?0:item+1);
+  if(item===featuredCards.length-1)direction=-1;else if(item===0)direction=1;select(item+direction);
  },4800)}
 }
 
