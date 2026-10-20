@@ -1,4 +1,4 @@
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import fs from 'node:fs/promises';
 
@@ -107,6 +107,59 @@ for(const theme of ['light','dark']){
  }
 }
 await browser.close();
+/* Separate WebKit pass catches Safari-style viewport, scrolling and font metrics. */
+const safari=await webkit.launch({headless:true});
+for(const theme of ['light','dark']){
+ for(const size of [
+  {name:'webkit-mini',width:320,height:568},
+  {name:'webkit-iphone',width:390,height:844},
+  {name:'webkit-iphone-landscape',width:844,height:390},
+  {name:'webkit-tablet',width:768,height:1024},
+  {name:'webkit-desktop',width:1440,height:900}
+ ]){
+  const context=await safari.newContext({viewport:{width:size.width,height:size.height},deviceScaleFactor:1,isMobile:size.width<500,hasTouch:size.width<500,reducedMotion:'reduce'});
+  await context.addInitScript(theme=>localStorage.setItem('des-theme',theme),theme);
+  const page=await context.newPage();
+  page.on('pageerror',err=>issues.push('WEBKIT JS '+theme+' '+size.name+' '+err.message));
+  await page.goto(origin+'/index.html#home',{waitUntil:'domcontentloaded'});
+  await page.waitForTimeout(140);
+  for(const id of ['home','work','story','approach','contact']){
+    const m=await page.evaluate(id=>{
+      const chapters=[...document.querySelectorAll('.chapter')];
+      const i=chapters.findIndex(el=>el.id===id);
+      chapters.forEach((el,n)=>{el.classList.toggle('is-revealed',i===n);el.inert=i!==n});
+      document.getElementById('chapters').scrollTop=chapters[i].offsetTop;
+      const frame=chapters[i].querySelector('.chapter-content').getBoundingClientRect();
+      const box=chapters[i].querySelector('.chapter-content-inner').getBoundingClientRect();
+      return {clipped:box.top<frame.top-2||box.bottom>frame.bottom+2,extraHeight:Math.round(box.height-frame.height),widthOver:Math.max(0,document.documentElement.scrollWidth-innerWidth)};
+    },id);
+    if(m.clipped)issues.push('WEBKIT CLIPPED '+theme+' '+size.name+' '+id+' '+m.extraHeight);
+    if(m.widthOver>2)issues.push('WEBKIT HORIZONTAL PAGE OVERFLOW '+theme+' '+size.name+' '+id+' '+m.widthOver);
+    summary.push({theme,screen:size.name,page:id,...m});
+    if(theme==='light'&&size.name==='webkit-iphone-landscape'&&id==='work'){
+      const file=output+'/webkit-light-landscape-work.jpeg';
+      await page.screenshot({path:file,type:'jpeg',quality:58});capture['webkit-light-landscape-work']=file;
+    }
+    if(theme==='light'&&size.name==='webkit-iphone'&&id==='home'){
+      const file=output+'/webkit-light-iphone-home.jpeg';
+      await page.screenshot({path:file,type:'jpeg',quality:58});capture['webkit-light-iphone-home']=file;
+    }
+  }
+  await page.goto(origin+'/resume.html',{waitUntil:'domcontentloaded'});
+  const footerHeights=await page.locator('.resume-footer-links a').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().height));
+  if(footerHeights.some(h=>h>80))issues.push('WEBKIT RESUME FOOTER STRETCHED '+theme+' '+size.name+' '+footerHeights);
+  await page.goto(origin+'/case-studies.html?project=anniversary#gallery',{waitUntil:'domcontentloaded'});
+  await page.waitForTimeout(100);
+  const overlapping=await page.evaluate(()=>{
+    const panel=document.querySelector('.work-panel').getBoundingClientRect();
+    const controls=document.querySelector('.gallery-controls').getBoundingClientRect();
+    return panel.bottom>controls.top+8;
+  });
+  if(overlapping)issues.push('WEBKIT GALLERY PANEL-CONTROLS OVERLAP '+theme+' '+size.name);
+  await context.close();
+ }
+}
+await safari.close();
 console.log('QA_SUMMARY='+JSON.stringify(summary));
 console.log('QA_ISSUES='+JSON.stringify(issues));
 for(const [name,path] of Object.entries(capture)){
