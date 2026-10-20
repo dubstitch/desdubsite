@@ -53,6 +53,40 @@ html[data-theme="light"] .school,html[data-theme="light"] .resume-footnote,html[
 html[data-theme="light"] .resume-footer a{color:#703567}
 @media(max-width:760px){.resume-layout{width:calc(100% - 42px);padding:35px 0}.resume-highlights{grid-template-columns:1fr}.skills-grid{grid-template-columns:1fr}.resume-section{padding:45px 0}.resume-section .role{padding:22px 19px}.role-top{display:block}.role-date{display:block;margin-top:9px}.resume-intro{padding:35px 0 42px}}
 @media print{html,html[data-theme="light"]{color-scheme:light}body,html[data-theme="light"] body{background:white!important;color:#111!important}.resume-layout{width:100%;max-width:none;padding:0}.resume-intro{padding:5px 0 16px!important}.resume-intro h1{font-size:29pt;margin:9px 0}.resume-role{font-size:13pt;color:#111!important}.resume-summary{font-size:9.5pt;line-height:1.35}.resume-actions{display:none}.resume-section{padding:15px 0!important;break-before:auto}.resume-section h2{font-size:20pt;color:#111!important;margin:6px 0 12px}.resume-highlights{grid-template-columns:repeat(3,1fr);gap:8px}.resume-highlights article,.skill-group{padding:10px;border-color:#bbb!important;background:white!important}.resume-highlights h3{font-size:13pt;color:#111}.resume-highlights p{font-size:8pt;color:#111!important}.resume-section .role,.resume-section .role.featured-role{padding:10px 0!important;background:white!important;border:0!important;margin:5px 0!important;break-inside:avoid}.role-top h3{font-size:14pt;color:#111!important}.role-type,.role-date,.company,.role li,.role li strong,.role-project,.skill-group h3,.skill-group p,.section-kicker{color:#111!important}.role li{font-size:8.3pt;line-height:1.32;margin:4px 0}.role-project{font-size:8pt}.role-project svg,.resume-footer{display:none}.skills-grid{gap:10px}.skill-group p{font-size:8.5pt;line-height:1.35}.education-section{padding-bottom:0!important}footer{display:none!important}}
+
+/* Full bleed résumé footer with a bounded interior grid */
+.resume-footer{
+  box-sizing:border-box;
+  display:block!important;
+  width:100%!important;max-width:none!important;
+  margin:0!important;
+  padding:clamp(52px,7vw,95px) clamp(22px,7vw,110px)!important;
+  border-top:1px solid #f0b3df65!important;
+  background:linear-gradient(135deg,#39233e,#24182e 60%,#392142)!important;
+  color:#fff3fb!important;
+}
+.resume-footer-inner{width:min(1170px,100%);margin:auto;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:30px}
+.resume-footer .footer-eyebrow{display:block;font-weight:700;letter-spacing:.19em;text-transform:uppercase;font-size:11px;color:#f7badf}
+.resume-footer h2{font-size:clamp(2.25rem,4.6vw,4.4rem);color:#ffe5f3!important;line-height:1.1;margin:14px 0 18px}
+.resume-footer p{font-size:1rem;line-height:1.7;color:#f0dce9!important;max-width:560px;margin:0}
+.resume-footer-links{display:flex;gap:10px;flex-direction:column;align-items:stretch}
+.resume-footer-links a{display:inline-flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 17px;border:1px solid #f2bbe1a8;border-radius:99px;min-width:182px;white-space:nowrap;color:#fff0f9!important;background:#ffffff16;text-decoration:none;font-size:13px;font-weight:700}
+.resume-footer-links a:hover{background:#ffffff2b}
+.resume-footer-links svg{width:16px;height:16px;flex-shrink:0}
+.role-spotlight{background:#e9a9d21a;border:1px solid #e6a2d774;border-radius:16px;padding:16px 18px;margin:6px 0 17px;max-width:none}
+.role-spotlight strong{display:block;font-size:1.03rem;color:#ffe0f2}
+.role-spotlight span{display:block;margin-top:5px;color:#e9d7e8;font-size:.88rem;line-height:1.5}
+html[data-theme="light"] .resume-footer{background:linear-gradient(135deg,#e9cee4,#e0cee8 60%,#e9d7e9)!important;border-color:#a871a266!important;color:#3c2947!important}
+html[data-theme="light"] .resume-footer h2{color:#412949!important}
+html[data-theme="light"] .resume-footer p{color:#503a57!important}
+html[data-theme="light"] .resume-footer .footer-eyebrow{color:#803c74}
+html[data-theme="light"] .resume-footer-links a{color:#512a55!important;background:#fffafbdb;border-color:#aa74a5}
+html[data-theme="light"] .role-spotlight{background:#fff6fc;border-color:#b687b2}
+html[data-theme="light"] .role-spotlight strong{color:#632d5b}
+html[data-theme="light"] .role-spotlight span{color:#5f4565}
+@media(max-width:800px){.resume-footer-inner{grid-template-columns:1fr;gap:24px}.resume-footer-links{flex-direction:row;flex-wrap:wrap}.resume-footer-links a{min-width:0;flex:1 1 180px}}
+@media(max-width:500px){.resume-footer{padding:45px 22px 55px!important}.resume-footer h2{font-size:clamp(2rem,10vw,3.4rem)}.resume-footer-links{flex-direction:column}.resume-footer-links a{width:100%}}
+@media print{.resume-footer{display:none!important}.role-spotlight{break-inside:avoid;background:white!important;border-color:#aaa}.role-spotlight strong,.role-spotlight span{color:#111!important}}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head><body><header><a class="brand" href="index.html#home">des<span>.</span></a><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><a href="index.html#work">← Back to portfolio</a><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button></div></header><main class="resume-layout">
 <section class="resume-intro" aria-labelledby="resume-name">
   <div class="eyebrow">Experience, expertise, impact</div>
@@ -72,7 +106,7 @@ html[data-theme="light"] .resume-footer a{color:#703567}
 <div class="resume-highlights">
   <article><span class="highlight-index">01</span><h3>Content meets code</h3><p>Write and adapt HTML, CSS and JavaScript while shaping content structure, user journeys and CMS-driven page experiences.</p></article>
   <article><span class="highlight-index">02</span><h3>Complex platforms, usable experiences</h3><p>Work across enterprise systems, including Higher Logic Collaborate, Sitecore, Finalsite, Sitefinity, SiteExecutive and Drupal.</p></article>
-  <article><span class="highlight-index">03</span><h3>Implementation with ownership</h3><p>Build and troubleshoot components, coordinate with stakeholders, manage publishing details and refine responsive and accessible interactions.</p></article>
+  <article><span class="highlight-index">03</span><h3>Engineering depth</h3><p>From VA eHMP healthcare applications and FHIR integrations to reusable CMS components and accessible front-end experiences, I connect technical execution with real user needs.</p></article>
 </div>
 </section>
 
@@ -104,35 +138,39 @@ html[data-theme="light"] .resume-footer a{color:#703567}
 <article class="role">
   <div class="role-top"><div><span class="role-type">Cloud CMS migration and cross-team enablement</span><h3>Software Engineer, Full Stack (CMS)</h3><p class="company">American Public Education Inc.</p></div><span class="role-date">June 2022 to August 2023</span></div>
   <ul>
-    <li>Helped implement cloud-based Sitefinity CMS and migrate content and workflows from SiteExecutive.</li>
-    <li>Served as a CMS trainer, guiding colleagues across teams in publishing, content creation and platform use.</li>
-    <li>Partnered with IT, Marketing and business teams to define platform enhancements and address application issues affecting staff productivity.</li>
-    <li>Worked with software engineering colleagues on diagnosis, troubleshooting and scalable changes to support business needs.</li>
+    <li><strong>Implemented a cloud-based CMS:</strong> Delivered Sitefinity as part of the migration from SiteExecutive, helping teams shift content publishing and management into a new platform.</li>
+    <li><strong>Enabled adoption across departments:</strong> Served as the team’s Sitefinity CMS trainer, delivering training to colleagues throughout the organization on content creation, management and publishing.</li>
+    <li><strong>Connected engineering and business needs:</strong> Partnered with IT, Marketing and other business teams to identify, analyze and implement enhancements designed for scalability, performance and round-the-clock availability.</li>
+    <li><strong>Supported application reliability:</strong> Collaborated with the lead software engineer and colleagues to diagnose and resolve application issues affecting workforce productivity.</li>
   </ul>
 </article>
 <article class="role">
   <div class="role-top"><div><span class="role-type">Front-end engineering and UX collaboration</span><h3>Front-End Web Developer</h3><p class="company">American Public Education Inc.</p></div><span class="role-date">December 2018 to June 2022</span></div>
   <ul>
     <li>Built and maintained dynamic web experiences and enhancements within the SiteExecutive platform.</li>
-    <li>Translated design and coding requirements into functional website features using front-end technologies.</li>
+    <li>Defined implementation requirements for site designs and delivered functional dynamic webpages using front-end development technologies.</li>
     <li>Collaborated with UX designers on student-facing and faculty-facing experiences.</li>
-    <li>Worked with Drupal theming and site-building to support Girl Scouts of the USA shared-services work.</li>
+    <li>Used Drupal’s theme layer and site builder to support Girl Scouts of the USA (GSUSA) shared-services requirements.</li>
   </ul>
 </article>
 <article class="role">
   <div class="role-top"><div><span class="role-type">Front-end development contract</span><h3>Front-End Web Developer</h3><p class="company">TEKsystems</p></div><span class="role-date">June 2018 to December 2018</span></div>
   <ul>
-    <li>Provided front-end development support for American Public University System digital experiences and public website requests.</li>
-    <li>Developed a custom Banner Creator tool for the APUS Marketing Department.</li>
+    <li>Contracted to deliver front-end development work for the American Public University System (APUS), enhancing student-facing web experiences and supporting the public web ticket queue.</li>
+    <li>Developed a custom Banner Creator for the APUS Marketing Department, translating a recurring content-production need into a usable internal tool.</li>
   </ul>
 </article>
-<article class="role">
-  <div class="role-top"><div><span class="role-type">Enterprise application development</span><h3>Software Developer</h3><p class="company">KRM Associates</p></div><span class="role-date">March 2016 to June 2018</span></div>
+<article class="role engineering-role">
+  <div class="role-top"><div><span class="role-type">Health technology, enterprise application engineering</span><h3>Software Developer</h3><p class="company">KRM Associates Inc., Shepherdstown, West Virginia</p></div><span class="role-date">March 2016 to June 2018</span></div>
+  <p class="role-spotlight"><strong>Veterans Affairs enterprise Health Management Platform (VA eHMP)</strong><span>Clinical information, front-end applets, integration services and user experience design</span></p>
   <ul>
-    <li>Supported design and development of KRM's LEAF enterprise application framework and Veterans Affairs electronic health applications.</li>
-    <li>Contributed to clinician-facing image-viewing features and healthcare information retrieval across electronic health record systems using FHIR.</li>
-    <li>Produced wireframes and prototypes in Axure and Adobe Experience Design, and helped develop services using Node.js, Express and JavaScript.</li>
-    <li>Contributed to real-time communication features using eJabberd and Strophe.js.</li>
+    <li><strong>Developed VA eHMP web applications and resources:</strong> Contributed to the open-source enterprise Health Management Platform serving clinical workflows, combining interface engineering with healthcare-specific information needs.</li>
+    <li><strong>Built patient imaging experiences:</strong> Developed solutions for the VA eHMP Image Viewer, allowing clinicians and other stakeholders to access and view patient images.</li>
+    <li><strong>Integrated health record information:</strong> Assisted in retrieving clinical information from multiple electronic health record systems through the FHIR interoperability protocol.</li>
+    <li><strong>Implemented back-end services:</strong> Developed REST services using Node.js, Express.js and JavaScript for VA eHMP applications.</li>
+    <li><strong>Designed and prototyped applets:</strong> Produced VA eHMP applet wireframes in Axure RP 8 and Adobe Experience Design, connecting technical implementation with clinician-facing usability.</li>
+    <li><strong>Supported real-time communication:</strong> Assisted in developing and designing VA eHMP chat functionality using eJabberd and Strophe.js.</li>
+    <li><strong>Built enterprise UI foundations:</strong> Contributed to front-end design and development for KRM's Light Enterprise Application Framework (LEAF).</li>
   </ul>
 </article>
 </section>
@@ -147,7 +185,16 @@ html[data-theme="light"] .resume-footer a{color:#703567}
 </div></section>
 <section class="resume-section education-section" aria-labelledby="education-heading">
 <div class="section-kicker">04 / Education</div><h2 id="education-heading">The foundation.</h2>
-<p><strong>Bachelor of Science, Computer Programming and Information Systems</strong><span class="school">Shepherd University, Shepherdstown, West Virginia</span></p>
+<p><strong>Bachelor of Science, Computer Programming and Information Systems</strong><span class="school">Shepherd University, Shepherdstown, West Virginia, 2011 to 2015</span></p>
 </section>
-<footer class="resume-footer"><p>The work is best understood together. <a href="case-studies.html">Explore my case studies</a> and <a href="philosophy.html">the philosophy behind them</a>.</p><p class="resume-footnote">Dates and project details should be verified before submitting the printable version with a job application.</p></footer>
-</main><script src="theme.js" defer></script></body></html>
+</main>
+<footer class="resume-footer" role="contentinfo">
+  <div class="resume-footer-inner">
+    <div><span class="footer-eyebrow">More than a job title</span><h2>See how it all connects.</h2><p>Explore the work and the thinking behind it, or get in touch to talk about what we can build together.</p></div>
+    <nav class="resume-footer-links" aria-label="Résumé footer navigation">
+      <a href="case-studies.html">Selected projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a>
+      <a href="philosophy.html">My philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a>
+      <a href="mailto:desireewade5@gmail.com">Let's connect <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a>
+    </nav>
+  </div>
+</footer><script src="theme.js" defer></script></body></html>
