@@ -87,6 +87,45 @@ html[data-theme="light"] .role-spotlight span{color:#5f4565}
 @media(max-width:800px){.resume-footer-inner{grid-template-columns:1fr;gap:24px}.resume-footer-links{flex-direction:row;flex-wrap:wrap}.resume-footer-links a{min-width:0;flex:1 1 180px}}
 @media(max-width:500px){.resume-footer{padding:45px 22px 55px!important}.resume-footer h2{font-size:clamp(2rem,10vw,3.4rem)}.resume-footer-links{flex-direction:column}.resume-footer-links a{width:100%}}
 @media print{.resume-footer{display:none!important}.role-spotlight{break-inside:avoid;background:white!important;border-color:#aaa}.role-spotlight strong,.role-spotlight span{color:#111!important}}
+
+/* Screenshot QA: compact mobile footer links, never a flex-basis used as height. */
+.resume-footer-inner,.resume-footer-links{min-width:0!important}
+.resume-footer-links{align-self:stretch;align-items:stretch!important}
+.resume-footer-links a{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex:0 0 auto!important;
+  width:auto;min-width:0!important;
+  min-height:46px!important;height:auto!important;
+  padding:11px 17px!important;
+  margin:0!important;
+  border-radius:999px!important;
+  line-height:1.35!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+}
+.resume-footer-links svg{width:17px!important;height:17px!important;flex:0 0 17px!important}
+@media(max-width:800px){
+ .resume-footer-inner{grid-template-columns:minmax(0,1fr)!important;gap:24px!important;align-items:start!important}
+ .resume-footer-links{flex-direction:column!important;flex-wrap:nowrap!important;gap:12px!important}
+ .resume-footer-links a{width:100%!important;max-width:100%!important;flex:0 0 auto!important;min-height:46px!important}
+}
+@media(max-width:500px){
+ .resume-footer{padding:46px 22px 56px!important}
+ .resume-footer-inner{gap:22px!important}
+ .resume-footer h2{font-size:clamp(2rem,9vw,3.1rem)!important;line-height:1.13!important}
+ .resume-footer p{font-size:.96rem!important;line-height:1.58!important}
+ .resume-footer-links{gap:11px!important}
+ .resume-footer-links a{padding:12px 17px!important;min-height:48px!important}
+}
+@media(orientation:landscape) and (max-height:560px){
+ .resume-footer{padding:30px clamp(25px,7vw,70px)!important}
+ .resume-footer-inner{grid-template-columns:minmax(0,1fr) minmax(0,.75fr)!important;gap:25px!important}
+ .resume-footer h2{font-size:clamp(1.85rem,4vw,2.75rem)!important}
+ .resume-footer-links{align-self:center!important}
+ .resume-footer-links a{min-height:43px!important}
+}
+@media(prefers-reduced-motion:reduce){.resume-footer-links a{transition:none!important}}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head><body><header><a class="brand" href="index.html#home">des<span>.</span></a><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><a href="index.html#work">← Back to portfolio</a><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button></div></header><main class="resume-layout">
 <section class="resume-intro" aria-labelledby="resume-name">
   <div class="eyebrow">Experience, expertise, impact</div>
