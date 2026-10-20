@@ -740,11 +740,62 @@ body > a.sr-only[href="#home"]:focus-visible{transform:translateY(0);opacity:1;p
  .constellation-track.constellation-arc{width:85px!important;height:68px!important;right:7px!important;bottom:4px!important}
  #chapters .chapter .next-section{bottom:17px!important}
 }
+
+/* Quality pass: native page bounds, transparent hero, unified buttons */
+html,body{width:100%;max-width:100%;overflow-x:hidden!important;overscroll-behavior-x:none!important}
+#chapters.chapters,#chapters .chapter{width:100%!important;max-width:100%!important;overflow-x:hidden!important;overscroll-behavior-x:none!important}
+#chapters .chapter-content,#chapters .chapter-content-inner,#chapters #home .chips{background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+#chapters #home .chip{box-shadow:none!important;backdrop-filter:none!important}
+#chapters #home .cta{
+ background:linear-gradient(115deg,#ac43835e,#8736aa44)!important;color:#ffddf2!important;
+ border:1px solid #fface4!important;border-radius:40px!important;
+ box-shadow:none!important;display:inline-flex!important;gap:10px!important;
+ text-decoration:none!important;align-items:center;transition:background .2s,transform .2s
+}
+#chapters #home .cta svg{width:19px!important;height:19px!important;stroke:currentColor!important}
+#chapters #home .cta:hover{background:#9e4e8980!important;transform:translateY(-2px)}
+html[data-theme="light"] #chapters #home .cta{
+ background:linear-gradient(115deg,#ffe0ef,#e8d2f4)!important;
+ color:#622c5d!important;border-color:#b264a0!important;box-shadow:none!important
+}
+html[data-theme="light"] #work .work-controls{color:#57315c!important}
+html[data-theme="light"] #work .work-controls button{
+ color:#633568!important;background:#fff8fc!important;
+ border:1.5px solid #976093!important;box-shadow:0 2px 9px #b985b33d!important
+}
+html[data-theme="light"] #work .work-controls button:disabled{
+ opacity:.7!important;background:#f8e9f4!important;color:#704479!important;border-color:#ab83a9!important
+}
+html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .work-instruction{color:#63386a!important;opacity:1!important}
+#work .work-controls button{min-width:38px!important;min-height:38px!important;flex-basis:38px!important}
+#work .work-controls button:disabled{opacity:.63!important}
+#work .work-controls button svg{width:18px!important;height:18px!important}
+#work .work-position,#work .work-instruction{opacity:1!important;letter-spacing:.055em!important}
+#chapters .chapter .meta{display:none!important}
+#chapters #home .chapter-content-inner{gap:clamp(12px,1.8svh,21px)!important}
+#chapters #work .chapter-content-inner{gap:clamp(10px,1.65svh,18px)!important}
+@media(max-width:900px){
+ #chapters .chapter{padding-bottom:clamp(148px,18.8svh,186px)!important}
+ .constellation-track.constellation-arc{width:177px!important;height:142px!important;right:25px!important;bottom:31px!important}
+ #chapters .chapter .next-section{bottom:52px!important}
+}
+@media(max-width:650px) and (orientation:portrait){
+ #chapters .chapter{padding-bottom:clamp(135px,18svh,177px)!important}
+ #chapters #home .chapter-content-inner{gap:clamp(12px,1.65svh,17px)!important}
+ .constellation-track.constellation-arc{width:clamp(141px,43vw,168px)!important;height:clamp(113px,34.4vw,135px)!important;right:23px!important;bottom:30px!important}
+ #chapters .chapter .next-section{bottom:53px!important}
+}
+@media(max-width:380px) and (orientation:portrait){
+ #chapters #home .chapter-content-inner{gap:clamp(9px,1.4svh,14px)!important}
+ .constellation-track.constellation-arc{width:135px!important;height:108px!important;right:18px!important;bottom:24px!important}
+ #chapters .chapter .next-section{bottom:40px!important}
+}
+@media(prefers-reduced-motion:reduce){#chapters #home .cta{transition:none!important}}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
 <canvas id="stardust" aria-hidden="true"></canvas><main class="chapters" id="chapters">
-<section class="chapter" id="home"><div class="chapter-content" role="region" aria-label="Arrival chapter content"><div class="chapter-content-inner"><div class="hero-identity"><span class="hero-name">Des Wade<span class="hero-star" aria-hidden="true">✧</span></span><span class="hero-role">Front-End Developer &amp; Web Content Strategist</span></div><h1>Make it<br><span class="accent">make sense.</span></h1><p>I make complex content and technology feel intuitive, beautiful and genuinely useful.</p><div class="chips"><span class="chip">Content Strategy</span><span class="chip">Enterprise CMS</span><span class="chip">Experience Design</span><span class="chip">Accessibility</span></div><a class="cta" href="#work">Explore my work <svg class="orbital-arrow" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="17" stroke="currentColor" stroke-opacity=".48"/><path d="M12 25 27 12M15 12h12v12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="m10 9 1.5-3L13 9l3 1.5L13 12l-1.5 3-1.5-3-3-1.5L10 9Z" fill="currentColor" opacity=".8"/></svg></a></div></div><span class="meta">01 / 05 &nbsp; ↓ Explore</span></section>
+<section class="chapter" id="home"><div class="chapter-content" role="region" aria-label="Arrival chapter content"><div class="chapter-content-inner"><div class="hero-identity"><span class="hero-name">Des Wade<span class="hero-star" aria-hidden="true">✧</span></span><span class="hero-role">Front-End Developer &amp; Web Content Strategist</span></div><h1>Make it<br><span class="accent">make sense.</span></h1><p>I make complex content and technology feel intuitive, beautiful and genuinely useful.</p><div class="chips"><span class="chip">Content Strategy</span><span class="chip">Enterprise CMS</span><span class="chip">Experience Design</span><span class="chip">Accessibility</span></div><a class="cta" href="#work">Explore my work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div><span class="meta">01 / 05 &nbsp; ↓ Explore</span></section>
 <section class="chapter" id="work"><div class="chapter-content" role="region" aria-label="Selected work chapter content"><div class="chapter-content-inner"><div class="eyebrow">01 / Selected work</div><h2>Good ideas.<br><span class="accent">Actually shipped.</span></h2><div class="work-grid"><a class="glass work" href="case-studies.html?project=anniversary#gallery"><small>01 / CMS & Campaign Ecosystem</small><strong>ASCE 175th Anniversary Toolkit</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=collaborate#gallery"><small>02 / Platform Transformation</small><strong>Collaborate Migration</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=asce2027#gallery"><small>03 / Digital Experience</small><strong>ASCE 2027</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=optimization#gallery"><small>04 / Content & Optimization</small><strong>Member Advantages</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a></div><div class="work-controls" role="group" aria-label="Featured project carousel controls"><button type="button" class="work-back" aria-label="Previous featured project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="work-position" aria-live="off">01 / 04</span><button type="button" class="work-forward" aria-label="Next featured project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="work-instruction">Swipe to explore</span></div></div></div><span class="meta">02 / 05</span></section>
 
 
