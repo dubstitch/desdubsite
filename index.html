@@ -410,6 +410,24 @@ html.reveal-ready #chapters .chapter-content-inner > :is(.hero-identity,.eyebrow
 #chapters .chapter-content-inner > *{max-width:100%}
 #chapters #work .work-grid{max-width:100%!important}
 @media(prefers-reduced-motion:reduce){#work .work-grid{scroll-behavior:auto!important}}
+
+/* Keep gesture direction flexible for nested horizontal and vertical scrollers. */
+#chapters .chapter-content{touch-action:auto!important}
+#work .work-grid{touch-action:pan-x!important}
+@media(max-width:380px){
+ header{padding:13px 12px!important;gap:5px!important}
+ header .brand{font-size:21px!important}
+ header .head-actions{gap:4px!important}
+ header .head-actions .resume-pill,
+ header .head-actions .mode{font-size:9px!important;padding:0 7px!important}
+ #chapters .chapter .next-section{
+   font-size:0!important;
+   letter-spacing:0!important;
+   bottom:39px!important;
+   gap:0!important;
+ }
+ #chapters .chapter .next-section span{font-size:19px!important}
+}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
