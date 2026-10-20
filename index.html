@@ -562,6 +562,23 @@ html[data-theme="light"] #chapters #approach .approach-pill-row span{color:#6535
  #chapters #approach .chapter-content-inner > p{font-size:.78rem!important}
  #chapters #approach .philosophy-link{font-size:10px!important;min-height:30px}
 }
+
+/* Focus access: inactive off-screen chapters cannot trap keyboard users. */
+body > a.sr-only[href="#home"]{
+  position:fixed!important;top:8px;left:8px;z-index:9999;
+  padding:12px 17px;width:auto!important;height:auto!important;
+  transform:translateY(-160%);clip:auto!important;overflow:visible!important;
+  background:#fff1fa;color:#43254d;border:2px solid #8c4285;
+  border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;
+  opacity:0;pointer-events:none;
+}
+body > a.sr-only[href="#home"]:focus-visible{transform:translateY(0);opacity:1;pointer-events:auto}
+#chapters .chapter-content-inner a:focus-visible,
+#chapters .chapter-content-inner button:focus-visible{outline:3px solid #ffd3eb;outline-offset:3px}
+@media(forced-colors:active){
+ #work .work-grid .work .arrow{border:2px solid ButtonText!important;background:Canvas!important;color:CanvasText!important}
+ #work .work-grid .work small,#work .work-grid .work strong{color:CanvasText!important}
+}
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
@@ -592,7 +609,7 @@ let current=0,locked=false,universeBusy=false,lastFocus=null,gestureStart=null,w
 const position=()=>Math.max(0,Math.min(pages.length-1,Math.round(surface.scrollTop/Math.max(1,surface.clientHeight))));
 
 // Reveal on every chapter change, using the same active state as snapping.
-const revealChapter=(index)=>{pages.forEach((page,i)=>page.classList.toggle('is-revealed',i===index))};
+const revealChapter=(index)=>{pages.forEach((page,i)=>{const active=i===index;page.classList.toggle('is-revealed',active);page.inert=!active;})};
 document.documentElement.classList.add('reveal-ready');
 let animFrame=0;
 const progress=document.getElementById('chapter-count');const starStops=[...document.querySelectorAll('.constellation-track button')];function updateConstellation(i){starStops.forEach((b,k)=>{if(k===i)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});const p=document.getElementById('constellation-active-line');if(p)p.style.strokeDashoffset=String(100-i*25)}
