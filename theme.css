@@ -1,4 +1,4 @@
-/* Des Wade portfolio — accessible dusk/daylight modes */
+
 .theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;min-height:40px;padding:10px 13px;border:1px solid rgba(255,226,248,.5);background:rgba(255,255,255,.1);border-radius:999px;color:#fff2fa;font-family:inherit;font-weight:700;font-size:11px;letter-spacing:.055em;cursor:pointer;transition:background .25s,transform .25s,border-color .25s}
 .theme-toggle:hover{transform:translateY(-1px);background:rgba(255,255,255,.2)}
 .theme-toggle:focus-visible{outline:3px solid #e996d0;outline-offset:3px}
@@ -48,7 +48,7 @@ html[data-theme="light"] .hex:before{background:linear-gradient(140deg,#fff7,#f1
 html[data-theme="light"] .hex strong{color:#3d264d;text-shadow:none}
 html[data-theme="light"] .hex small{color:#634067}
 html[data-theme="light"] #stardust{opacity:.4;mix-blend-mode:multiply}
-/* Case studies */
+
 html[data-theme="light"] .intro{background:radial-gradient(ellipse at 82% 28%,#edd1f0,transparent 57%),#fbf1fa}
 html[data-theme="light"] .intro h1,html[data-theme="light"] .case h2{color:#392647}
 html[data-theme="light"] .intro .accent,html[data-theme="light"] .case .accent{color:#8e4176}
@@ -60,7 +60,7 @@ html[data-theme="light"] .case .chip,html[data-theme="light"] .case-links a{bord
 html[data-theme="light"] .case .cta{background:#863d74;color:#fff}
 html[data-theme="light"] footer{background:#f8eef7;color:#54425f}
 html[data-theme="light"] footer a{color:#78346c}
-/* Resume */
+
 html[data-theme="light"] body:has(.role){background:radial-gradient(ellipse at 89% 0%,#e9c5e7,transparent 48%),radial-gradient(ellipse at 15% 70%,#d9cef0,transparent 55%),#fff8fb}
 html[data-theme="light"] body:has(.role) h1,html[data-theme="light"] body:has(.role) h2{color:#392647}
 html[data-theme="light"] body:has(.role) .meta{color:#765373}
@@ -73,10 +73,8 @@ html[data-theme="light"] body:has(.role) footer{background:transparent;color:#66
 @media(max-width:650px){.theme-toggle{font-size:10px;padding:9px 10px}.theme-toggle .theme-icon{font-size:14px}}
 @media print{.theme-toggle{display:none!important}html[data-theme="light"] body:has(.role){background:white!important}}
 
-/* Keep the experience switch compact beside navigation on phones */
 @media(max-width:650px){.theme-toggle{width:37px;min-width:37px;height:37px;padding:0;border-radius:50%;flex-shrink:0}.theme-toggle .theme-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.head-actions{gap:7px}.resume-pill{padding:9px 10px;font-size:10px}.mode{padding:9px 10px;font-size:10px}header nav{gap:9px}header nav a{font-size:11px}}
 
-/* Shared signature polish */
 .theme-toggle{width:44px;height:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;padding:0 10px!important;position:relative;line-height:1}
 .theme-toggle .theme-icon{font-family:Georgia,serif;display:grid;place-items:center;width:20px;height:20px;line-height:1;font-size:19px;transform:none}
 .theme-toggle .theme-label{position:absolute;width:1px;height:1px;clip:rect(0,0,0,0);overflow:hidden;white-space:nowrap}
@@ -103,11 +101,9 @@ html[data-theme="light"] .work-panel:nth-child(3){background:linear-gradient(145
 html[data-theme="light"] .work-panel:nth-child(4){background:linear-gradient(145deg,#f0e5fa,#ffe6f1)}
 @media(max-width:650px){.theme-toggle{width:38px;height:38px;min-height:38px;padding:0!important}.resume-pill,.mode{height:38px!important;min-height:38px!important;padding:0 10px!important}}
 
-/* Consistent luminous capsule language across résumé and project storytelling */
 body:has(.role) .chip,.case .chip,.panel-pill{border:1px solid #ee92ce!important;background:linear-gradient(120deg,#c0439b55,#8c3cac66)!important;color:#ffe8f7!important;box-shadow:inset 0 1px 0 #ffffff25,0 0 15px #b84d9a55!important;border-radius:999px;font-weight:700}
 html[data-theme="light"] body:has(.role) .chip,html[data-theme="light"] .case .chip,html[data-theme="light"] .panel-pill{border-color:#b45d9d!important;background:linear-gradient(125deg,#ffdbed,#e5c8f3)!important;color:#542954!important;box-shadow:0 0 14px #e58ac259!important}
 
-/* October visual sweep: legibility, depth and full-viewport gallery */
 .gallery-kicker{color:#f8e1ef!important;font-weight:700;letter-spacing:.11em}
 .panel-number,.work-panel .eyebrow,.story-details h3,.panel-end,.artifact-kicker{color:#ffe3f2!important}
 .gallery-instructions{color:#e9d9e8!important;font-weight:600}
@@ -150,7 +146,6 @@ html:not([data-theme="light"]) header{background:#30213be9!important}
 @media(max-width:700px){.gallery-shell{height:calc(100dvh - 65px);min-height:470px;padding-top:12px!important}.gallery-controls{min-height:74px;padding:12px 10px!important}.gallery-instructions{font-size:11px!important;padding:2px 18px 9px!important}.case-grid-nav{gap:9px!important;min-width:144px!important}.case-grid-nav .nav-star{width:21px!important;height:21px!important;flex-basis:21px}.case-grid-nav .nav-star svg{width:18px;height:18px}.panels{scroll-padding-inline:4vw;padding-inline:4vw}.work-panel{flex-basis:92vw!important}.panel-scroller{padding:23px 24px 38px}.gallery-arrow{width:43px;height:43px}}
 @media(max-height:610px){.gallery-instructions{display:none}.gallery-controls{min-height:56px}.gallery-shell{min-height:340px}}
 
-/* October carousel accessibility and responsive sizing refinement */
 html{scroll-padding-top:var(--gallery-header-height,72px)}
 .gallery-hero,.gallery-shell,.gallery-footer{scroll-margin-top:0!important}
 .gallery-hero{height:auto!important;min-height:calc(100dvh - var(--gallery-header-height,72px))!important}
@@ -284,8 +279,6 @@ html[data-theme="light"] .case-grid-nav .nav-star[aria-current="step"]::before{b
   }
 }
 
-/* Final mobile carousel repair. Prevent the grid's min-content width
-   from expanding the viewport beyond the device width. */
 body:has(.gallery-shell){overflow-x:hidden}
 .gallery-shell{
   box-sizing:border-box;
@@ -402,8 +395,6 @@ html[data-theme="light"] .case-grid-nav .nav-star[aria-current="step"] svg{
   }
 }
 
-/* Unified signature card surfaces, with contrast in both themes.
-   Cards should read as clearly separate surfaces, not tinted holes in the page. */
 :root{--card-deep:#392540;--card-deep-alt:#33243c;--card-light:#fffafd;--card-light-alt:#fff5fa}
 html:not([data-theme="light"]) #work .work,
 html:not([data-theme="light"]) .glass.work,
@@ -460,7 +451,6 @@ html:not([data-theme="light"]) #work .work.is-lit{
   box-shadow:0 8px 30px #0d071b60,0 0 22px #db8fc86b!important;
 }
 
-/* The four approach tiles use the same signature card language. */
 html:not([data-theme="light"]) #approach .step{
   background:linear-gradient(150deg,#392540,#30223b)!important;
   border:1px solid #dda7d48c!important;border-radius:14px;
