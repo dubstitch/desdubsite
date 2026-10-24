@@ -874,7 +874,7 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
  #chapters #story .chips{display:none!important}
  .constellation-track.constellation-arc{width:93px!important;height:74px!important;right:23px!important;bottom:21px!important}
 }
-</style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script><style>
+</style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=(["dark","light","rainbow"].includes(localStorage.getItem("des-theme"))?localStorage.getItem("des-theme"):"dark")}catch(e){document.documentElement.dataset.theme="dark"}</script><style>
 
 .work-dialog{width:min(1100px,calc(100vw - 32px));height:min(88dvh,900px);max-width:none;max-height:none;margin:auto;padding:0;border:1px solid #efbfe4a8;border-radius:22px;background:#21152e;color:#fff2fa;box-shadow:0 24px 100px #08020bcf;overflow:hidden}
 .work-dialog::backdrop{background:#0e0816d9;backdrop-filter:blur(9px)}
@@ -883,7 +883,7 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
 .work-dialog-close:focus-visible,.work-dialog-head a:focus-visible{outline:3px solid #ffd7ee;outline-offset:3px}
 .work-dialog iframe{display:block;width:100%;height:calc(100% - 70px);border:0;background:#21152e}
 @media(max-width:650px){.work-dialog{width:100vw;height:100dvh;border-radius:0}.work-dialog-head{padding:9px 13px}.work-dialog iframe{height:calc(100% - 64px)}}
-</style></head>
+</style><link rel="stylesheet" href="rainbow.css"></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
 <canvas id="stardust" aria-hidden="true"></canvas><main class="chapters" id="chapters">
