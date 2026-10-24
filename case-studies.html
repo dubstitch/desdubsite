@@ -124,14 +124,12 @@ html[data-theme="light"] .case-grid-nav .nav-star[aria-current="step"] svg{filte
 @media(max-height:590px){.gallery-shell{padding:5px 0 3px}.gallery-instructions{display:none}.gallery-controls{min-height:49px}.gallery-hero h1{font-size:clamp(2.9rem,8.3vh,5rem)}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.panels{scroll-behavior:auto}.case-grid-nav .nav-star svg,.case-grid-nav .nav-star[aria-current="step"] svg,.case-grid-nav .nav-star[aria-current="step"]::before,.case-grid-nav .nav-star[aria-current="step"]::after{animation:none!important}}
 
-/* Cohesive card palette and readable surfaces */
 .work-panel{border-color:#e3afd483;background-clip:padding-box}
 .artifact-placeholder{background:linear-gradient(145deg,#4a31517a,#3a274574);border-color:#d5a9d57a}
 html[data-theme="light"] .work-panel{border:1px solid #b689a99c;box-shadow:0 12px 27px #846a8b31}
 html[data-theme="light"] .artifact-placeholder{background:linear-gradient(145deg,#ffffff,#fff4fa);border-color:#ad82ac98}
 @media(prefers-contrast:more){.work-panel{border-width:2px}.panel-pill{box-shadow:none}}
 
-/* Final gallery layout: stable screen sizing, no sideways page shift, readable following snap. */
 html{max-width:100%;overflow-x:hidden;overscroll-behavior-x:none;scroll-snap-type:y mandatory}
 body,main{max-width:100%;min-width:0;overflow-x:clip;overscroll-behavior-x:none}
 .gallery-shell{
