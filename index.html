@@ -5,7 +5,6 @@
 :root{color-scheme:dark;--ink:#fff4f8;--muted:#d2bfd8;--accent:#f5afd5;--bg:#170e25}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif}button,a{font:inherit}a{color:inherit}button{cursor:pointer}.backdrop{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 55vw 55vw at 86% 21%,#77477585,transparent 75%),radial-gradient(ellipse 70vw 58vw at 10% 83%,#382b75aa,transparent 74%),linear-gradient(125deg,#160c25,#271633 48%,#130e22)}.backdrop:before,.backdrop:after{content:"";position:absolute;border:1px solid #ffffff18;border-radius:50%;width:60vw;height:60vw;filter:blur(.3px)}.backdrop:before{right:-22vw;top:-24vw}.backdrop:after{left:-22vw;bottom:-32vw}.star{position:fixed;width:4px;height:4px;border-radius:50%;background:#fff5;box-shadow:0 0 17px #f4b5e9;pointer-events:none;z-index:0}.s1{top:22%;left:24%}.s2{top:63%;left:77%}.s3{top:81%;left:42%}.s4{top:43%;left:91%}header{position:fixed;z-index:60;top:0;width:100%;padding:22px clamp(22px,5vw,80px);display:flex;align-items:center;justify-content:space-between;gap:18px;background:linear-gradient(#160e2499,transparent)}.brand{font-size:25px;font-weight:700;letter-spacing:-.08em;text-decoration:none}.brand span{color:var(--accent)}.head-actions{display:flex;align-items:center;gap:14px}.plain-link{font-size:.8rem;text-transform:uppercase;letter-spacing:.13em;text-decoration:none;color:#f6d9eb}.mode{border:1px solid #ffffff55;color:white;background:#ffffff18;border-radius:40px;padding:12px 17px;backdrop-filter:blur(15px);font-size:12px;letter-spacing:.1em;text-transform:uppercase;transition:background .2s}.mode:hover,.mode:focus-visible{background:#ffffff35}.chapters{height:auto;overflow:visible}.chapter{scroll-snap-align:start;scroll-snap-stop:normal}html{scroll-snap-type:y proximity;scroll-padding-top:0;overscroll-behavior-y:auto}body{overflow-y:visible}.next-section{position:absolute;left:clamp(25px,10vw,165px);bottom:28px;display:inline-flex;gap:10px;align-items:center;font-size:11px;text-transform:uppercase;letter-spacing:.17em;text-decoration:none;color:#f6cde9;padding:12px 0;z-index:2}.next-section span{font-size:20px;line-height:1;transition:transform .2s}.next-section:hover span{transform:translateY(5px)}@media(max-width:650px){.next-section{left:24px;bottom:22px}.chapter{padding-bottom:100px}html{scroll-snap-type:y proximity}}.chapter{position:relative;min-height:100svh;padding:clamp(100px,15vh,160px) clamp(25px,10vw,165px) 65px;display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start;isolation:isolate}.chapter:after{content:"";position:absolute;right:6%;bottom:10%;width:23vw;height:23vw;border:1px solid #f9bddd27;transform:rotate(30deg);border-radius:30px;pointer-events:none;z-index:-1}.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#f6c9e5;font-weight:700}.chapter h1,.chapter h2{font-family:'Playfair Display',Georgia,serif;font-weight:500;letter-spacing:-.06em;line-height:1.05;margin:24px 0}.chapter h1{font-size:clamp(4rem,10.7vw,10rem)}.chapter h2{font-size:clamp(3rem,7vw,6.5rem)}.accent{font-style:italic;color:var(--accent)}.chapter p{font-size:clamp(1.05rem,1.75vw,1.4rem);line-height:1.7;color:#e0cfe0;max-width:720px}.chips{display:flex;flex-wrap:wrap;gap:9px;margin:20px 0}.chip{border:1px solid #ffffff50;border-radius:40px;padding:10px 13px;color:#f2e1ef;font-size:13px}.cta{display:inline-flex;align-self:flex-start;align-items:center;gap:8px;margin-top:20px;padding:14px 22px;border-radius:40px;background:#f0b2d5;color:#24142d;font-weight:700;text-decoration:none}.meta{position:absolute;bottom:30px;right:clamp(22px,5vw,80px);color:#dfc5e1;font-size:11px;letter-spacing:.18em}.glass{background:#ffffff0c;border:1px solid #ffffff25;border-radius:24px;backdrop-filter:blur(16px);padding:clamp(20px,3vw,35px)}.work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;width:min(980px,100%);margin-top:30px}.work{min-height:176px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;transition:transform .25s,background .25s}.work:hover,.work:focus-visible{transform:translateY(-5px);background:#ffffff1d}.work small{letter-spacing:.15em;text-transform:uppercase;color:#dcb9d5}.work strong{font-family:'Playfair Display',serif;font-size:clamp(20px,2.6vw,31px);font-weight:500}.work .arrow{align-self:flex-end;font-size:25px;color:var(--accent)}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:28px;max-width:1000px}.step{padding:20px;border-top:1px solid #f5b8e1}.step b{display:block;font-family:'Playfair Display';font-size:1.6rem;font-weight:500}.step small{color:var(--muted);line-height:1.6;display:block;margin-top:8px}.footer-links{display:flex;gap:20px;flex-wrap:wrap;margin-top:25px}.footer-links a{color:var(--accent)}.universe{position:fixed;z-index:90;inset:0;background:radial-gradient(ellipse at center,#4d2b65,#130d22 75%);display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s;overflow:hidden}.universe.open{opacity:1;visibility:visible}.universe::before{content:"";position:absolute;width:80vmin;height:80vmin;border:1px solid #ffffff21;border-radius:50%;box-shadow:0 0 120px #cd82de33}.universe-title{position:absolute;top:10%;font-size:12px;letter-spacing:.27em;text-transform:uppercase;color:#f5d7ed}.close{position:absolute;right:5vw;top:25px;background:#ffffff12;border:1px solid #ffffff55;border-radius:40px;padding:10px 16px;color:white;z-index:4}.honey{position:relative;width:min(90vw,760px);height:min(68vh,560px)}.hex{position:absolute;left:50%;top:50%;width:clamp(120px,23vw,188px);aspect-ratio:1/.93;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);border:0;background:linear-gradient(135deg,#cba6d9c7,#76528eb0 50%,#d185b8b8);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:17px;transform:translate(-50%,-50%);transition:transform .72s cubic-bezier(.19,1,.22,1),opacity .5s,filter .5s;box-shadow:0 0 40px #dfb1e455}.hex:before{content:"";position:absolute;inset:3px;clip-path:inherit;background:#26132e80;z-index:-1}.hex strong{font-family:'Playfair Display';font-weight:500;font-size:clamp(15px,2.3vw,22px)}.hex small{font-size:9px;letter-spacing:.17em;text-transform:uppercase;margin-bottom:9px;color:#ffe2f3}.hex:hover,.hex:focus-visible{filter:brightness(1.35);transform:translate(-50%,-50%) scale(1.1);z-index:3}.hex:nth-child(1){left:50%;top:18%}.hex:nth-child(2){left:28%;top:39%}.hex:nth-child(3){left:72%;top:39%}.hex:nth-child(4){left:28%;top:71%}.hex:nth-child(5){left:72%;top:71%}.hex:nth-child(6){left:50%;top:92%}.hex.go{transform:translate(-50%,-50%) scale(14);opacity:1;filter:blur(5px);z-index:9}.hex.fade{opacity:0;transform:translate(-50%,-50%) scale(.35)}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}:focus-visible{outline:3px solid #ffd2eb;outline-offset:5px}
 @media(max-width:650px){header{padding:17px 20px}.plain-link{display:none}.chapter{padding:110px 24px 65px}.chapter h1{font-size:clamp(3.7rem,15vw,6rem)}.work-grid{grid-template-columns:1fr}.work{min-height:122px}.steps{grid-template-columns:repeat(2,1fr)}.meta{right:24px}.honey{height:430px;width:97vw}.hex{width:34vw}.hex:nth-child(1){top:14%}.hex:nth-child(2),.hex:nth-child(3){top:34%}.hex:nth-child(4),.hex:nth-child(5){top:61%}.hex:nth-child(6){top:82%}.universe-title{top:7%;font-size:10px}.chapter:after{width:44vw;height:44vw}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 
-/* 2026-10: snap-only cinematic chapters, editorial metallic palette */
 html,body{height:100%;overflow:hidden!important;scroll-snap-type:none!important}
 .chapters{height:100svh;height:100dvh;overflow:hidden!important;scroll-behavior:auto!important;overscroll-behavior:contain;touch-action:pan-x}
 .chapter{height:100svh;height:100dvh;min-height:0;overflow:hidden;scroll-snap-align:none!important;justify-content:center}
@@ -29,7 +28,7 @@ html,body{height:100%;overflow:hidden!important;scroll-snap-type:none!important}
 @media(max-height:660px){.chapter{padding-top:80px;padding-bottom:65px}.chapter h2{font-size:clamp(2.4rem,7vh,4rem)}.chapter p{font-size:.91rem;line-height:1.45}.work{min-height:68px}.work-grid{gap:5px}.work strong{font-size:17px}.work small{font-size:8px}.chip{padding:5px 8px}}
 @media(prefers-reduced-motion:reduce){.chapters{scroll-behavior:auto!important}}
 .nav-stack{display:flex;flex-direction:column;align-items:center;gap:6px}.nav-stack .resume-nav{font-size:10px;letter-spacing:.16em;border:0;padding:0;color:#fce5f5}.nav-stack .resume-nav:hover{text-decoration:underline}@media(max-width:650px){.nav-stack{gap:3px}.nav-stack .resume-nav{font-size:10px}}
-/* Editorial redesign: legible text, restrained atmospherics, true cinematic section navigation */
+
 body{background:#150d22}
 .backdrop{background:radial-gradient(ellipse at 74% 17%,#72417842,transparent 63%),#150d22}
 .chapter{isolation:isolate;overflow:hidden}
@@ -59,12 +58,11 @@ body{background:#150d22}
 }
 @media(max-height:700px){.work{min-height:75px}.chapter{padding-top:95px;padding-bottom:90px}.chapter .next-section{bottom:18px}.site-progress{bottom:22px}}
 
-/* Constellation edition */
 .head-actions{gap:13px}.resume-pill{text-decoration:none;white-space:nowrap;color:#fce9f5;border:1px solid #f7d7ee55;padding:11px 17px;border-radius:999px;background:#ffffff0e;letter-spacing:.09em;text-transform:uppercase;font-size:11px;font-weight:600;transition:background .25s,transform .25s}.resume-pill:hover,.resume-pill:focus-visible{background:#ffffff24;transform:translateY(-2px)}.resume-pill span{margin-left:5px;color:#f6b7df}.mode{font-weight:600;letter-spacing:.1em;display:flex;gap:8px;align-items:center}.mode span{font-size:20px;line-height:.4;color:#ffd5ee}.work-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:900px;margin-top:18px;margin-bottom:65px}.work{min-height:132px!important;padding:18px 24px;position:relative;isolation:isolate;overflow:hidden;transition:transform .35s cubic-bezier(.2,.9,.2,1),border-color .4s,box-shadow .4s,background .4s}.work:before{content:"";position:absolute;inset:-50%;background:radial-gradient(circle,#ffc9ee33 0%,transparent 40%);opacity:0;transform:translate(-40%,20%);transition:opacity .6s,transform 1s;pointer-events:none;z-index:-1}.work:hover:before,.work:focus-visible:before,.work.is-lit:before{opacity:1;transform:translate(25%,-8%)}.work.is-lit,.work:hover,.work:focus-visible{border-color:#ffd3edb5;box-shadow:0 0 22px #ed97dd35,0 14px 55px #200b3344}.work small{font-size:10px}.work strong{font-size:clamp(18px,2.3vw,27px);line-height:1.15}.work .arrow{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#ffdded1e;border:1px solid #ffd6ec66}.work .arrow svg{width:17px;height:17px}.next-section{bottom:clamp(45px,8vh,85px)!important;display:inline-flex;align-items:center;gap:12px;text-decoration:none;letter-spacing:.15em;color:#ffe4f3;font-size:11px;padding:9px 0!important}.next-section span{width:32px;height:32px;display:grid;place-items:center;border:1px solid #ffcbe885;border-radius:50%;background:#ffffff10;transition:transform .25s,background .25s}.next-section span svg{width:18px;height:18px}.next-section:hover span{background:#ffffff2c;transform:translateY(5px)}.constellation-track{position:fixed;z-index:59;right:clamp(12px,2.2vw,32px);top:50%;transform:translateY(-50%);width:44px;height:278px;display:flex;align-items:center;justify-content:space-between;flex-direction:column;padding:5px 0 38px;pointer-events:none}.constellation-lines{position:absolute;inset:0;width:44px;height:248px;z-index:0;overflow:visible;pointer-events:none}.constellation-track button{position:relative;z-index:1;border:1px solid #f7c7e6b5;background:#d3a6d6b0;box-shadow:0 0 8px #fff8,0 0 16px #e891cc77;width:9px;height:9px;border-radius:50%;padding:0;pointer-events:auto;transition:transform .35s,background .35s,box-shadow .35s}.constellation-track button:nth-of-type(2),.constellation-track button:nth-of-type(4){margin-left:-20px}.constellation-track button:nth-of-type(3){margin-left:18px}.constellation-track button[aria-current="step"]{transform:scale(1.8);background:white;box-shadow:0 0 12px #fff,0 0 25px #f5a6de}.constellation-current{position:absolute;right:0;bottom:0;font-size:9px;letter-spacing:.13em;color:#ffe4f3;font-weight:700;text-align:right;white-space:nowrap}.constellation-track #constellation-active-line{stroke-dasharray:275;stroke-dashoffset:275;transition:stroke-dashoffset .95s cubic-bezier(.2,.8,.2,1)}#stardust{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;opacity:.62;mix-blend-mode:screen}.chapter{overflow:hidden}.chapter .eyebrow,.chapter h1,.chapter h2,.chapter p,.chapter .chips,.chapter .work-grid,.chapter .cta,.chapter .steps,.chapter .footer-links,.chapter .next-section{z-index:4}.chapter:nth-child(even){background:radial-gradient(ellipse at 83% 30%,#b7719f63,transparent 62%),linear-gradient(135deg,#23152f,#4b284d 45%,#24182f)}.chapter:nth-child(odd){background:radial-gradient(ellipse at 90% 20%,#765a9d61,transparent 64%),linear-gradient(135deg,#161020,#332343 60%,#191025)}.universe{background:radial-gradient(ellipse at 50% 37%,#714b8570,transparent 49%),linear-gradient(150deg,#160f23,#30203c 60%,#130e22)}.universe::before{border-color:#f7dbf42a;box-shadow:0 0 130px #c991df3a,0 0 280px #9e65bc25}.honey{width:min(92vw,540px);height:min(70vh,550px)}.hex{width:clamp(116px,27vw,174px);height:clamp(104px,24vw,155px);aspect-ratio:auto;overflow:visible;background:linear-gradient(145deg,#ffebff 0%,#b27bc8 13%,#4a2b64 39%,#b47abc 63%,#3d244e 87%,#f5d4f1 100%);box-shadow:inset 4px 4px 10px #ffffffa0,inset -9px -11px 20px #1b092a9c,0 8px 20px #09031480;filter:drop-shadow(0 0 8px #ffd7f447);transition:transform .75s cubic-bezier(.19,1,.22,1),opacity .5s,filter .45s}.hex:before{inset:5px;background:linear-gradient(140deg,#5b357488,#271a3ecc);box-shadow:inset 0 0 28px #b98bd577}.hex:hover,.hex:focus-visible{filter:brightness(1.3) drop-shadow(0 0 17px #ffdbf8);z-index:7}.hex:nth-child(1){left:50%;top:22%}.hex:nth-child(2){left:27%;top:39%}.hex:nth-child(3){left:73%;top:39%}.hex:nth-child(4){left:50%;top:56%}.hex:nth-child(5){left:27%;top:73%}.hex:nth-child(6){left:73%;top:73%}.hex small{font-size:9px}.hex strong{font-size:clamp(15px,2.3vw,21px);text-shadow:0 2px 12px #11071e}.universe-title{top:9%}
 @media(max-width:650px){.head-actions{gap:8px}.resume-pill{font-size:10px;padding:9px 11px}.mode{padding:10px 12px;font-size:10px}.plain-link{display:none}.work-grid{margin-top:14px;margin-bottom:70px;gap:9px}.work{min-height:105px!important;padding:12px 16px}.work small{font-size:9px}.work strong{font-size:clamp(17px,4.6vw,21px)}.work .arrow{width:24px;height:24px}.chapter .next-section{bottom:clamp(30px,6vh,55px)!important}.constellation-track{right:9px;transform:translateY(-50%) scale(.78);transform-origin:right center}.chapter{padding-right:38px}.honey{width:96vw;height:450px}.hex{width:33vw;height:29.4vw}.hex:nth-child(1){left:50%;top:20%}.hex:nth-child(2){left:28%;top:37%}.hex:nth-child(3){left:72%;top:37%}.hex:nth-child(4){left:50%;top:54%}.hex:nth-child(5){left:28%;top:71%}.hex:nth-child(6){left:72%;top:71%}}
 @media(max-height:700px){.work-grid{margin-bottom:30px}.work{min-height:72px!important}.work strong{font-size:17px}.chapter .next-section{bottom:13px!important}}
 @media(prefers-reduced-motion:reduce){#stardust{opacity:.28}.work:before{display:none}.constellation-track #constellation-active-line{transition:none}}
-/* Finishing touches: mathematically adjacent honeycomb cells and small-screen clearance */
+
 .honey .hex:nth-child(1){left:50%;top:26%}
 .honey .hex:nth-child(2){left:25.85%;top:40%}
 .honey .hex:nth-child(3){left:74.15%;top:40%}
@@ -74,7 +72,6 @@ body{background:#150d22}
 @media(max-width:650px){.honey .hex:nth-child(1){left:50%;top:25%}.honey .hex:nth-child(2){left:24%;top:38%}.honey .hex:nth-child(3){left:76%;top:38%}.honey .hex:nth-child(4){left:50%;top:51%}.honey .hex:nth-child(5){left:24%;top:64%}.honey .hex:nth-child(6){left:76%;top:64%}}
 @media(max-width:650px) and (max-height:750px){.work-grid{margin-bottom:47px}.work{min-height:74px!important;padding:10px 14px}.work strong{font-size:17px}.work small{font-size:8px}}
 
-/* Refined signature identity and hero hierarchy */
 .hero-identity{display:flex;flex-direction:column;align-items:flex-start;gap:9px;max-width:760px}
 .hero-name{font-family:'Playfair Display',Georgia,serif;color:#fff0fb;font-size:clamp(2.1rem,4vw,4rem);font-weight:500;line-height:1.04;letter-spacing:-.045em}
 .hero-star{font-family:inherit;font-size:.46em;color:#ecaad9;display:inline-block;margin-left:10px;vertical-align:top;transform:rotate(-15deg);text-shadow:0 0 18px #f5a3d977}
@@ -84,7 +81,7 @@ html[data-theme="light"] .hero-name{color:#3b2751}
 html[data-theme="light"] .hero-role{color:#844374}
 html[data-theme="light"] .hero-star{color:#a85f93;text-shadow:none}
 @media(max-width:650px){.hero-name{font-size:clamp(2rem,9vw,3.1rem)}.hero-role{font-size:10px;letter-spacing:.10em}.hero-identity{gap:6px}.chapter#home h1{margin-top:25px}}
-/* Connected celestial navigation without the plastic bevel */
+
 .universe{background:radial-gradient(ellipse at 52% 42%,#54365c,#1d112d 57%,#110e1e);backdrop-filter:blur(28px)}
 .universe::before{width:min(78vw,570px);height:min(78vw,570px);box-shadow:0 0 120px #d4a2e834,inset 0 0 80px #d4a2e81a;border-color:#c69fe82f}
 .honey{width:min(92vw,600px);height:min(68vh,545px);filter:drop-shadow(0 22px 45px #0b061b80)}
@@ -97,7 +94,7 @@ html[data-theme="light"] .universe{background:radial-gradient(ellipse at center,
 html[data-theme="light"] .hex{background:linear-gradient(145deg,#f9edfb,#b88cc9 48%,#ecc3dc);box-shadow:none}
 html[data-theme="light"] .hex:before{background:linear-gradient(145deg,#fffdf9e5,#efd7edbb)}
 @media(max-width:650px){.honey{height:420px;width:100vw}.hex{width:clamp(110px,34vw,145px);height:clamp(96px,30vw,128px)}.hex:nth-child(1){left:50%;top:23%}.hex:nth-child(2){left:24%;top:38%}.hex:nth-child(3){left:76%;top:38%}.hex:nth-child(4){left:50%;top:53%}.hex:nth-child(5){left:24%;top:68%}.hex:nth-child(6){left:76%;top:68%}}
-/* Celestial arc lives in dedicated lower-right space, never across headings */
+
 .constellation-track.constellation-arc{display:block!important;position:fixed!important;top:auto!important;bottom:10px!important;right:12px!important;width:300px!important;height:240px!important;transform:none!important;padding:0!important;z-index:53;pointer-events:none}
 .constellation-arc .constellation-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .constellation-arc .star-path{opacity:.87;filter:drop-shadow(0 0 5px #f5b2de)}
@@ -134,7 +131,6 @@ html[data-theme="light"] .constellation-arc .constellation-current{color:#4d2852
 @media(max-height:700px){.constellation-track.constellation-arc{width:135px!important;height:108px!important;bottom:0!important}.chapter#approach .philosophy-link{margin-top:6px}}
 @media(prefers-reduced-motion:reduce){.constellation-arc button span{animation:none}}
 
-/* Starlit chapter entrances: animation only activates with JS */
 html.reveal-ready .chapter .hero-identity,
 html.reveal-ready .chapter > .eyebrow,
 html.reveal-ready .chapter > h1,
@@ -186,7 +182,6 @@ html.reveal-ready .chapter > .footer-links{opacity:1;transform:none;filter:none;
 html.reveal-ready .chapter.is-revealed .work{animation:none}
 }
 
-/* Unified celestial rose palette for hero controls */
 #home .chips{gap:10px}
 #home .chip{background:linear-gradient(135deg,#5e326aeb,#713f79c9)!important;border:1px solid #e1a6d5!important;color:#fff2fb!important;box-shadow:inset 0 1px 0 #fff3,0 0 14px #b75c9b2e!important}
 #home .cta{background:linear-gradient(115deg,#f3b5d9,#dd9bd3 64%,#c49be2)!important;color:#351a42!important;border:1px solid #f9d7ec!important;box-shadow:0 8px 30px #bd6aaf3d,inset 0 1px 0 #fff8;display:inline-flex;align-items:center;gap:12px;font-weight:700;transition:transform .25s,box-shadow .25s}
@@ -205,7 +200,6 @@ html[data-theme="light"] #home .cta{background:linear-gradient(110deg,#9a4d88,#7
 html[data-theme="light"] .constellation-arc button span,html[data-theme="light"] .constellation-arc button[aria-current="step"] span{color:#fff!important;text-shadow:0 0 3px #fff,0 0 9px #8e4d9b,0 0 22px #b461b4,0 0 30px #e58dc8!important}
 @media(max-width:650px){#story h2,#approach h2{font-size:clamp(2.5rem,10.3vw,4.2rem);line-height:1.08}#approach p,#story p{font-size:clamp(.86rem,3.4vw,1rem);line-height:1.48}#home .cta{padding:10px 17px;gap:9px}.orbital-arrow{width:25px;height:25px}}
 
-/* Constellation polish: more breathing room and a living active star */
 .constellation-track.constellation-arc{width:350px!important;height:280px!important;right:34px!important;bottom:22px!important;opacity:1!important}
 .constellation-arc .constellation-lines{filter:drop-shadow(0 0 4px rgba(245,173,236,.5))}
 .constellation-arc .star-path{stroke:#fce2ff;stroke-width:2;opacity:1;filter:drop-shadow(0 0 6px #eeb7ff)}
@@ -257,7 +251,6 @@ color:#fff!important;text-shadow:0 0 4px #632c85,0 0 10px #823a94,0 0 22px #d36b
 .constellation-arc button[aria-current="step"]::before,.constellation-arc button[aria-current="step"]::after,.constellation-arc button[aria-current="step"] span{animation:none!important}
 }
 
-/* Permanent chapter layout: a reserved constellation zone with no content overlap */
 :root{--chapter-header-clearance:108px;--chapter-bottom-clearance:90px}
 #chapters.chapters{height:100svh!important;max-height:100svh;overscroll-behavior:contain}
 #chapters .chapter{
@@ -344,7 +337,7 @@ color:#fff!important;text-shadow:0 0 4px #632c85,0 0 10px #823a94,0 0 22px #d36b
 #chapters .chapter .work.is-lit{transform:translateY(-3px)}
 #chapters .chapter-content-inner .footer-links{margin-top:18px}
 #chapters .chapter-content-inner .philosophy-link{margin-top:14px}
-/* Previously direct child reveal rules no longer apply after the semantic scroll wrappers. */
+
 html.reveal-ready #chapters .chapter:not(.is-revealed) .chapter-content-inner > :is(.hero-identity,.eyebrow,h1,h2,p,.chips,.work-grid,.steps,.philosophy-link,.cta,.footer-links,.work-controls){opacity:0;filter:blur(5px);transform:translateY(12px)}
 html.reveal-ready #chapters .chapter.is-revealed .chapter-content-inner > :is(.hero-identity,.eyebrow,h1,h2,p,.chips,.work-grid,.steps,.philosophy-link,.cta,.footer-links,.work-controls){opacity:1;filter:none;transform:none}
 html.reveal-ready #chapters .chapter-content-inner > :is(.hero-identity,.eyebrow,h1,h2,p,.chips,.work-grid,.steps,.philosophy-link,.cta,.footer-links,.work-controls){transition:opacity .75s,filter .8s,transform .85s}
@@ -402,7 +395,6 @@ html.reveal-ready #chapters .chapter-content-inner > :is(.hero-identity,.eyebrow
  html.reveal-ready #chapters .chapter-content-inner > *{transition:none!important;animation:none!important;opacity:1!important;transform:none!important;filter:none!important}
 }
 
-/* Allow real scrolling inside each independently bounded chapter. */
 #chapters.chapters{touch-action:auto!important}
 #chapters .chapter-content{touch-action:pan-y;-webkit-overflow-scrolling:touch}
 #work .work-grid{position:relative;touch-action:pan-x}
@@ -429,7 +421,6 @@ html.reveal-ready #chapters .chapter-content-inner > :is(.hero-identity,.eyebrow
  #chapters .chapter .next-section span{font-size:19px!important}
 }
 
-/* Readable project cards: intentionally high contrast in both modes */
 #work .work-grid .work{
   isolation:isolate;
   overflow:hidden;
@@ -471,7 +462,7 @@ html[data-theme="light"] #work .work-grid .work strong{color:#312139!important;f
 html[data-theme="light"] #work .work-grid .work .arrow{color:white!important;background:#71356e!important;border-color:#71356e!important;box-shadow:0 3px 12px #906b9c4d!important}
 html[data-theme="light"] #work .work-grid .work .arrow svg{stroke:#fff!important}
 #work .work-grid .work:focus-visible{outline:3px solid #f7c6e6!important;outline-offset:3px}
-/* Approach is a single intentional chapter. No internal scrolling and no cut-off content. */
+
 #chapters #approach .chapter-content{overflow:visible!important;scrollbar-width:none!important}
 #chapters #approach .chapter-content-inner{
   min-height:100%;
@@ -529,14 +520,13 @@ html[data-theme="light"] #chapters #approach .approach-pill-row span{color:#6535
  #chapters #approach .approach-pill-row{display:none!important}
  #chapters #approach .chapter-content-inner > h2{font-size:clamp(1.6rem,5.1vh,2.4rem)!important}
 }
-/* Wrap content only on extreme widths; no horizontal viewport overflow */
+
 @media(max-width:350px){
  #chapters #approach .chapter-content-inner > h2{font-size:1.85rem!important}
  #chapters #approach .chapter-content-inner > p{font-size:.82rem!important}
  #work .work-grid .work .arrow{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important}
 }
 
-/* Short, unscrollable philosophy preview. Full methodology lives on its own page. */
 #chapters #approach .chapter-content{
   overflow:hidden!important;min-height:0!important;
   display:flex!important;flex-direction:column;justify-content:center;
@@ -670,7 +660,7 @@ body > a.sr-only[href="#home"]:focus-visible{transform:translateY(0);opacity:1;p
 #chapters #approach .chapter-content-inner{min-height:0!important;max-height:100%!important}
 #chapters #contact .footer-links{display:flex;flex-wrap:wrap;gap:9px!important;margin:0!important}
 #chapters #contact .contact-actions a{padding:11px 15px!important;font-size:12px!important}
-/* On tablets the constellation becomes a small dedicated lower-right dock. */
+
 @media(max-width:900px){
  #chapters .chapter{padding:clamp(72px,9svh,88px) 27px clamp(136px,17svh,162px)!important}
  #chapters .chapter-content-inner{gap:clamp(7px,1.05svh,13px)!important}
@@ -741,7 +731,6 @@ body > a.sr-only[href="#home"]:focus-visible{transform:translateY(0);opacity:1;p
  #chapters .chapter .next-section{bottom:17px!important}
 }
 
-/* Quality pass: native page bounds, transparent hero, unified buttons */
 html,body{width:100%;max-width:100%;overflow-x:hidden!important;overscroll-behavior-x:none!important}
 #chapters.chapters,#chapters .chapter{width:100%!important;max-width:100%!important;overflow-x:hidden!important;overscroll-behavior-x:none!important}
 #chapters .chapter-content,#chapters .chapter-content-inner,#chapters #home .chips{background:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
@@ -792,7 +781,6 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
 }
 @media(prefers-reduced-motion:reduce){#chapters #home .cta{transition:none!important}}
 
-/* Short landscape viewport: compose content across the screen, never crop portrait content */
 @media(orientation:landscape) and (max-height:680px){
  #chapters .chapter{
    height:100svh!important;
@@ -887,7 +875,7 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
  .constellation-track.constellation-arc{width:93px!important;height:74px!important;right:23px!important;bottom:21px!important}
 }
 </style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script><style>
-/* Portfolio additions: dialogs, technical notes */
+
 .work-dialog{width:min(1100px,calc(100vw - 32px));height:min(88dvh,900px);max-width:none;max-height:none;margin:auto;padding:0;border:1px solid #efbfe4a8;border-radius:22px;background:#21152e;color:#fff2fa;box-shadow:0 24px 100px #08020bcf;overflow:hidden}
 .work-dialog::backdrop{background:#0e0816d9;backdrop-filter:blur(9px)}
 .work-dialog-head{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:13px 17px;background:#35223e;border-bottom:1px solid #f6c4e65c}
@@ -901,7 +889,6 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
 <canvas id="stardust" aria-hidden="true"></canvas><main class="chapters" id="chapters">
 <section class="chapter" id="home"><div class="chapter-content" role="region" aria-label="Arrival chapter content"><div class="chapter-content-inner"><div class="hero-identity"><span class="hero-name">Des Wade<span class="hero-star" aria-hidden="true">✧</span></span><span class="hero-role">Front-End Developer &amp; Web Content Strategist</span></div><h1>Make it<br><span class="accent">make sense.</span></h1><p>I make complex content and technology feel intuitive, beautiful and genuinely useful.</p><div class="chips"><span class="chip">Content Strategy</span><span class="chip">Enterprise CMS</span><span class="chip">Experience Design</span><span class="chip">Accessibility</span></div><a class="cta" href="#work">Explore my work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div><span class="meta">01 / 05 &nbsp; ↓ Explore</span></section>
 <section class="chapter" id="work"><div class="chapter-content" role="region" aria-label="Selected work chapter content"><div class="chapter-content-inner"><div class="eyebrow">01 / Selected work</div><h2>Good ideas.<br><span class="accent">Actually shipped.</span></h2><div class="work-grid"><a class="glass work" href="case-studies.html?project=anniversary#gallery"><small>01 / CMS & Campaign Ecosystem</small><strong>ASCE 175th Anniversary Toolkit</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=collaborate#gallery"><small>02 / Platform Transformation</small><strong>Collaborate Migration</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=asce2027#gallery"><small>03 / Digital Experience</small><strong>ASCE 2027</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a><a class="glass work" href="case-studies.html?project=optimization#gallery"><small>04 / Content & Optimization</small><strong>Member Advantages</strong><span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7M10 7h7v7"/></svg></span></a></div><div class="work-controls" role="group" aria-label="Featured project carousel controls"><button type="button" class="work-back" aria-label="Previous featured project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="work-position" aria-live="off">01 / 04</span><button type="button" class="work-forward" aria-label="Next featured project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="work-instruction">Swipe to explore</span></div></div></div><span class="meta">02 / 05</span></section>
-
 
 
 
