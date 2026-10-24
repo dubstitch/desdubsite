@@ -1,6 +1,5 @@
-/*index.css*/
-/* Responsive CSS file styles defined for smaller width devices */
-/* CSS for tablet devices */
+
+
 @media screen and (min-width: 576px) and (max-width: 820px) { 
     .logo { 
         padding: 0 3rem; 
@@ -56,15 +55,13 @@
 
 }
 
-/* Homepage Site Selection Cards */
-/* @media screen and (min-width: 576px) and (max-width: 820px) { */
+
     .card-group {
         height: 100vh;
     }
-/* } */
 
 
-/* CSS for mobile devices */
+
 @media screen and (min-width: 280px) and (max-width: 576px) { 
     .hero { 
         justify-content: center; 
