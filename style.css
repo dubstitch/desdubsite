@@ -1,5 +1,5 @@
-/*index.css*/
-/* Styles defined for the desktop or the bigger screen devices*/
+
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap'); 
 
 body { 
@@ -9,7 +9,6 @@ body {
     font-family: 'Poppins', sans-serif; 
 } 
 
-/* Header Navbar Styles */
 .navbar { 
     display: flex; 
     align-items: center; 
@@ -59,7 +58,6 @@ body {
     } 
 } 
 
-/* Main Hero Section Styles */
 .hero { 
     background-image: url('./Images/heroImg3.avif'); 
     background-repeat: no-repeat; 
@@ -84,7 +82,6 @@ body {
     justify-content: space-evenly; 
 } 
 
-/* Homepage Site Selection Cards */
 @media screen and (min-width: 856px) and (max-width: 2000px) {
     .card {
         height: 100vh;
@@ -92,7 +89,6 @@ body {
     }
 }
 
-/* About section styles */
 .about { 
     display: flex; 
     align-items: center; 
@@ -113,7 +109,6 @@ body {
     padding: 5rem 5rem 5rem 1rem; 
 } 
 
-/* Portfolio section styles */
 .portfolio { 
     margin: 4.8rem 0; 
     padding: 0 5rem; 
@@ -136,7 +131,6 @@ body {
     border-top-left-radius: 20px; 
 } 
 
-/* Services section styles */
 .services { 
     display: flex; 
     align-items: center; 
@@ -184,7 +178,6 @@ body {
     color: #fff; 
 } 
 
-/* Contact section styles */
 .contact { 
     padding: 0 5rem; 
 } 
@@ -218,7 +211,6 @@ body {
     width: 50%; 
 } 
 
-/* Footer Styles */
 .footer { 
     background-color: #000; 
     color: #fff; 
@@ -261,8 +253,6 @@ body {
 
 
 
-
-/* utility classes */
 .greet-heading { 
     font-size: 1.3rem; 
     font-weight: lighter; 
