@@ -886,7 +886,16 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
  #chapters #story .chips{display:none!important}
  .constellation-track.constellation-arc{width:93px!important;height:74px!important;right:23px!important;bottom:21px!important}
 }
-</style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script></head>
+</style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("des-theme")==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script><style>
+/* Portfolio additions: dialogs, technical notes */
+.work-dialog{width:min(1100px,calc(100vw - 32px));height:min(88dvh,900px);max-width:none;max-height:none;margin:auto;padding:0;border:1px solid #efbfe4a8;border-radius:22px;background:#21152e;color:#fff2fa;box-shadow:0 24px 100px #08020bcf;overflow:hidden}
+.work-dialog::backdrop{background:#0e0816d9;backdrop-filter:blur(9px)}
+.work-dialog-head{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:13px 17px;background:#35223e;border-bottom:1px solid #f6c4e65c}
+.work-dialog-head strong{font:600 15px 'DM Sans',sans-serif}.work-dialog-head a{font-size:12px;text-decoration:underline;text-underline-offset:3px}.work-dialog-close{border:1px solid #f6c4e6a0;color:#fff;background:#ffffff19;border-radius:999px;min-width:43px;min-height:43px;font-size:25px;line-height:1}
+.work-dialog-close:focus-visible,.work-dialog-head a:focus-visible{outline:3px solid #ffd7ee;outline-offset:3px}
+.work-dialog iframe{display:block;width:100%;height:calc(100% - 70px);border:0;background:#21152e}
+@media(max-width:650px){.work-dialog{width:100vw;height:100dvh;border-radius:0}.work-dialog-head{padding:9px 13px}.work-dialog iframe{height:calc(100% - 64px)}}
+</style></head>
 <body><a class="sr-only" href="#home">Skip to content</a><div class="backdrop"></div><i class="star s1"></i><i class="star s2"></i><i class="star s3"></i><i class="star s4"></i>
 <header><a class="brand" href="#home" aria-label="Des Wade home">des<span>.</span></a><div class="head-actions"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="plain-link" href="#work">Selected work</a><a class="resume-pill" href="resume.html">Résumé <span aria-hidden="true">↗</span></a><button type="button" class="mode" id="open-universe" aria-controls="universe" aria-expanded="false"><span aria-hidden="true">✧</span> Universe</button></div></header>
 <canvas id="stardust" aria-hidden="true"></canvas><main class="chapters" id="chapters">
@@ -901,7 +910,7 @@ html[data-theme="light"] #work .work-position,html[data-theme="light"] #work .wo
 <div class="eyebrow">03 / How I think</div>
 <h2>Structure is a love language.<br><span class="accent">It makes room for magic.</span></h2>
 <p>I connect code, content and creativity to make complex things clear, useful and human.</p>
-<a class="philosophy-link" href="philosophy.html">Explore my philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+<a class="philosophy-link" href="component-lab.html" style="margin-right:12px">Explore my components ↗</a><a class="philosophy-link" href="philosophy.html">Explore my philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 </div></div><span class="meta">04 / 05</span></section>
 <section class="chapter" id="contact"><div class="chapter-content" role="region" aria-label="Contact chapter content"><div class="chapter-content-inner"><div class="eyebrow">04 / The invitation</div><h2>Let's make<br><span class="accent">something make sense.</span></h2><p>I’m interested in remote roles where web content strategy, enterprise CMS expertise and thoughtful implementation come together.</p><div class="footer-links contact-actions"><a href="mailto:desireewade5@gmail.com">Let's talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="resume.html">View résumé <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="philosophy.html">My philosophy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div></div><span class="meta">05 / 05</span></section>
 </main><nav class="constellation-track constellation-arc" aria-label="Navigate the five chapters">
@@ -996,4 +1005,10 @@ if(featured&&featuredCards.length&&featuredControls){
 
 const cards=[...document.querySelectorAll('.work')];if(cards.length&&!reduced){let light=0;setInterval(()=>{cards.forEach((c,i)=>c.classList.toggle('is-lit',i===light));light=(light+1)%cards.length},2800)}
 })();
-</script><script src="theme.js" defer></script></body></html>
+</script><script src="theme.js" defer></script><dialog class="work-dialog" id="work-dialog" aria-labelledby="work-dialog-title"><div class="work-dialog-head"><strong id="work-dialog-title">Selected work</strong><a id="work-dialog-newtab" href="case-studies.html" target="_blank" rel="noopener noreferrer">Open full page ↗</a><button type="button" class="work-dialog-close" id="work-dialog-close" aria-label="Close project">×</button></div><iframe id="work-dialog-frame" title="Project details" loading="lazy"></iframe></dialog>
+<script>
+(()=>{const dialog=document.getElementById('work-dialog');const frame=document.getElementById('work-dialog-frame');const close=document.getElementById('work-dialog-close');const title=document.getElementById('work-dialog-title');const full=document.getElementById('work-dialog-newtab');if(!dialog||!dialog.showModal)return;let trigger=null;
+document.querySelectorAll('#work .work-grid a.work').forEach(card=>card.addEventListener('click',event=>{if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();trigger=card;const href=card.getAttribute('href');title.textContent=card.querySelector('strong')?.textContent||'Selected work';frame.src=href;full.href=href;dialog.showModal();close.focus();}));
+const dismiss=()=>dialog.close();close.addEventListener('click',dismiss);dialog.addEventListener('click',event=>{if(event.target===dialog)dismiss()});dialog.addEventListener('close',()=>{frame.removeAttribute('src');trigger?.focus()});
+})();
+</script></body></html>
