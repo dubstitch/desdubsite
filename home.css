@@ -1089,3 +1089,7 @@ html,body,#chapters{overscroll-behavior-x:none!important}
 #chapters.chapters{touch-action:pan-y pinch-zoom}
 #chapters #work .work-grid{touch-action:pan-x pan-y!important}
 html[data-theme="light"] .site-header-shell .resume-pill svg{color:#4c2853!important}
+
+/* Keep carousel gestures horizontal while the document-level guard blocks sideways rubber-band. */
+#chapters.chapters{touch-action:auto!important}
+#chapters #work .work-grid{touch-action:pan-x pan-y!important}
