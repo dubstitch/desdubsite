@@ -60,11 +60,7 @@ document.addEventListener('keydown',event=>{
   if(event.key==='ArrowRight'){event.preventDefault();navigate(current+1)}
   else if(event.key==='ArrowLeft'){event.preventDefault();navigate(current-1)}
 });
-function alignGallery(){
-  if(location.hash!=='#gallery')return;
-  const y=window.scrollY+gallery.getBoundingClientRect().top-header.getBoundingClientRect().height;
-  window.scrollTo({top:Math.max(0,y),behavior:'instant'});
-}
+// Leave vertical navigation to the browser's native anchor and touch scrolling.
 function initialize(){
   sizeHeader();
   const query=new URLSearchParams(location.search).get('project');
@@ -79,12 +75,10 @@ function initialize(){
     history.replaceState(null,'',url.pathname+url.search+url.hash);
   }
   navigate(requested,true);
-  if(location.hash==='#gallery')requestAnimationFrame(()=>requestAnimationFrame(alignGallery));
 }
 initialize();
 document.fonts?.ready?.then(()=>{
   navigate(current,true);
-  if(location.hash==='#gallery')alignGallery();
 });
 window.addEventListener('pageshow',event=>{if(event.persisted){sizeHeader();navigate(current,true)}});
 window.addEventListener('resize',()=>{
