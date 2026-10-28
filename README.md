@@ -16,6 +16,7 @@ A personal portfolio focused on web content strategy, CMS implementation, UX and
 | `philosophy.html` | Personal philosophy, work approach and creative perspective |
 | `component-lab.html` | Public experimental component sketchbook |
 | `theme.css` / `theme.js` | Shared dark and light appearance controls |
+| `site-shell.css` / `site-shell.js` | Shared headers, compact footer and horizontal gesture protection |
 
 Everything is a static file and runs without a build step. Each portfolio page keeps its content separate from its styles, and interactive pages keep their behavior in dedicated JavaScript files.
 
