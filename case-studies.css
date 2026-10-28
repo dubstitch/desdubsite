@@ -282,3 +282,34 @@ html[data-theme="light"] .gallery-axis a{color:#4b2d56}
  .gallery-axis{min-height:28px}
  .gallery-axis a{font-size:10px}
 }
+
+
+/* Vertical navigation should be free, not snapped back to a screen.
+   Keep horizontal snapping only for project selection. */
+html,html:has(.gallery-shell){
+  scroll-snap-type:none!important;
+  scroll-behavior:auto;
+  scroll-padding-top:0!important;
+  overscroll-behavior-y:auto!important;
+}
+body{overscroll-behavior-y:auto!important}
+.gallery-hero,.gallery-shell,.site-footer{
+  scroll-snap-align:none!important;
+  scroll-snap-stop:normal!important;
+}
+#gallery.gallery-shell{
+  scroll-margin-top:var(--head-height)!important;
+  padding-top:0!important;
+  padding-bottom:3px!important;
+  overflow:hidden;
+}
+#gallery .gallery-frame{min-height:0}
+#project-track.panels{padding-top:0!important}
+#gallery-intro{scroll-margin-top:0!important}
+#more.site-footer{scroll-margin-top:var(--head-height)!important}
+.panel-scroller{overscroll-behavior-y:auto!important;touch-action:pan-y pinch-zoom}
+#project-track.panels{touch-action:pan-x pan-y}
+@media(orientation:landscape) and (max-height:680px){
+  #gallery.gallery-shell{padding-top:0!important}
+  #project-track.panels{padding-top:0!important}
+}
