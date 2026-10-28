@@ -186,3 +186,50 @@ body,main{max-width:100%;min-width:0;overflow-x:clip;overscroll-behavior-x:none}
 /* Three stops keep the project constellation balanced. */
 .case-grid-nav{width:170px!important;flex-basis:170px!important}
 @media(max-width:700px){.case-grid-nav{width:135px!important;flex-basis:135px!important}}
+
+/* Compact-height screens: keep the entire project and its controls in view.
+   The project body itself remains vertically scrollable. */
+@media (orientation:landscape) and (max-height:680px){
+  .site-header{
+    min-height:0!important;
+    padding:7px clamp(14px,3vw,36px)!important;
+  }
+  .site-header nav{gap:clamp(9px,2vw,19px)}
+  .gallery-shell{
+    grid-template-rows:minmax(0,1fr) 48px 0px!important;
+    padding:5px 0!important;
+  }
+  .gallery-instructions{display:none!important}
+  .gallery-controls{
+    height:48px!important;min-height:48px!important;
+    padding:3px 10px!important;gap:clamp(9px,2vw,22px)!important;
+  }
+  #project-track.panels{
+    --card-width:calc(100% - 40px);
+    --gutter:20px;
+    padding:4px var(--gutter) 7px!important;
+    scroll-padding-inline:var(--gutter)!important;
+  }
+  .work-panel{
+    flex:0 0 var(--card-width)!important;
+    width:var(--card-width)!important;
+    max-width:var(--card-width)!important;
+  }
+  .panel-scroller{padding:14px clamp(18px,3vw,31px) 26px!important}
+  .panel-number{font-size:11px;margin-bottom:6px!important}
+  .work-panel h2{font-size:clamp(1.7rem,6svh,2.75rem)!important}
+  .panel-intro{font-size:clamp(.88rem,2.7svh,1rem)!important}
+  .gallery-arrow{width:38px;height:38px;flex-basis:38px}
+}
+@media (orientation:landscape) and (max-height:420px){
+  .site-header{padding-top:5px!important;padding-bottom:5px!important}
+  .site-header .brand{font-size:21px}
+  .site-header .theme-toggle{width:35px;height:35px;min-width:35px;flex-basis:35px}
+  .gallery-shell{grid-template-rows:minmax(0,1fr) 43px 0!important}
+  .gallery-controls{height:43px!important;min-height:43px!important}
+  .panel-scroller{padding:12px 20px 22px!important}
+}
+@media(max-width:700px) and (orientation:portrait){
+  #project-track.panels{--card-width:calc(100% - 30px);--gutter:15px}
+  .work-panel{flex-basis:var(--card-width)!important;width:var(--card-width)!important;max-width:var(--card-width)!important}
+}
