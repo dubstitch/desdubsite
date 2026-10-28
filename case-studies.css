@@ -307,8 +307,10 @@ body{overscroll-behavior-y:auto!important}
 #project-track.panels{padding-top:0!important}
 #gallery-intro{scroll-margin-top:0!important}
 #more.site-footer{scroll-margin-top:var(--head-height)!important}
-.panel-scroller{overscroll-behavior-y:auto!important;touch-action:pan-y pinch-zoom}
-#project-track.panels{touch-action:pan-x pan-y}
+/* Allow diagonal gestures to resolve naturally: vertical reading in the panel,
+   horizontal project swipes on its parent carousel. */
+.panel-scroller{overscroll-behavior-y:auto!important;touch-action:auto!important}
+#project-track.panels{touch-action:auto!important}
 @media(orientation:landscape) and (max-height:680px){
   #gallery.gallery-shell{padding-top:0!important}
   #project-track.panels{padding-top:0!important}
