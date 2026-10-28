@@ -138,3 +138,25 @@ html[data-theme="light"] .role-spotlight span{color:#5f4565}
  .resume-intro{padding:24px 0 33px}
  .resume-section{padding:38px 0 46px}
 }
+
+/* The introduction is the first section: reset legacy section margins.
+   Internal résumé section rhythm remains untouched. */
+@media screen {
+  main.resume-layout{padding-top:clamp(14px,2.8vw,28px)!important}
+  main.resume-layout > section.resume-intro{
+    margin:0!important;
+    border-top:0!important;
+    padding-top:0!important;
+  }
+  main.resume-layout > section.resume-intro > .eyebrow{margin-top:0!important}
+}
+@media screen and (orientation:landscape) and (max-height:560px){
+  main.resume-layout{padding-top:12px!important}
+  main.resume-layout > section.resume-intro h1{font-size:clamp(2.9rem,6vw,5rem)}
+}
+@media screen and (max-width:600px){
+  header{gap:12px;padding:12px 17px}
+  header > div{gap:10px!important;justify-content:flex-end}
+  header > div a{font-size:clamp(10px,2.9vw,13px)}
+  main.resume-layout{padding-top:16px!important}
+}
