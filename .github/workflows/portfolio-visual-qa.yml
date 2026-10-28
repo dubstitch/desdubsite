@@ -9,6 +9,7 @@ on:
       - 'site-shell.css'
       - 'site-shell.js'
       - 'case-studies.css'
+      - 'case-flow.css'
       - 'case-studies.js'
       - 'resume.css'
       - 'philosophy.css'
