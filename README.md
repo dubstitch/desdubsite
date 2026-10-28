@@ -10,6 +10,7 @@ A personal portfolio focused on web content strategy, CMS implementation, UX and
 | `home.css` | Homepage visual system, responsive layouts and motion |
 | `home.js` | Chapter navigation, Universe and featured work interactions |
 | `case-studies.css` / `case-studies.js` | Gallery presentation, carousel behavior and keyboard navigation |
+| `case-flow.css` | Two vertical snap sections: introduction and combined gallery / invitation |
 | `resume.css` / `philosophy.css` / `component-lab.css` | Page-specific layouts and responsive styling |
 | `case-studies.html` | Three completed work stories in an interactive gallery |
 | `resume.html` | Professional background and skills |
