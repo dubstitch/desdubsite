@@ -13,6 +13,7 @@ on:
       - 'resume.css'
       - 'philosophy.css'
       - 'component-lab.css'
+      - 'component-lab-light.css'
       - 'component-lab.html'
       - 'philosophy.html'
       - 'case-studies.html'
