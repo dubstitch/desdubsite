@@ -233,3 +233,52 @@ body,main{max-width:100%;min-width:0;overflow-x:clip;overscroll-behavior-x:none}
   #project-track.panels{--card-width:calc(100% - 30px);--gutter:15px}
   .work-panel{flex-basis:var(--card-width)!important;width:var(--card-width)!important;max-width:var(--card-width)!important}
 }
+
+
+/* Gallery cue and navigation between vertically stacked parts of the experience. */
+html:has(.gallery-shell){scroll-snap-type:y proximity}
+.gallery-hero{position:relative;scroll-margin-top:var(--head-height)}
+.gallery-scroll-cue{
+ display:inline-flex;align-items:center;gap:11px;align-self:flex-start;
+ width:max-content;max-width:100%;margin-top:25px;padding:10px 0;
+ border-bottom:1px solid currentColor;color:var(--accent);text-decoration:none;
+ text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:700;
+}
+.gallery-scroll-cue span{font-size:24px;line-height:1.1;transition:transform .2s}
+.gallery-scroll-cue:hover span{transform:translateY(4px)}
+.gallery-shell{
+ grid-template-rows:minmax(0,1fr) 48px 28px 35px!important;
+ min-height:0;scroll-margin-top:var(--head-height)!important;
+}
+.gallery-axis{
+ display:flex;align-items:center;justify-content:center;gap:clamp(14px,4vw,48px);
+ min-height:35px;margin:0;padding:2px 12px;
+}
+.gallery-axis a{
+ display:inline-flex;align-items:center;gap:9px;white-space:nowrap;
+ text-decoration:none;color:var(--ink);font-size:11px;
+ letter-spacing:.06em;font-weight:700;border-bottom:1px solid currentColor;
+ padding:4px 1px;
+}
+.gallery-axis a span{font-size:19px;line-height:1}
+.gallery-axis a:hover{color:var(--accent)}
+html[data-theme="light"] .gallery-scroll-cue{color:#713963}
+html[data-theme="light"] .gallery-axis a{color:#4b2d56}
+@media(max-width:700px){
+ .gallery-shell{grid-template-rows:minmax(0,1fr) 52px 27px 34px!important}
+ .gallery-scroll-cue{font-size:10px;margin-top:17px}
+}
+@media(orientation:landscape) and (max-height:680px){
+ .gallery-shell{grid-template-rows:minmax(0,1fr) 43px 0px 31px!important;padding:4px 0!important}
+ .gallery-controls{height:43px!important;min-height:43px!important}
+ .gallery-instructions{display:none!important}
+ .gallery-axis{min-height:31px;padding:0 12px;gap:35px}
+ .gallery-axis a{font-size:10px;padding:2px 0}
+ .gallery-scroll-cue{margin-top:12px;padding:5px 0}
+}
+@media(orientation:landscape) and (max-height:420px){
+ .gallery-shell{grid-template-rows:minmax(0,1fr) 39px 0px 28px!important}
+ .gallery-controls{height:39px!important;min-height:39px!important}
+ .gallery-axis{min-height:28px}
+ .gallery-axis a{font-size:10px}
+}
