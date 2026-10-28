@@ -1132,3 +1132,21 @@ html[data-theme="light"] .site-header-shell .resume-pill svg{color:#4c2853!impor
   #chapters #home .hero-secondary{margin-top:3px!important}
   #chapters #contact .contact-actions{margin-top:7px!important}
 }
+
+
+/* Smallest portrait phones still need fully visible action links.
+   Condense only this constrained viewport, not the general homepage rhythm. */
+@media (orientation:portrait) and (max-width:360px) and (max-height:670px){
+  #chapters #home .chapter-content-inner{gap:5px!important}
+  #chapters #home .chips{
+    margin-top:4px!important;margin-bottom:2px!important;gap:5px!important;
+  }
+  #chapters #home .cta{
+    min-height:36px!important;margin-top:2px!important;
+    padding:6px 11px!important;
+  }
+  #chapters #home .hero-secondary{
+    margin-top:2px!important;padding:2px 0!important;
+    font-size:11px!important;line-height:1.25!important;
+  }
+}
