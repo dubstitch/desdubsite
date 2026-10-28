@@ -66,6 +66,24 @@ for(const theme of ['light','dark']){
       }catch(e){issues.push('AXE ERROR '+theme+' '+size.name+' homepage-'+section+' '+e.message)}
     }
   }
+  // Regression checks for the Universe, case study links and public component lab.
+  if(theme==='dark'&&['iphone','desktop'].includes(size.name)){
+    await page.goto(origin+'/index.html?universe=1',{waitUntil:'domcontentloaded'});
+    const state=await page.evaluate(()=>({
+      visible:document.getElementById('universe')?.classList.contains('open'),
+      tiles:document.querySelectorAll('#universe .hex').length,
+      lab:!!document.querySelector('#universe .hex[data-href="component-lab.html"]'),
+      cards:document.querySelectorAll('.work').length,
+      modals:document.querySelectorAll('.work-dialog').length
+    }));
+    if(!state.visible||state.tiles!==7||!state.lab||state.cards!==3||state.modals)issues.push('UNIVERSE REGRESSION '+size.name+' '+JSON.stringify(state));
+    await page.locator('#universe .hex[data-href="component-lab.html"]').click();
+    await page.waitForURL('**/component-lab.html');
+    if(!await page.locator('.lab-note').isVisible())issues.push('MISSING PUBLIC LAB NOTE '+size.name);
+    await page.getByRole('link',{name:'Universe'}).click();
+    await page.waitForURL('**/index.html?universe=1');
+    if(!await page.locator('#universe.open').isVisible())issues.push('BROKEN LAB RETURN TO UNIVERSE '+size.name);
+  }
   await page.goto(origin+'/resume.html',{waitUntil:'domcontentloaded'});
   await page.waitForTimeout(70);
   const footer=await page.evaluate(()=>{
