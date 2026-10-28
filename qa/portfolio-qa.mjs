@@ -193,15 +193,30 @@ for(const theme of ['light','dark']){
   }
   if(gallery.width>gallery.client+2)issues.push('GALLERY HORIZONTAL OVERFLOW '+theme+' '+size.name);
   if(gallery.panel.bottom>gallery.controls.top+8)issues.push('GALLERY PANEL-CONTROLS OVERLAP '+theme+' '+size.name+' '+JSON.stringify(gallery));
-  const wayfinding=await page.evaluate(()=>({
-    arrows:document.querySelectorAll('.gallery-axis a').length,
-    cue:!!document.querySelector('.gallery-scroll-cue'),
-    footer:!!document.querySelector('.site-footer'),
-    controls:document.querySelector('.gallery-controls').getBoundingClientRect().bottom,
-    axisTop:document.querySelector('.gallery-axis').getBoundingClientRect().top,
-  }));
-  if(wayfinding.arrows!==2||!wayfinding.cue||!wayfinding.footer||wayfinding.axisTop<wayfinding.controls-6)
-    issues.push('GALLERY WAYFINDING '+theme+' '+size.name+' '+JSON.stringify(wayfinding));
+  // Exactly two vertical snap destinations: intro; gallery + invitation.
+  const flow=await page.evaluate(()=>{
+    const intro=document.getElementById('gallery-intro');
+    const destination=document.getElementById('gallery');
+    const footer=document.getElementById('more');
+    const snap=getComputedStyle(document.documentElement).scrollSnapType;
+    const d=destination.getBoundingClientRect(),f=footer.getBoundingClientRect();
+    return {
+      snap,introSnap:getComputedStyle(intro).scrollSnapAlign,
+      gallerySnap:getComputedStyle(destination).scrollSnapAlign,
+      galleryHeight:Math.round(d.height),
+      visibleHeight:innerHeight-document.querySelector('.site-header').getBoundingClientRect().height,
+      footerInside:destination.contains(footer),
+      footerBottomRelative:Math.round(f.bottom-d.top),
+      removedCue:!document.querySelector('.gallery-scroll-cue'),
+      removedAxis:!document.querySelector('.gallery-axis'),
+      sections:document.querySelectorAll('main > section').length
+    };
+  });
+  if(flow.sections!==2||!flow.footerInside||!flow.removedCue||!flow.removedAxis||
+    !flow.snap.startsWith('y')||flow.introSnap!=='start'||flow.gallerySnap!=='start')
+    issues.push('CASE TWO SECTION FLOW '+theme+' '+size.name+' '+JSON.stringify(flow));
+  if(flow.footerBottomRelative>flow.galleryHeight+3)
+    issues.push('CASE INVITATION OVERFLOWS '+theme+' '+size.name+' '+JSON.stringify(flow));
 
   if(theme==='light'&&size.name==='iphone'){
     const file=output+'/gallery-light-iphone.jpeg';await page.screenshot({path:file,type:'jpeg',quality:55});capture['gallery-light-iphone']=file;
@@ -213,25 +228,35 @@ for(const theme of ['light','dark']){
     }catch(e){issues.push('AXE ERROR '+e.message)}
   }
 
-  // A native vertical document flow must never snap back to the project.
+  // Snap to the second destination, confirm invitation stays inside it,
+  // and ensure vertical scroll inside a project is independent of page snapping.
   if(theme==='light'&&['iphone','phone-landscape','desktop'].includes(size.name)){
-    const initialFlow=await page.evaluate(()=>({
-      snap:getComputedStyle(document.documentElement).scrollSnapType,
-      shellTop:document.getElementById('gallery').getBoundingClientRect().top,
-      footerTop:document.getElementById('more').getBoundingClientRect().top,
-      documentHeight:document.documentElement.scrollHeight
-    }));
-    if(initialFlow.snap!=='none')issues.push('GALLERY VERTICAL SNAP STILL ENABLED '+size.name+' '+JSON.stringify(initialFlow));
-    await page.locator('.gallery-axis a[href="#more"]').click();
-    await page.waitForTimeout(350);
+    await page.evaluate(()=>document.getElementById('gallery').scrollIntoView({behavior:'instant',block:'start'}));
+    await page.waitForTimeout(200);
+    const landing=await page.evaluate(()=>{
+      const shell=document.getElementById('gallery').getBoundingClientRect();
+      const footer=document.getElementById('more').getBoundingClientRect();
+      const header=document.querySelector('.site-header').getBoundingClientRect();
+      return {
+        shellTop:Math.round(shell.top),
+        footerBottom:Math.round(footer.bottom),
+        viewportHeight:innerHeight,
+        headerHeight:Math.round(header.height),
+        scrollY:Math.round(scrollY)
+      };
+    });
+    if(landing.scrollY<30||landing.shellTop>landing.headerHeight+20||
+      landing.footerBottom>landing.viewportHeight+10)
+      issues.push('CASE TWO SECTION LANDING '+size.name+' '+JSON.stringify(landing));
+    // Trigger the internal scroller, which should not force the parent to another section.
+    await page.locator('.work-panel:first-child .panel-scroller').evaluate(el=>el.scrollTop=140);
+    await page.waitForTimeout(160);
     const after=await page.evaluate(()=>({
-      scrollY:window.scrollY,
-      footerTop:Math.round(document.getElementById('more').getBoundingClientRect().top),
-      footerBottom:Math.round(document.getElementById('more').getBoundingClientRect().bottom),
-      vh:innerHeight
+      scrollY:Math.round(scrollY),
+      panelScroll:document.querySelector('.work-panel:first-child .panel-scroller').scrollTop
     }));
-    if(after.scrollY<20||after.footerTop>after.vh)
-      issues.push('GALLERY FOOTER NOT REACHABLE '+size.name+' '+JSON.stringify(after));
+    if(after.panelScroll<15||Math.abs(after.scrollY-landing.scrollY)>30)
+      issues.push('CASE INTERNAL SCROLL ESCAPE '+size.name+' '+JSON.stringify({landing,after}));
     if(size.name==='iphone'){
       const file=output+'/gallery-footer-visible-iphone.jpeg';
       await page.screenshot({path:file,type:'jpeg',quality:55});
@@ -322,4 +347,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|GALLERY WAYFINDING|GALLERY VERTICAL SNAP STILL ENABLED|GALLERY FOOTER NOT REACHABLE|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
+if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
