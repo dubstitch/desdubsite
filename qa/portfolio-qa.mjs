@@ -212,6 +212,52 @@ for(const theme of ['light','dark']){
       for(const v of violations){issues.push('AXE '+theme+' '+size.name+' case-gallery '+v.id+' ('+v.impact+') '+v.nodes.length+' '+v.nodes.slice(0,2).map(n=>n.target.join(' ')).join(','));}
     }catch(e){issues.push('AXE ERROR '+e.message)}
   }
+
+  // A native vertical document flow must never snap back to the project.
+  if(theme==='light'&&['iphone','phone-landscape','desktop'].includes(size.name)){
+    const initialFlow=await page.evaluate(()=>({
+      snap:getComputedStyle(document.documentElement).scrollSnapType,
+      shellTop:document.getElementById('gallery').getBoundingClientRect().top,
+      footerTop:document.getElementById('more').getBoundingClientRect().top,
+      documentHeight:document.documentElement.scrollHeight
+    }));
+    if(initialFlow.snap!=='none')issues.push('GALLERY VERTICAL SNAP STILL ENABLED '+size.name+' '+JSON.stringify(initialFlow));
+    await page.locator('.gallery-axis a[href="#more"]').click();
+    await page.waitForTimeout(350);
+    const after=await page.evaluate(()=>({
+      scrollY:window.scrollY,
+      footerTop:Math.round(document.getElementById('more').getBoundingClientRect().top),
+      footerBottom:Math.round(document.getElementById('more').getBoundingClientRect().bottom),
+      vh:innerHeight
+    }));
+    if(after.scrollY<20||after.footerTop>after.vh)
+      issues.push('GALLERY FOOTER NOT REACHABLE '+size.name+' '+JSON.stringify(after));
+    if(size.name==='iphone'){
+      const file=output+'/gallery-footer-visible-iphone.jpeg';
+      await page.screenshot({path:file,type:'jpeg',quality:55});
+      capture['gallery-footer-visible-iphone']=file;
+    }
+  }
+  if(theme==='light'&&['iphone','desktop'].includes(size.name)){
+    await page.goto(origin+'/component-lab.html',{waitUntil:'domcontentloaded'});
+    await page.waitForTimeout(80);
+    const lab=await page.evaluate(()=>({
+      noteBackground:getComputedStyle(document.querySelector('.lab-note')).backgroundColor,
+      noteColor:getComputedStyle(document.querySelector('.lab-note p')).color,
+      cardBackground:getComputedStyle(document.querySelector('.component')).backgroundImage,
+      cardText:getComputedStyle(document.querySelector('.component h2')).color
+    }));
+    try{
+      const violations=(await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze()).violations;
+      for(const v of violations)issues.push('LAB LIGHT AXE '+size.name+' '+v.id+' '+v.impact+' '+v.nodes.length+' '+v.nodes.slice(0,2).map(n=>n.target.join(' ')).join(','));
+    }catch(e){issues.push('LAB LIGHT AXE ERROR '+size.name+' '+e.message)}
+    if(size.name==='iphone'){
+      const file=output+'/lab-light-iphone.jpeg';
+      await page.locator('.lab-note').screenshot({path:file,type:'jpeg',quality:56});
+      capture['lab-light-iphone']=file;
+    }
+    summary.push({theme,screen:size.name,page:'component-lab',...lab});
+  }
   await context.close();
  }
 }
@@ -276,4 +322,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>/^(JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|GALLERY WAYFINDING)/.test(x)))process.exitCode=1;
+if(issues.some(x=>/^(JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|GALLERY WAYFINDING|GALLERY VERTICAL SNAP STILL ENABLED|GALLERY FOOTER NOT REACHABLE|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
