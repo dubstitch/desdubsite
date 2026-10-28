@@ -60,7 +60,7 @@ for(const theme of ['light','dark']){
 
     for(const control of m.controls)if(control.width>0&&(control.y<m.viewport.y-5||control.bottom>m.viewport.bottom+5))issues.push('CONTROL OUTSIDE '+theme+' '+size.name+' '+id+' '+control.name);
     summary.push({theme,screen:size.name,page:id,clipped,extraHeight:Math.round(m.inner.height-m.viewport.height),widthOver:Math.max(0,m.docWidth-m.windowWidth)});
-    if((theme==='light'&&size.name==='iphone'&&['home','work'].includes(id))||(theme==='light'&&size.name==='phone-landscape'&&id==='work')||(theme==='light'&&size.name==='iphone-mini'&&id==='home')||(theme==='dark'&&size.name==='desktop'&&id==='home')){
+    if((theme==='light'&&size.name==='iphone'&&['home','work'].includes(id))||(theme==='light'&&size.name==='phone-landscape'&&['home','work'].includes(id))||(theme==='light'&&size.name==='phone-landscape-short'&&id==='home')||(theme==='light'&&size.name==='iphone-mini'&&id==='home')||(theme==='dark'&&size.name==='desktop'&&id==='home')){
       const name=theme+'-'+size.name+'-'+id;
       const file=output+'/'+name+'.jpeg';
       await page.screenshot({path:file,type:'jpeg',quality:56,fullPage:false});
@@ -96,6 +96,11 @@ for(const theme of ['light','dark']){
       return {maxTileOverlap:Math.round(worst),which,titleCloseOverlap:Math.round(intersects(title,close)),tiles:rectangles.length};
     });
     if(geometry.maxTileOverlap>40||geometry.titleCloseOverlap>10)issues.push('UNIVERSE TILE COLLISION '+size.name+' '+JSON.stringify(geometry));
+    if(['iphone','phone-landscape','desktop'].includes(size.name)){
+      const file=output+'/universe-'+size.name+'.jpeg';
+      await page.screenshot({path:file,type:'jpeg',quality:57});
+      capture['universe-'+size.name]=file;
+    }
   }
   // Regression checks for the Universe, case study links and public component lab.
   if(theme==='dark'&&['iphone','desktop'].includes(size.name)){
@@ -123,6 +128,11 @@ for(const theme of ['light','dark']){
    return {width:r.width,docWidth:document.documentElement.scrollWidth,windowWidth:innerWidth,links:links.map(a=>{const b=a.getBoundingClientRect();return {width:b.width,height:b.height}})};
   });
 
+  if(theme==='light'&&['iphone','phone-landscape'].includes(size.name)){
+    const file=output+'/resume-top-'+size.name+'.jpeg';
+    await page.screenshot({path:file,type:'jpeg',quality:55});
+    capture['resume-top-'+size.name]=file;
+  }
   const introGap=await page.evaluate(()=>{
     const header=document.querySelector('body > header').getBoundingClientRect();
     const intro=document.querySelector('.resume-intro');
@@ -150,6 +160,11 @@ for(const theme of ['light','dark']){
     return {width:document.documentElement.scrollWidth,client:innerWidth,head:box(document.querySelector('.site-header')),shell:box(document.querySelector('.gallery-shell')),frame:box(document.querySelector('.gallery-frame')),panel:box(document.querySelector('.work-panel')),controls:box(document.querySelector('.gallery-controls'))}
   });
 
+  if(theme==='light'&&size.name==='phone-landscape'){
+    const file=output+'/gallery-landscape.jpeg';
+    await page.screenshot({path:file,type:'jpeg',quality:57});
+    capture['gallery-landscape']=file;
+  }
   if(size.width>size.height){
     const position=await page.evaluate(()=>{
       const frame=document.querySelector('.gallery-frame').getBoundingClientRect();
