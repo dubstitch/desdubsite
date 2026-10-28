@@ -1,174 +1,213 @@
-/* Case studies: two intentional vertical destinations.
-   1. The introduction.
-   2. A gallery with its invitation in the SAME snap section.
-   Each project remains independently readable and horizontally selectable. */
+/* Two-stage Selected Work flow.
+   Each outer section is a deliberate vertical snap stop. The gallery card is
+   independently scrollable and its horizontal carousel remains independent. */
 html:has(.case-experience){
-  scroll-snap-type:y proximity!important;
+  scroll-snap-type:y mandatory!important;
   scroll-padding-top:var(--head-height)!important;
   scroll-behavior:smooth;
   overscroll-behavior-y:auto;
 }
-body:has(.case-experience){overflow-x:clip}
-body:has(.case-experience) main{overflow:visible}
+body:has(.case-experience){
+  overflow-x:clip;
+}
+body:has(.case-experience) main{
+  overflow:visible;
+}
+body:has(.case-experience) main > .gallery-hero,
+body:has(.case-experience) main > .case-experience{
+  scroll-snap-align:start!important;
+  scroll-snap-stop:always!important;
+  scroll-margin:0!important;
+}
 body:has(.case-experience) .gallery-hero{
   min-height:calc(100svh - var(--head-height))!important;
   height:auto!important;
-  scroll-snap-align:start!important;
-  scroll-snap-stop:normal!important;
-  scroll-margin:0!important;
-  padding:clamp(36px,6svh,74px) clamp(25px,10vw,150px)!important;
+  padding:clamp(38px,7svh,84px) clamp(25px,10vw,150px)!important;
+  display:flex;
+  flex-direction:column;
   justify-content:center;
 }
 body:has(.case-experience) .gallery-hero h1{
-  margin:clamp(16px,2.7svh,28px) 0 clamp(10px,1.7svh,18px);
+  margin:clamp(18px,3svh,31px) 0 clamp(12px,2svh,21px);
 }
-body:has(.case-experience) .gallery-kicker{margin-top:clamp(18px,3svh,28px)}
-.case-experience{
+body:has(.case-experience) .gallery-kicker{
+  margin-top:clamp(17px,3svh,30px);
+}
+
+/* The second destination is intentionally taller than a viewport. Its footer
+   has breathing room *below* it, instead of being pinned to the bottom edge. */
+#gallery.case-experience{
+  --project-window:clamp(435px,66svh,660px);
+  box-sizing:border-box;
   display:flex;
   flex-direction:column;
-  width:100%;max-width:100%;min-width:0;
-  height:calc(100svh - var(--head-height));
-  min-height:480px;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  height:auto!important;
+  min-height:calc(100svh - var(--head-height) + 95px)!important;
+  padding:clamp(36px,5.5svh,68px) 0 clamp(48px,7svh,86px);
   background:var(--shell-bg);
-  scroll-snap-align:start;
-  scroll-snap-stop:normal;
-  scroll-margin:0!important;
-  scroll-margin-top:0!important;
-  overflow:hidden;
+  overflow:visible!important;
 }
 #gallery.case-experience > .gallery-shell{
   box-sizing:border-box;
-  flex:1 1 0!important;
-  width:100%!important;
-  height:auto!important;min-height:0!important;
   display:grid!important;
   grid-template-columns:minmax(0,1fr)!important;
-  grid-template-rows:minmax(0,1fr) auto auto!important;
-  padding:clamp(9px,1.3svh,16px) 0 4px!important;
+  grid-template-rows:var(--project-window) auto auto!important;
   row-gap:0!important;
-  overflow:hidden!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  padding:0!important;
   background:transparent!important;
+  overflow:hidden!important;
   scroll-snap-align:none!important;
 }
-.case-experience .gallery-frame{
+#gallery .gallery-frame{
+  box-sizing:border-box;
+  height:var(--project-window)!important;
   min-height:0!important;
-  height:100%!important;
   overflow:hidden!important;
 }
-.case-experience #project-track.panels{
-  min-height:0!important;
+#gallery #project-track.panels{
   height:100%!important;
-  padding-top:2px!important;
-  padding-bottom:4px!important;
+  min-height:0!important;
+  padding-top:0!important;
+  padding-bottom:5px!important;
   scroll-snap-type:x mandatory!important;
 }
-.case-experience .work-panel{
+#gallery .work-panel{
   height:100%!important;
   min-height:0!important;
   max-height:100%!important;
 }
-.case-experience .panel-scroller{
+#gallery .panel-scroller{
   height:100%!important;
   min-height:0!important;
   max-height:100%!important;
   overflow-y:auto!important;
   touch-action:auto;
 }
-.case-experience .gallery-controls{
+#gallery .gallery-controls{
+  min-height:60px!important;
   height:auto!important;
-  min-height:52px!important;
-  padding:4px 12px!important;
-  flex:0 0 auto;
+  margin-top:clamp(11px,1.8svh,19px)!important;
+  padding:6px 12px!important;
 }
-.case-experience .gallery-instructions{
+#gallery .gallery-instructions{
   display:block!important;
   min-height:0;
-  margin:0!important;
-  padding:0 12px 9px!important;
+  max-width:760px;
+  margin:0 auto!important;
+  padding:4px 18px 0!important;
+  line-height:1.45!important;
   font-size:clamp(10px,1vw,12px)!important;
-  line-height:1.35;
 }
-.case-experience > .site-footer{
+#gallery > .site-footer{
   box-sizing:border-box;
+  display:flex;
   flex:0 0 auto;
-  min-height:0!important;
+  width:100%;
   height:auto!important;
+  min-height:0!important;
   max-height:none!important;
-  margin:0!important;
-  padding:clamp(14px,2.1svh,24px) clamp(20px,5vw,80px)!important;
-  gap:clamp(12px,2.4vw,27px)!important;
-  border-top:1px solid var(--line);
+  margin:clamp(30px,4.5svh,56px) 0 0!important;
+  padding:clamp(21px,3svh,35px) clamp(20px,5vw,80px) clamp(28px,4svh,47px)!important;
   justify-content:space-between!important;
   align-items:center!important;
+  gap:clamp(16px,3vw,32px)!important;
+  border-top:1px solid var(--line);
 }
-.case-experience > .site-footer h2{
-  font-size:clamp(1.25rem,2.1vw,1.8rem)!important;
+#gallery > .site-footer h2{
+  font-size:clamp(1.3rem,2.2vw,1.9rem)!important;
   line-height:1.16!important;
   margin:0!important;
 }
-.case-experience > .site-footer .site-footer-kicker{margin-bottom:5px}
-.case-experience > .site-footer .site-footer-links{row-gap:7px!important}
-.case-experience > .site-footer .site-footer-links a{
-  min-height:35px;
-  padding:7px 12px;
+#gallery > .site-footer .site-footer-kicker{
+  margin-bottom:6px;
+}
+#gallery > .site-footer .site-footer-links{
+  gap:10px!important;
+  row-gap:10px!important;
+}
+#gallery > .site-footer .site-footer-links a{
+  min-height:36px;
+  padding:8px 13px;
   font-size:11px;
 }
 @media(max-width:700px){
   body:has(.case-experience) .gallery-hero{
-    padding:clamp(30px,5.2svh,54px) 25px!important;
+    padding:40px 25px!important;
   }
-  .case-experience{min-height:450px}
-  #gallery.case-experience > .gallery-shell{padding:10px 0 2px!important}
-  .case-experience .gallery-controls{min-height:49px!important}
-  .case-experience .gallery-instructions{font-size:10px!important;padding-bottom:8px!important}
-  .case-experience > .site-footer{
+  #gallery.case-experience{
+    --project-window:clamp(440px,70svh,650px);
+    min-height:calc(100svh - var(--head-height) + 130px)!important;
+    padding:clamp(32px,5svh,52px) 0 clamp(57px,8svh,85px)!important;
+  }
+  #gallery .gallery-controls{min-height:54px!important;margin-top:14px!important}
+  #gallery .gallery-instructions{
+    font-size:10.5px!important;
+    padding:6px 20px 0!important;
+  }
+  #gallery > .site-footer{
     flex-direction:column!important;
     align-items:flex-start!important;
-    gap:9px!important;
-    padding:14px 21px 17px!important;
+    gap:13px!important;
+    margin-top:clamp(34px,5svh,53px)!important;
+    padding:22px 23px 39px!important;
   }
-  .case-experience > .site-footer .site-footer-links{justify-content:flex-start!important}
-  .case-experience > .site-footer h2{font-size:1.32rem!important}
+  #gallery > .site-footer h2{font-size:clamp(1.38rem,5vw,1.75rem)!important}
+  #gallery > .site-footer .site-footer-links{
+    justify-content:flex-start!important;
+  }
 }
 @media(orientation:landscape) and (max-height:680px){
   body:has(.case-experience) .gallery-hero{
     min-height:calc(100svh - var(--head-height))!important;
-    padding:clamp(20px,4svh,45px) clamp(30px,8vw,95px)!important;
+    padding:clamp(22px,4svh,40px) clamp(28px,8vw,95px)!important;
   }
   body:has(.case-experience) .gallery-hero h1{
-    font-size:clamp(2.1rem,8.1svh,4.1rem)!important;
-    margin:8px 0 9px!important;
+    font-size:clamp(2.1rem,8svh,4.1rem)!important;
+    margin:8px 0 10px!important;
   }
   body:has(.case-experience) .gallery-hero p{
-    font-size:clamp(.88rem,2.8svh,1.08rem)!important;
+    font-size:clamp(.87rem,2.7svh,1.08rem)!important;
     line-height:1.45!important;
   }
-  .case-experience{
-    height:calc(100svh - var(--head-height));
-    min-height:0!important;
+  #gallery.case-experience{
+    --project-window:clamp(290px,72svh,490px);
+    min-height:calc(100svh - var(--head-height) + 155px)!important;
+    padding:clamp(24px,5svh,42px) 0 clamp(38px,7svh,66px)!important;
   }
-  #gallery.case-experience > .gallery-shell{padding:5px 0 2px!important}
-  .case-experience .gallery-controls{min-height:40px!important;height:40px!important;padding:1px 12px!important}
-  .case-experience .gallery-instructions{display:none!important}
-  .case-experience > .site-footer{
+  #gallery .gallery-controls{
+    min-height:46px!important;
+    margin-top:10px!important;
+    padding:2px 12px!important;
+  }
+  #gallery .gallery-instructions{display:none!important}
+  #gallery > .site-footer{
     flex-direction:row!important;
     align-items:center!important;
-    padding:10px clamp(14px,4vw,44px)!important;
-    gap:12px!important;
+    gap:15px!important;
+    margin-top:clamp(24px,4.5svh,35px)!important;
+    padding:16px clamp(18px,4vw,44px) 27px!important;
   }
-  .case-experience > .site-footer .site-footer-kicker{font-size:9px;margin-bottom:2px}
-  .case-experience > .site-footer h2{font-size:clamp(1.1rem,2.3vw,1.45rem)!important}
-  .case-experience > .site-footer .site-footer-links{gap:6px!important}
-  .case-experience > .site-footer .site-footer-links a{
-    min-height:29px;padding:6px 9px;font-size:10px;
+  #gallery > .site-footer h2{font-size:clamp(1.05rem,2.4vw,1.5rem)!important}
+  #gallery > .site-footer .site-footer-links{gap:7px!important}
+  #gallery > .site-footer .site-footer-links a{
+    padding:7px 10px;
+    min-height:32px;
+    font-size:10px;
   }
 }
 @media(orientation:landscape) and (max-height:390px){
-  .case-experience > .site-footer .site-footer-kicker{display:none}
-  .case-experience > .site-footer h2{font-size:1.05rem!important}
-  .case-experience > .site-footer .site-footer-links a{font-size:9px;padding:5px 7px;min-height:28px}
-  .case-experience .gallery-controls{min-height:36px!important;height:36px!important}
+  #gallery.case-experience{--project-window:clamp(270px,73svh,320px)}
+  #gallery > .site-footer .site-footer-kicker{display:none}
+  #gallery > .site-footer h2{font-size:1.08rem!important}
+  #gallery > .site-footer .site-footer-links a{font-size:9px;min-height:30px}
 }
 @media(prefers-reduced-motion:reduce){
-  html:has(.case-experience){scroll-behavior:auto}
+  html:has(.case-experience){scroll-behavior:auto!important}
 }
