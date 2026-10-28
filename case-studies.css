@@ -315,3 +315,137 @@ body{overscroll-behavior-y:auto!important}
   #gallery.gallery-shell{padding-top:0!important}
   #project-track.panels{padding-top:0!important}
 }
+
+
+/* FINAL PAGE RHYTHM | Selected Work
+   This page is an editorial gallery, not a series of forced full-screen slides.
+   Project stories scroll inside their cards; the page itself scrolls naturally. */
+body:has(#gallery) .gallery-hero{
+  min-height:clamp(430px,70svh,720px)!important;
+  padding:clamp(48px,7svh,78px) clamp(24px,9vw,145px)!important;
+}
+body:has(#gallery) .gallery-kicker{margin-top:clamp(12px,2svh,19px)}
+body:has(#gallery) .gallery-scroll-cue{
+  margin-top:clamp(17px,2.8svh,28px);
+}
+#gallery.gallery-shell{
+  --project-card-height:clamp(360px,59svh,570px);
+  height:auto!important;
+  min-height:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  grid-template-rows:var(--project-card-height) auto auto auto!important;
+  row-gap:0!important;
+  padding:clamp(17px,2.7vw,35px) 0 clamp(38px,5vw,62px)!important;
+  overflow:visible!important;
+}
+#gallery .gallery-frame{
+  height:var(--project-card-height)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+}
+#gallery #project-track.panels{
+  height:100%!important;
+  min-height:0!important;
+  padding-top:0!important;
+  padding-bottom:0!important;
+  align-items:stretch!important;
+}
+#gallery .work-panel{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+}
+#gallery .panel-scroller{
+  height:100%!important;
+  max-height:100%!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+}
+#gallery .gallery-controls{
+  height:auto!important;min-height:58px!important;
+  padding:clamp(10px,1.6svh,17px) 14px 5px!important;
+}
+#gallery .gallery-instructions{
+  display:block!important;
+  text-align:center!important;
+  padding:2px 16px!important;
+  margin:0!important;
+  font-size:clamp(10px,1vw,12px)!important;
+  line-height:1.5!important;
+}
+#gallery .gallery-axis{
+  display:flex!important;
+  width:min(480px,calc(100% - 36px));
+  min-height:0!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:clamp(28px,6vw,70px)!important;
+  margin:clamp(13px,2svh,22px) auto 0!important;
+  padding:13px 0 0!important;
+  border-top:1px solid var(--line);
+}
+#gallery .gallery-axis a{
+  min-height:30px;
+  padding:4px 5px!important;
+  align-items:center;
+  gap:9px;
+  font-weight:700;
+}
+body:has(#gallery) > footer.site-footer{
+  min-height:0!important;
+  margin:0!important;
+  padding:clamp(28px,3vw,40px) clamp(20px,5vw,80px) clamp(39px,4.5vw,56px)!important;
+  justify-content:space-between!important;
+  align-items:center!important;
+}
+body:has(#gallery) > footer.site-footer .site-footer-links{
+  row-gap:12px!important;
+}
+@media(max-width:700px){
+  body:has(#gallery) .gallery-hero{
+    min-height:clamp(390px,65svh,630px)!important;
+    padding:48px 25px 50px!important;
+  }
+  #gallery.gallery-shell{
+    --project-card-height:clamp(375px,58svh,525px);
+    padding:15px 0 39px!important;
+  }
+  #gallery .gallery-controls{
+    min-height:55px!important;
+    padding:10px 12px 4px!important;
+  }
+  #gallery .gallery-instructions{font-size:10.5px!important}
+  #gallery .gallery-axis{
+    margin-top:15px!important;
+    padding-top:14px!important;
+  }
+  body:has(#gallery) > footer.site-footer{
+    padding:26px 22px 43px!important;
+    align-items:flex-start!important;
+  }
+}
+@media(orientation:landscape) and (max-height:680px){
+  body:has(#gallery) .gallery-hero{
+    min-height:0!important;
+    padding:clamp(25px,5svh,43px) clamp(26px,7vw,92px)!important;
+  }
+  body:has(#gallery) .gallery-hero h1{
+    margin:9px 0!important;
+    font-size:clamp(2.3rem,8.5svh,4.1rem)!important;
+  }
+  body:has(#gallery) .gallery-hero p{line-height:1.45!important}
+  #gallery.gallery-shell{
+    --project-card-height:clamp(210px,61svh,365px);
+    padding:12px 0 34px!important;
+  }
+  #gallery .gallery-controls{min-height:44px!important;padding:6px 12px 2px!important}
+  #gallery .gallery-instructions{display:none!important}
+  #gallery .gallery-axis{margin-top:13px!important;padding-top:10px!important}
+  body:has(#gallery) > footer.site-footer{
+    padding-top:27px!important;padding-bottom:39px!important;
+  }
+}
+@media(orientation:portrait) and (max-width:390px){
+  #gallery.gallery-shell{--project-card-height:clamp(360px,55svh,475px)}
+}
