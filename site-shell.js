@@ -1,5 +1,7 @@
 /* Stop horizontal viewport rubber-banding without disabling intentional carousels. */
 (()=>{
+ // Keep page interactions in JavaScript rather than inline HTML attributes.
+ document.querySelectorAll('[data-print-resume]').forEach(button=>button.addEventListener('click',()=>window.print()));
  let start=null;
  const scrollable='.work-grid,#project-track,.slider,[data-horizontal-scroll]';
  document.addEventListener('touchstart',event=>{
