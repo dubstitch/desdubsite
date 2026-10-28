@@ -280,6 +280,25 @@ landing.footerBottom<landing.viewportHeight+40)
     }));
     if(after.panelScroll<15||Math.abs(after.scrollY-landing.scrollY)>30)
       issues.push('CASE INTERNAL SCROLL ESCAPE '+size.name+' '+JSON.stringify({landing,after}));
+    // A snap destination taller than the screen must still let the visitor reach
+    // its invitation and the generous breathing room beneath it.
+    await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+    await page.waitForTimeout(180);
+    const endPosition=await page.evaluate(()=>{
+      const section=document.getElementById('gallery').getBoundingClientRect();
+      const footer=document.getElementById('more').getBoundingClientRect();
+      return {
+        footerTop:Math.round(footer.top),
+        footerBottom:Math.round(footer.bottom),
+        sectionBottom:Math.round(section.bottom),
+        bottomSpace:Math.round(section.bottom-footer.bottom),
+        viewportHeight:innerHeight,
+        scrollY:Math.round(scrollY)
+      };
+    });
+    if(endPosition.footerTop>=endPosition.viewportHeight-30||
+       endPosition.bottomSpace<35||endPosition.scrollY<=landing.scrollY)
+      issues.push('CASE FOOTER UNREACHABLE AT SNAP END '+size.name+' '+JSON.stringify(endPosition));
     if(size.name==='iphone'){
       const file=output+'/gallery-footer-visible-iphone.jpeg';
       await page.screenshot({path:file,type:'jpeg',quality:55});
@@ -394,4 +413,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|CASE GALLERY CRAMPED|CASE VERTICAL GESTURE DOES NOT SNAP|WEBKIT CASE SNAP OR BOTTOM GAP|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
+if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|CASE GALLERY CRAMPED|CASE VERTICAL GESTURE DOES NOT SNAP|CASE FOOTER UNREACHABLE AT SNAP END|WEBKIT CASE SNAP OR BOTTOM GAP|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
