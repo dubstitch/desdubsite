@@ -205,18 +205,24 @@ for(const theme of ['light','dark']){
       gallerySnap:getComputedStyle(destination).scrollSnapAlign,
       galleryHeight:Math.round(d.height),
       visibleHeight:innerHeight-document.querySelector('.site-header').getBoundingClientRect().height,
+      cardHeight:Math.round(document.querySelector('.gallery-frame').getBoundingClientRect().height),
       footerInside:destination.contains(footer),
       footerBottomRelative:Math.round(f.bottom-d.top),
+      invitationBottomSpace:Math.round(d.bottom-f.bottom),
       removedCue:!document.querySelector('.gallery-scroll-cue'),
       removedAxis:!document.querySelector('.gallery-axis'),
       sections:document.querySelectorAll('main > section').length
     };
   });
   if(flow.sections!==2||!flow.footerInside||!flow.removedCue||!flow.removedAxis||
-    !flow.snap.startsWith('y')||flow.introSnap!=='start'||flow.gallerySnap!=='start')
+    !flow.snap.includes('mandatory')||flow.introSnap!=='start'||flow.gallerySnap!=='start')
     issues.push('CASE TWO SECTION FLOW '+theme+' '+size.name+' '+JSON.stringify(flow));
   if(flow.footerBottomRelative>flow.galleryHeight+3)
     issues.push('CASE INVITATION OVERFLOWS '+theme+' '+size.name+' '+JSON.stringify(flow));
+  // A short gallery crushed the cards and pinned the invitation to the bottom.
+  if(flow.galleryHeight<flow.visibleHeight+65||flow.invitationBottomSpace<36||
+     flow.cardHeight<(size.width>size.height?265:400))
+    issues.push('CASE GALLERY CRAMPED '+theme+' '+size.name+' '+JSON.stringify(flow));
 
   if(theme==='light'&&size.name==='iphone'){
     const file=output+'/gallery-light-iphone.jpeg';await page.screenshot({path:file,type:'jpeg',quality:55});capture['gallery-light-iphone']=file;
@@ -246,8 +252,25 @@ for(const theme of ['light','dark']){
       };
     });
     if(landing.scrollY<30||landing.shellTop>landing.headerHeight+20||
-      landing.footerBottom>landing.viewportHeight+10)
+landing.footerBottom<landing.viewportHeight+40)
       issues.push('CASE TWO SECTION LANDING '+size.name+' '+JSON.stringify(landing));
+    // A real vertical wheel/trackpad gesture should settle at the gallery snap point.
+    if(size.name==='desktop'){
+      await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+      await page.waitForTimeout(250);
+      await page.mouse.move(80,200);
+      await page.mouse.wheel(0,Math.round(innerHeight*.85));
+      await page.waitForTimeout(500);
+      const snapLanding=await page.evaluate(()=>{
+        const el=document.getElementById('gallery').getBoundingClientRect();
+        const header=document.querySelector('.site-header').getBoundingClientRect();
+        return {galleryTop:Math.round(el.top),headerHeight:Math.round(header.height),scrollY:Math.round(scrollY)};
+      });
+      if(Math.abs(snapLanding.galleryTop-snapLanding.headerHeight)>32)
+        issues.push('CASE VERTICAL GESTURE DOES NOT SNAP '+size.name+' '+JSON.stringify(snapLanding));
+      await page.evaluate(()=>document.getElementById('gallery').scrollIntoView({behavior:'instant',block:'start'}));
+      await page.waitForTimeout(170);
+    }
     // Trigger the internal scroller, which should not force the parent to another section.
     await page.locator('.work-panel:first-child .panel-scroller').evaluate(el=>el.scrollTop=140);
     await page.waitForTimeout(160);
@@ -347,4 +370,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
+if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|CASE GALLERY CRAMPED|CASE VERTICAL GESTURE DOES NOT SNAP|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
