@@ -49,6 +49,7 @@ for (const theme of ['light', 'dark']) {
           h1: document.querySelectorAll('h1').length,
           main: document.querySelectorAll('main').length,
           footer: document.querySelectorAll('.site-footer').length,
+          homeContact: !!document.getElementById('contact'),
           header: document.querySelectorAll('.site-header-shell').length,
           theme: document.documentElement.dataset.theme,
           pageWidth: document.documentElement.scrollWidth,
@@ -63,11 +64,12 @@ for (const theme of ['light', 'dark']) {
           } : null
         };
       });
+      const home = url.pathname.endsWith('/index.html');
       if (!content.title || !content.lang || content.h1 < 1 || content.main !== 1 ||
-          content.header !== 1 || content.footer !== 1) {
+          content.header !== 1 || (home ? !content.homeContact : content.footer !== 1)) {
         issues.push('STRUCTURE ' + label + ' ' + JSON.stringify({
           title: content.title, h1: content.h1, main: content.main,
-          header: content.header, footer: content.footer, lang: content.lang
+          header: content.header, footer: content.footer, homeContact: content.homeContact, lang: content.lang
         }));
       }
       if (content.theme !== theme) issues.push('THEME ' + label + ' unexpected ' + content.theme);
