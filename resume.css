@@ -175,3 +175,16 @@ html[data-theme="light"] .role-spotlight span{color:#5f4565}
 }
 html[data-theme="light"] .resume-action svg,
 html[data-theme="light"] .site-nav-pill svg{color:#512a59!important;stroke:currentColor!important}
+
+
+/* The filled contact button uses white foreground text and icon in light mode.
+   The outline buttons continue using the dark-purple foreground. */
+html[data-theme="light"] .resume-action.primary-action svg{
+  color:#fff!important;
+  stroke:#fff!important;
+}
+html[data-theme="light"] .resume-action.primary-action:hover svg,
+html[data-theme="light"] .resume-action.primary-action:focus-visible svg{
+  color:#fff!important;
+  stroke:#fff!important;
+}
