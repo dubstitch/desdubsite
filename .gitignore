@@ -1,0 +1,18 @@
+# Local dependencies and browser test outputs
+node_modules/
+playwright-report/
+test-results/
+coverage/
+.nyc_output/
+
+# Local tooling and operating system files
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+!.env.example
+.vscode/*
+!.vscode/extensions.json
+__pycache__/
+*.py[cod]
