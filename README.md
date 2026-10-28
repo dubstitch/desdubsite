@@ -9,13 +9,15 @@ A personal portfolio focused on web content strategy, CMS implementation, UX and
 | `index.html` | Five chapter homepage and Universe navigation |
 | `home.css` | Homepage visual system, responsive layouts and motion |
 | `home.js` | Chapter navigation, Universe and featured work interactions |
+| `case-studies.css` / `case-studies.js` | Gallery presentation, carousel behavior and keyboard navigation |
+| `resume.css` / `philosophy.css` / `component-lab.css` | Page-specific layouts and responsive styling |
 | `case-studies.html` | Three completed work stories in an interactive gallery |
 | `resume.html` | Professional background and skills |
 | `philosophy.html` | Personal philosophy, work approach and creative perspective |
 | `component-lab.html` | Public experimental component sketchbook |
 | `theme.css` / `theme.js` | Shared dark and light appearance controls |
 
-Everything is a static file and runs without a build step. The homepage has its own assets so the content and behavior are easier to find and maintain.
+Everything is a static file and runs without a build step. Each portfolio page keeps its content separate from its styles, and interactive pages keep their behavior in dedicated JavaScript files.
 
 ## Local preview
 
