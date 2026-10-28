@@ -117,7 +117,8 @@ for(const theme of ['light','dark']){
     await page.waitForURL('**/component-lab.html');
     if(!await page.locator('.lab-note').isVisible())issues.push('MISSING PUBLIC LAB NOTE '+size.name);
     await page.getByRole('link',{name:'Universe'}).click();
-    await page.waitForURL('**/index.html?universe=1');
+    // The homepage intentionally removes the one-time universe query after opening.
+    await page.locator('#universe.open').waitFor({state:'visible',timeout:10000});
     if(!await page.locator('#universe.open').isVisible())issues.push('BROKEN LAB RETURN TO UNIVERSE '+size.name);
   }
   await page.goto(origin+'/resume.html',{waitUntil:'domcontentloaded'});
