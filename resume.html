@@ -124,7 +124,21 @@ html[data-theme="light"] .role-spotlight span{color:#5f4565}
  .resume-footer-links a{min-height:43px!important}
 }
 @media(prefers-reduced-motion:reduce){.resume-footer-links a{transition:none!important}}
-</style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=(localStorage.getItem("des-theme")==="light"?"light":"dark")}catch(e){document.documentElement.dataset.theme="dark"}</script></head><body><header><a class="brand" href="index.html#home">des<span>.</span></a><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><a href="index.html#work">← Back to portfolio</a><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button></div></header><main class="resume-layout">
+
+/* More deliberate spacing between the masthead, introduction and first section. */
+@media screen {
+ .resume-layout{padding-top:30px}
+ .resume-intro{padding-top:24px;padding-bottom:37px}
+ .resume-section{padding-top:46px;padding-bottom:58px}
+ .resume-section:first-of-type{padding-top:38px}
+ .resume-action svg{width:17px;height:17px;flex:none}
+}
+@media screen and (max-width:760px){
+ .resume-layout{padding-top:20px}
+ .resume-intro{padding:24px 0 33px}
+ .resume-section{padding:38px 0 46px}
+}
+</style><link rel="stylesheet" href="theme.css"><script>try{document.documentElement.dataset.theme=(localStorage.getItem("des-theme")==="light"?"light":"dark")}catch(e){document.documentElement.dataset.theme="dark"}</script></head><body><header><a class="brand" href="index.html#home">des<span>.</span></a><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><a href="index.html#work">← Back to portfolio</a><a href="index.html?universe=1">Universe</a><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button></div></header><main class="resume-layout">
 <section class="resume-intro" aria-labelledby="resume-name">
   <div class="eyebrow">Experience, expertise, impact</div>
   <h1 id="resume-name">Desiree N. <em>Wade.</em></h1>
@@ -215,13 +229,13 @@ html[data-theme="light"] .role-spotlight span{color:#5f4565}
 </article>
 </section>
 
-<section class="resume-section" aria-labelledby="career-shape"><div class="section-kicker">The experience behind the roles</div><h2 id="career-shape">I build it. Then I make it usable.</h2><p class="resume-summary">At APEI, I learned that the work doesn't end when a component ships. I was writing the code, working with UX leadership, helping departments get what they needed, and eventually teaching people how to use the CMS and publish their own content. That combination shaped the way I work today: I can talk through the problem, design a practical solution, build it and help the next person maintain it.</p><p><a class="resume-action" href="philosophy.html">More about how I work ↗</a> <a class="resume-action" href="component-lab.html">See my component lab ↗</a></p></section><section class="resume-section" aria-labelledby="skills-heading">
+<section class="resume-section" aria-labelledby="career-shape"><div class="section-kicker">The experience behind the roles</div><h2 id="career-shape">I build it. Then I make it usable.</h2><p class="resume-summary">At APEI, I learned that the work doesn't end when a component ships. I was writing the code, working with UX leadership, helping departments get what they needed, and eventually teaching people how to use the CMS and publish their own content. That combination shaped the way I work today: I can talk through the problem, design a practical solution, build it and help the next person maintain it.</p><p><a class="resume-action" href="philosophy.html">More about how I work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a> <a class="resume-action" href="component-lab.html">See my component lab <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></p></section><section class="resume-section" aria-labelledby="skills-heading">
 <div class="section-kicker">03 / Tools and capabilities</div><h2 id="skills-heading">A toolkit that keeps growing.</h2>
 <div class="skills-grid">
   <div class="skill-group"><h3>Content and experience</h3><p>Web content strategy, information architecture, content governance, enterprise publishing, stakeholder collaboration, UX optimization, SEO considerations, web analytics reporting, accessibility and QA.</p></div>
-  <div class="skill-group"><h3>CMS and platforms</h3><p>Sitecore, Higher Logic Collaborate, Finalsite, Sitefinity, SiteExecutive, Drupal, WordPress and related publishing workflows.</p></div>
+  <div class="skill-group"><h3>CMS and platforms</h3><p>Sitecore, Higher Logic Collaborate, Finalsite, Sitefinity, SiteExecutive, Drupal and WordPress, with additional independent website work using Square and Shopify.</p></div>
   <div class="skill-group"><h3>Development</h3><p>HTML5, CSS3, JavaScript, responsive UI, custom component implementation, Sass, Vue.js, Bootstrap, Node.js, Express.js, REST APIs, JSON and Git.</p></div>
-  <div class="skill-group"><h3>Additional technical background</h3><p>Python, Java, C++, C#, PHP, XML, SQL, Azure DevOps, Jira, Docker, Axure RP and Adobe experience design tools.</p></div>
+  <div class="skill-group"><h3>Additional technical background</h3><p>Adobe Photoshop, Axure RP, Adobe experience design tools, Python, Java, C++, C#, PHP, XML, SQL, Azure DevOps, Jira and Docker.</p></div>
 </div></section>
 <section class="resume-section education-section" aria-labelledby="education-heading">
 <div class="section-kicker">04 / Education</div><h2 id="education-heading">The foundation.</h2>
