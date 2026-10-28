@@ -1043,3 +1043,49 @@ html[data-theme="light"] #chapters #home .hero-secondary{color:#71365f;border-co
   .honey .hex:nth-child(2),.honey .hex:nth-child(5){left:17%}
   .honey .hex:nth-child(3),.honey .hex:nth-child(6){left:83%}
 }
+
+
+/* Selected work: a single complete card in compact landscape, without a clipped
+   second tile or the square shadow the carousel previously left behind. */
+@media (orientation:landscape) and (max-height:680px){
+ #chapters #work .chapter-content-inner{row-gap:clamp(8px,1.8svh,15px)!important}
+ #chapters #work .work-grid{
+   min-width:0!important;width:100%!important;max-width:100%!important;
+   padding:0!important;margin:0!important;gap:0!important;
+   overflow-x:auto!important;overflow-y:hidden!important;
+   scroll-snap-type:x mandatory!important;scroll-padding:0!important;
+   background:none!important;border:none!important;border-radius:0!important;
+   box-shadow:none!important;filter:none!important;
+   -webkit-overflow-scrolling:touch;
+ }
+ #chapters #work .work-grid > .work{
+   flex:0 0 100%!important;width:100%!important;min-width:100%!important;
+   max-width:100%!important;box-shadow:none!important;filter:none!important;
+   min-height:clamp(103px,29svh,151px)!important;
+   padding:clamp(12px,2.2svh,18px)!important;
+   margin:0!important;scroll-snap-align:start!important;
+   border-radius:18px!important;
+ }
+ #chapters #work .work-grid > .work::before,
+ #chapters #work .work-grid > .work::after{display:none!important;content:none!important}
+ #chapters #work .work-controls{margin:0!important;gap:13px!important;min-height:40px!important}
+ #chapters #home .chapter-content-inner{
+   row-gap:clamp(9px,2svh,15px)!important;
+ }
+ #chapters #home .chips{gap:clamp(7px,1.6svh,12px)!important;margin:5px 0!important}
+ #chapters #home .chip{padding:5px 10px!important;line-height:1.2!important}
+ #chapters #home .cta{margin-top:5px!important;min-height:40px!important}
+ #chapters #home .hero-secondary{margin-top:5px!important;padding:3px 0!important}
+}
+@media (orientation:landscape) and (max-height:420px){
+ #chapters #home .chapter-content-inner{row-gap:clamp(6px,1.4svh,10px)!important}
+ #chapters #home .chips{gap:6px!important;margin:3px 0!important}
+ #chapters #home .chip{padding:4px 8px!important}
+ #chapters #home .cta{min-height:35px!important;padding:5px 12px!important}
+ #chapters #home .hero-secondary{margin-top:3px!important}
+ #chapters #work .work-grid > .work{min-height:clamp(92px,27svh,118px)!important}
+}
+html,body,#chapters{overscroll-behavior-x:none!important}
+#chapters.chapters{touch-action:pan-y pinch-zoom}
+#chapters #work .work-grid{touch-action:pan-x pan-y!important}
+html[data-theme="light"] .site-header-shell .resume-pill svg{color:#4c2853!important}
