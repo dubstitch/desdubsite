@@ -4,6 +4,10 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'home.css'
+      - 'home.js'
+      - 'component-lab.html'
+      - 'philosophy.html'
       - 'case-studies.html'
       - 'resume.html'
       - 'theme.css'
