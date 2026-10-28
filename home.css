@@ -912,3 +912,118 @@ html[data-theme="light"] #chapters #home .hero-secondary{color:#71365f;border-co
  .honey .hex{width:clamp(90px,17vw,150px);height:clamp(80px,15.1vw,133px)}
 }
 @media(prefers-reduced-motion:reduce){.universe,.honey .hex,#chapters #home .hero-secondary svg{transition:none!important}}
+
+/* Responsive layout pass: keep the two hero links separate in landscape. */
+@media (orientation:landscape) and (max-height:680px){
+  #chapters #home .chapter-content-inner{
+    grid-template-rows:auto auto auto auto!important;
+    row-gap:clamp(4px,1svh,9px)!important;
+  }
+  #chapters #home .chapter-content-inner > h1{
+    grid-area:2 / 1 / 5 / 2!important;
+  }
+  #chapters #home .cta{
+    grid-area:3 / 2 / 4 / 3!important;
+    justify-self:start!important;
+    align-self:center!important;
+    margin:0!important;
+    width:max-content!important;
+    max-width:100%!important;
+  }
+  #chapters #home .hero-secondary{
+    grid-area:4 / 2 / 5 / 3!important;
+    justify-self:start!important;
+    align-self:center!important;
+    margin:0!important;
+    padding:1px 0!important;
+    font-size:clamp(10px,1.5vw,13px)!important;
+    line-height:1.3!important;
+  }
+  /* Preserve breathing room for the larger constellation. */
+  #chapters .chapter{
+    padding-right:clamp(146px,19vw,195px)!important;
+  }
+  .constellation-track.constellation-arc{
+    width:clamp(127px,16.5vw,176px)!important;
+    height:clamp(102px,13.2vw,141px)!important;
+    right:clamp(13px,2vw,27px)!important;
+    bottom:clamp(13px,3.2svh,25px)!important;
+  }
+  #chapters .chapter .next-section{bottom:14px!important}
+}
+@media (orientation:landscape) and (max-height:425px){
+  #chapters .chapter{
+    padding-top:clamp(55px,13svh,68px)!important;
+    padding-bottom:16px!important;
+    padding-right:clamp(145px,19vw,190px)!important;
+  }
+  #chapters #home .chapter-content-inner{
+    row-gap:3px!important;
+  }
+  #chapters #home .chapter-content-inner > h1{
+    font-size:clamp(2.25rem,8svh,3.5rem)!important;
+  }
+  #chapters #home .chips{gap:4px!important}
+  #chapters #home .chip{padding:3px 6px!important}
+  #chapters #home .cta{min-height:31px!important;padding:5px 12px!important}
+  #chapters #home .hero-secondary{font-size:11px!important}
+}
+/* Universe labels and controls need separate space from the navigation. */
+.universe .close{top:clamp(12px,2.5svh,24px);right:clamp(14px,3vw,38px)}
+.universe-title{top:clamp(85px,12svh,125px);left:0;right:0;text-align:center;pointer-events:none}
+@media (orientation:portrait){
+  .honey{width:min(94vw,680px);height:min(63svh,540px)}
+  .honey .hex:nth-child(1){left:50%;top:15%}
+  .honey .hex:nth-child(2){left:22%;top:32.5%}
+  .honey .hex:nth-child(3){left:78%;top:32.5%}
+  .honey .hex:nth-child(4){left:50%;top:50%}
+  .honey .hex:nth-child(5){left:22%;top:67.5%}
+  .honey .hex:nth-child(6){left:78%;top:67.5%}
+  .honey .hex:nth-child(7){left:50%;top:85%}
+}
+@media (orientation:portrait) and (max-width:650px){
+  .honey{height:min(60svh,515px);width:min(96vw,490px)}
+  .honey .hex{
+    width:clamp(100px,28.5vw,137px);
+    height:auto;aspect-ratio:1/.93;
+    padding:9px;
+  }
+  .honey .hex strong{font-size:clamp(12px,3.3vw,16px);line-height:1.2}
+  .universe-title{top:clamp(76px,11svh,112px)}
+}
+@media (orientation:landscape) and (max-height:680px){
+  .universe-title{
+    top:clamp(12px,3svh,23px);left:clamp(18px,4vw,58px);
+    right:auto;text-align:left;font-size:10px;max-width:50%;
+  }
+  .universe .close{
+    top:clamp(8px,2svh,15px);right:clamp(12px,3vw,28px);
+    padding:8px 17px;
+  }
+  .honey{
+    width:min(90vw,760px);
+    height:min(calc(100svh - 108px),310px);
+    margin-top:48px;
+  }
+  .honey .hex{
+    width:clamp(94px,16vw,138px);
+    height:auto;aspect-ratio:1/.93;
+    padding:7px;
+  }
+  .honey .hex strong{font-size:clamp(12px,1.8vw,17px);line-height:1.12}
+  .honey .hex small{margin-bottom:3px;font-size:9px}
+  .honey .hex:nth-child(1){left:15%;top:25%}
+  .honey .hex:nth-child(2){left:38%;top:25%}
+  .honey .hex:nth-child(3){left:61%;top:25%}
+  .honey .hex:nth-child(4){left:84%;top:25%}
+  .honey .hex:nth-child(5){left:26.5%;top:75%}
+  .honey .hex:nth-child(6){left:50%;top:75%}
+  .honey .hex:nth-child(7){left:73.5%;top:75%}
+}
+@media (orientation:landscape) and (max-height:370px){
+  .universe-title{top:8px}
+  .universe .close{top:5px;padding:5px 12px}
+  .honey{height:calc(100svh - 85px);margin-top:44px}
+  .honey .hex{width:clamp(85px,13.5vw,116px)}
+  .honey .hex strong{font-size:clamp(11px,1.6vw,14px)}
+}
