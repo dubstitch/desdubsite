@@ -185,4 +185,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>x.startsWith('JS ')||x.startsWith('CLIPPED ')||x.startsWith('HORIZONTAL')||x.startsWith('RESUME FOOTER STRETCHED')||x.startsWith('GALLERY PANEL')))process.exitCode=1;
+if(issues.some(x=>/^(JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN)/.test(x)))process.exitCode=1;
