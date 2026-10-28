@@ -6,6 +6,8 @@ on:
       - 'index.html'
       - 'home.css'
       - 'home.js'
+      - 'site-shell.css'
+      - 'site-shell.js'
       - 'case-studies.css'
       - 'case-studies.js'
       - 'resume.css'
