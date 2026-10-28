@@ -13,3 +13,13 @@ html[data-theme="light"] body{background:#fff7fc;color:#392b42}html[data-theme="
   .essay blockquote{margin:26px 0 10px}
   .essay blockquote + section{padding-top:18px}
 }
+
+
+/* The closing work link needs readable text on its pink filled surface. */
+.essay .footer-nav a.cta{
+  background:#f3c2e1!important;
+  color:#301a3a!important;
+  border:1px solid #a56998!important;
+}
+.essay .footer-nav a.cta svg{stroke:currentColor!important}
+.essay .footer-nav a.cta:hover{background:#f8d8ec!important}
