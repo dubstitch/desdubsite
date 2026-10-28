@@ -259,7 +259,7 @@ landing.footerBottom<landing.viewportHeight+40)
       await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
       await page.waitForTimeout(250);
       await page.mouse.move(80,200);
-      await page.mouse.wheel(0,Math.round(innerHeight*.85));
+      await page.mouse.wheel(0,Math.round(size.height*.85));
       await page.waitForTimeout(500);
       const snapLanding=await page.evaluate(()=>{
         const el=document.getElementById('gallery').getBoundingClientRect();
