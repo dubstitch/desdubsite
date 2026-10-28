@@ -160,3 +160,18 @@ html[data-theme="light"] .role-spotlight span{color:#5f4565}
   header > div a{font-size:clamp(10px,2.9vw,13px)}
   main.resume-layout{padding-top:16px!important}
 }
+
+
+/* Keep actions equally spaced whether inline or wrapped to a new row. */
+.resume-next-links{
+ display:flex;flex-wrap:wrap;align-items:center;
+ gap:14px;margin:18px 0 0;
+}
+.resume-next-links .resume-action{margin:0!important;min-width:0}
+.resume-next-links + p{margin-top:0}
+@media(max-width:600px){
+ .resume-next-links{flex-direction:column;align-items:flex-start;gap:13px}
+ .resume-next-links .resume-action{max-width:100%;width:max-content}
+}
+html[data-theme="light"] .resume-action svg,
+html[data-theme="light"] .site-nav-pill svg{color:#512a59!important;stroke:currentColor!important}
