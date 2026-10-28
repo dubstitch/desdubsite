@@ -102,6 +102,23 @@ for(const theme of ['light','dark']){
       capture['universe-'+size.name]=file;
     }
   }
+  if(['iphone','phone-landscape','desktop'].includes(size.name)) {
+    const nav=await page.evaluate(()=>{
+      const h=document.querySelector('.site-header-shell').getBoundingClientRect();
+      const actions=[...document.querySelectorAll('.site-header-shell .site-header-actions > *')].filter(x=>getComputedStyle(x).display!=='none');
+      return {height:Math.round(h.height),overflow:actions.some(el=>el.getBoundingClientRect().right>innerWidth+2)};
+    });
+    if(nav.overflow)issues.push('HEADER NAV OVERFLOW '+theme+' '+size.name+' '+JSON.stringify(nav));
+  }
+  if(size.width>size.height&&size.height<680){
+    const carousel=await page.evaluate(()=>{
+      const frame=document.querySelector('#work .work-grid').getBoundingClientRect();
+      const first=document.querySelector('#work .work-grid .work').getBoundingClientRect();
+      const cards=[...document.querySelectorAll('#work .work-grid .work')];
+      return {width:frame.width,firstWidth:first.width,visibleSecond:Math.max(0,Math.min(frame.right,cards[1].getBoundingClientRect().right)-Math.max(frame.left,cards[1].getBoundingClientRect().left))};
+    });
+    if(carousel.firstWidth<carousel.width-8||carousel.visibleSecond>8)issues.push('HOME LANDSCAPE MULTICARD '+theme+' '+size.name+' '+JSON.stringify(carousel));
+  }
   // Regression checks for the Universe, case study links and public component lab.
   if(theme==='dark'&&['iphone','desktop'].includes(size.name)){
     await page.goto(origin+'/index.html?universe=1',{waitUntil:'domcontentloaded'});
@@ -124,7 +141,7 @@ for(const theme of ['light','dark']){
   await page.goto(origin+'/resume.html',{waitUntil:'domcontentloaded'});
   await page.waitForTimeout(70);
   const footer=await page.evaluate(()=>{
-   const f=document.querySelector('.resume-footer'),links=[...document.querySelectorAll('.resume-footer-links a')];
+   const f=document.querySelector('.site-footer'),links=[...document.querySelectorAll('.site-footer-links a')];
    const r=f.getBoundingClientRect();
    return {width:r.width,docWidth:document.documentElement.scrollWidth,windowWidth:innerWidth,links:links.map(a=>{const b=a.getBoundingClientRect();return {width:b.width,height:b.height}})};
   });
@@ -151,7 +168,7 @@ for(const theme of ['light','dark']){
   }
   if(theme==='dark'&&size.name==='iphone'){
    const file=output+'/resume-footer-dark-iphone.jpeg';
-   await page.locator('.resume-footer').screenshot({path:file,type:'jpeg',quality:55});
+   await page.locator('.site-footer').screenshot({path:file,type:'jpeg',quality:55});
    capture['resume-footer-dark-iphone']=file;
   }
   await page.goto(origin+'/case-studies.html?project=anniversary#gallery',{waitUntil:'domcontentloaded'});
@@ -176,6 +193,16 @@ for(const theme of ['light','dark']){
   }
   if(gallery.width>gallery.client+2)issues.push('GALLERY HORIZONTAL OVERFLOW '+theme+' '+size.name);
   if(gallery.panel.bottom>gallery.controls.top+8)issues.push('GALLERY PANEL-CONTROLS OVERLAP '+theme+' '+size.name+' '+JSON.stringify(gallery));
+  const wayfinding=await page.evaluate(()=>({
+    arrows:document.querySelectorAll('.gallery-axis a').length,
+    cue:!!document.querySelector('.gallery-scroll-cue'),
+    footer:!!document.querySelector('.site-footer'),
+    controls:document.querySelector('.gallery-controls').getBoundingClientRect().bottom,
+    axisTop:document.querySelector('.gallery-axis').getBoundingClientRect().top,
+  }));
+  if(wayfinding.arrows!==2||!wayfinding.cue||!wayfinding.footer||wayfinding.axisTop<wayfinding.controls-6)
+    issues.push('GALLERY WAYFINDING '+theme+' '+size.name+' '+JSON.stringify(wayfinding));
+
   if(theme==='light'&&size.name==='iphone'){
     const file=output+'/gallery-light-iphone.jpeg';await page.screenshot({path:file,type:'jpeg',quality:55});capture['gallery-light-iphone']=file;
   }
@@ -228,7 +255,7 @@ for(const theme of ['light','dark']){
     }
   }
   await page.goto(origin+'/resume.html',{waitUntil:'domcontentloaded'});
-  const footerHeights=await page.locator('.resume-footer-links a').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().height));
+  const footerHeights=await page.locator('.site-footer-links a').evaluateAll(elements=>elements.map(el=>el.getBoundingClientRect().height));
   if(footerHeights.some(h=>h>80))issues.push('WEBKIT RESUME FOOTER STRETCHED '+theme+' '+size.name+' '+footerHeights);
   await page.goto(origin+'/case-studies.html?project=anniversary#gallery',{waitUntil:'domcontentloaded'});
   await page.waitForTimeout(100);
@@ -249,4 +276,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>/^(JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED)/.test(x)))process.exitCode=1;
+if(issues.some(x=>/^(JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|GALLERY WAYFINDING)/.test(x)))process.exitCode=1;
