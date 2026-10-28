@@ -1027,3 +1027,19 @@ html[data-theme="light"] #chapters #home .hero-secondary{color:#71365f;border-co
   .honey .hex{width:clamp(85px,13.5vw,116px)}
   .honey .hex strong{font-size:clamp(11px,1.6vw,14px)}
 }
+
+/* Size the hexes to the available constellation rather than the full screen.
+   This prevents neighboring destination hit areas from stacking on each other. */
+.honey{width:min(92vw,720px);height:min(70svh,565px)}
+.honey .hex{
+  width:clamp(108px,14vw,154px);
+  height:auto;
+  aspect-ratio:1/.93;
+  min-height:0;
+}
+@media (orientation:portrait) and (max-width:650px){
+  .honey{height:min(67svh,560px);width:min(96vw,490px)}
+  .honey .hex{width:clamp(96px,28.5vw,137px)}
+  .honey .hex:nth-child(2),.honey .hex:nth-child(5){left:17%}
+  .honey .hex:nth-child(3),.honey .hex:nth-child(6){left:83%}
+}
