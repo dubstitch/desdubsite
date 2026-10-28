@@ -1093,3 +1093,42 @@ html[data-theme="light"] .site-header-shell .resume-pill svg{color:#4c2853!impor
 /* Keep carousel gestures horizontal while the document-level guard blocks sideways rubber-band. */
 #chapters.chapters{touch-action:auto!important}
 #chapters #work .work-grid{touch-action:pan-x pan-y!important}
+
+
+/* A little intentional breathing room around the homepage actions. */
+#chapters #home .chips{
+  margin-top:clamp(12px,2.1svh,22px)!important;
+  margin-bottom:clamp(7px,1.6svh,14px)!important;
+}
+#chapters #home .cta{
+  margin-top:clamp(9px,1.8svh,17px)!important;
+}
+#chapters #home .hero-secondary{
+  margin-top:clamp(8px,1.5svh,13px)!important;
+}
+#chapters #approach .philosophy-link{
+  width:max-content!important;
+  max-width:100%!important;
+  justify-self:start!important;
+  margin-top:clamp(15px,2.9svh,25px)!important;
+}
+#chapters #contact .contact-actions{
+  margin-top:clamp(17px,3svh,29px)!important;
+  column-gap:clamp(12px,1.8vw,20px)!important;
+  row-gap:12px!important;
+}
+@media (orientation:landscape) and (max-height:680px){
+  #chapters #home .chips{
+    margin-top:clamp(5px,1svh,9px)!important;
+    margin-bottom:clamp(4px,1svh,8px)!important;
+  }
+  #chapters #home .cta{margin-top:clamp(5px,1svh,9px)!important}
+  #chapters #home .hero-secondary{margin-top:clamp(5px,1svh,9px)!important}
+  #chapters #approach .philosophy-link{margin-top:clamp(7px,1.7svh,14px)!important}
+  #chapters #contact .contact-actions{margin-top:clamp(8px,2svh,14px)!important}
+}
+@media (orientation:landscape) and (max-height:400px){
+  #chapters #home .cta{margin-top:3px!important}
+  #chapters #home .hero-secondary{margin-top:3px!important}
+  #chapters #contact .contact-actions{margin-top:7px!important}
+}
