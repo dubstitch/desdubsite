@@ -1166,3 +1166,30 @@ html[data-theme="light"] .site-header-shell .resume-pill svg{color:#4c2853!impor
    min-height:30px!important;margin-top:0!important;
  }
 }
+
+
+/* The chapter sequence lives in the constellation, not beside every heading. */
+.constellation-arc button{overflow:visible!important}
+.constellation-arc button .constellation-stop-number{
+  position:absolute;top:-12px;left:50%;
+  transform:translateX(-50%);pointer-events:none;
+  color:#fff0fa!important;
+  font:700 9px/1 'DM Sans',sans-serif;
+  letter-spacing:.04em;white-space:nowrap;
+  text-shadow:0 0 6px #cc79bf,0 0 13px #81397390;
+  filter:none!important;
+}
+.constellation-arc button[aria-current="step"] .constellation-stop-number{
+  color:white!important;font-weight:800;
+  text-shadow:0 0 8px #fff8,0 0 15px #ce80bd;
+}
+html[data-theme="light"] .constellation-arc button .constellation-stop-number{
+  color:#45224e!important;
+  text-shadow:0 1px 3px #fff,0 0 7px #cb8db2;
+}
+@media(max-width:650px){
+ .constellation-arc button .constellation-stop-number{top:-10px;font-size:8px}
+}
+@media(orientation:landscape) and (max-height:420px){
+ .constellation-arc button .constellation-stop-number{top:-10px;font-size:8px}
+}
