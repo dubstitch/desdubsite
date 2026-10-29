@@ -1193,3 +1193,19 @@ html[data-theme="light"] .constellation-arc button .constellation-stop-number{
 @media(orientation:landscape) and (max-height:420px){
  .constellation-arc button .constellation-stop-number{top:-10px;font-size:8px}
 }
+
+/* Keep numeric labels steady while the star itself twinkles and scales. */
+.constellation-arc button .constellation-stop-number,
+.constellation-arc button[aria-current="step"] .constellation-stop-number{
+  font-size:9px!important;
+  line-height:1!important;
+  transform:translateX(-50%)!important;
+  animation:none!important;
+  filter:none!important;
+}
+@media(max-width:650px), (orientation:landscape) and (max-height:420px){
+  .constellation-arc button .constellation-stop-number,
+  .constellation-arc button[aria-current="step"] .constellation-stop-number{
+    font-size:8px!important;
+  }
+}
