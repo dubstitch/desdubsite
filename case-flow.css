@@ -211,3 +211,18 @@ body:has(.case-experience) .gallery-kicker{
 @media(prefers-reduced-motion:reduce){
   html:has(.case-experience){scroll-behavior:auto!important}
 }
+
+
+/* The homepage uses gesture-driven chapters, not CSS proximity snapping.
+   This two-chapter page now uses the same mechanism in case-studies.js;
+   CSS snapping would fight the animation and the taller second section. */
+html:has(.case-experience){
+  scroll-snap-type:none!important;
+  scroll-behavior:auto!important;
+  scroll-padding-top:0!important;
+}
+body:has(.case-experience) main > .gallery-hero,
+body:has(.case-experience) main > .case-experience{
+  scroll-snap-align:none!important;
+  scroll-snap-stop:normal!important;
+}
