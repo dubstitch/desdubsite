@@ -1,0 +1,82 @@
+/* Shared soft-glow finishing pass.
+   Glow must fade into the surface, not terminate on a rectangular content edge.
+   Keep decorative shadows subtle at rest and preserve stronger hover glow. */
+:root{
+  --glow-soft:rgba(219,132,194,.19);
+  --glow-outer:rgba(212,111,193,.10);
+}
+html[data-theme="light"]{
+  --glow-soft:rgba(173,85,153,.18);
+  --glow-outer:rgba(184,111,190,.09);
+}
+/* Give the luminous edge enough breathing room inside normal flow containers. */
+.site-header-actions,.site-footer-links,.resume-actions,.resume-next-links,
+.footer-nav,.contact-actions,.chips,.lab .chips,.gallery-controls{
+  overflow:visible!important;
+}
+#chapters .chapter-content-inner{overflow:visible!important}
+#chapters .chapter-content{
+  overflow-x:visible!important;
+}
+#chapters #home .chips{padding:5px 6px!important;margin-left:-6px!important}
+#chapters #contact .contact-actions{padding:9px 7px!important;margin-left:-7px!important}
+.resume-actions,.resume-next-links,.site-footer-links,.footer-nav{
+  padding-top:8px!important;padding-bottom:10px!important;
+}
+/* Rounded radiance follows the button rather than drawing a rectangular
+   background layer. Four falloff rings feather naturally into either theme. */
+.site-nav-pill,.site-nav-universe,.site-header-shell .theme-toggle,
+.resume-action,.resume-next-links .resume-action,
+.philosophy-link,.contact-actions a,
+.site-footer-links a,.footer-nav a,.cta,
+.lab .action,.lab .pill,
+.panel-pill,.gallery-action,.gallery-arrow{
+  box-shadow:0 0 0 1px rgba(231,165,211,.08),
+    0 0 9px 1px var(--glow-soft),
+    0 0 22px 3px var(--glow-outer)!important;
+  filter:none;
+}
+.site-nav-pill:hover,.site-nav-universe:hover,
+.site-header-shell .theme-toggle:hover,.resume-action:hover,
+.philosophy-link:hover,.contact-actions a:hover,
+.site-footer-links a:hover,.footer-nav a:hover,.cta:hover,
+.lab .action:hover,.lab .pill:hover,
+.gallery-action:hover,.gallery-arrow:hover{
+  box-shadow:0 0 0 1px rgba(233,169,221,.23),
+    0 0 13px 2px rgba(224,128,194,.27),
+    0 0 32px 6px rgba(204,99,189,.14)!important;
+}
+/* Skills, category and technology chips: visible aura, no big backdrop card. */
+#chapters .chip,.panel-pill,.lab .pill{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.20),
+    0 0 8px 1px var(--glow-soft),
+    0 0 18px 2px var(--glow-outer)!important;
+}
+#chapters .chip:hover,.panel-pill:hover,.lab .pill:hover{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),
+    0 0 14px 3px rgba(212,113,187,.24),
+    0 0 25px 5px rgba(207,110,198,.12)!important;
+}
+/* Scrolling frames must have a fade zone inside their clipping edge. */
+#project-track .panel-scroller{
+  padding-bottom:max(32px,2.5rem)!important;
+}
+#gallery .gallery-controls{
+  padding-top:11px!important;
+  padding-bottom:11px!important;
+}
+#chapters #work .work-grid{
+  padding-top:max(10px,1.2svh)!important;
+  padding-bottom:max(10px,1.2svh)!important;
+}
+/* Avoid enlarging the gallery card shadows into the clipped carousel boundary. */
+#gallery .work-panel{filter:none!important}
+#gallery .panel-pill{filter:none!important}
+@media(orientation:landscape) and (max-height:430px){
+  #chapters #home .chips,#chapters #contact .contact-actions{padding-top:2px!important;padding-bottom:2px!important}
+  #chapters #work .work-grid{padding-top:5px!important;padding-bottom:5px!important}
+  #gallery .gallery-controls{padding-top:4px!important;padding-bottom:4px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .site-nav-pill,.site-nav-universe,.resume-action,.cta{transition-duration:.01ms!important}
+}
