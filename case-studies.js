@@ -150,6 +150,10 @@ function initialize(){
     history.replaceState(null,'',url.pathname+url.search+url.hash);
   }
   navigate(requested,true);
+  // Align direct project deep links below the sticky header.
+  if(location.hash==='#gallery'){
+    requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:chapterTop(gallery),behavior:'instant'})));
+  }
 }
 initialize();
 document.fonts?.ready?.then(()=>{
