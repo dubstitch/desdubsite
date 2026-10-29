@@ -226,3 +226,9 @@ body:has(.case-experience) main > .case-experience{
   scroll-snap-align:none!important;
   scroll-snap-stop:normal!important;
 }
+
+/* Anchor navigation must land below the persistent header, not hide
+   the beginning of the first card behind it. */
+#gallery.case-experience{
+  scroll-margin-top:var(--head-height)!important;
+}
