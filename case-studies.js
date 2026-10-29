@@ -60,7 +60,82 @@ document.addEventListener('keydown',event=>{
   if(event.key==='ArrowRight'){event.preventDefault();navigate(current+1)}
   else if(event.key==='ArrowLeft'){event.preventDefault();navigate(current-1)}
 });
-// Leave vertical navigation to the browser's native anchor and touch scrolling.
+// Use the same gesture-driven chapter transition as the homepage.
+// The gallery is intentionally taller than the viewport: once entered,
+// normal vertical reading and the invitation remain scrollable.
+const intro=document.getElementById('gallery-intro');
+let chapterLock=false,chapterFrame=0,chapterTouch=null,chapterWheel=0,chapterWheelReset=0;
+const chapterTop=el=>Math.max(0,Math.round(el.getBoundingClientRect().top+window.scrollY-header.getBoundingClientRect().height));
+function chapterGo(el){
+  if(chapterLock)return;
+  const from=window.scrollY,to=chapterTop(el);
+  if(Math.abs(to-from)<3)return;
+  chapterLock=true;
+  clearTimeout(chapterWheelReset);
+  chapterWheel=0;
+  cancelAnimationFrame(chapterFrame);
+  const duration=reduced.matches?0:780;
+  if(!duration){window.scrollTo(0,to);chapterLock=false;return;}
+  const begun=performance.now();
+  function tick(now){
+    const t=Math.min(1,(now-begun)/duration);
+    const eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+    window.scrollTo(0,from+(to-from)*eased);
+    if(t<1)chapterFrame=requestAnimationFrame(tick);
+    else{window.scrollTo(0,to);chapterLock=false;}
+  }
+  chapterFrame=requestAnimationFrame(tick);
+}
+const nearGalleryStart=()=>Math.abs(window.scrollY-chapterTop(gallery))<42;
+const inProject=target=>!!target.closest('.panel-scroller,#project-track,.work-panel');
+function chapterIntent(target,direction){
+  if(inProject(target))return null;
+  if(direction>0&&window.scrollY<chapterTop(gallery)-32)return gallery;
+  if(direction<0&&nearGalleryStart())return intro;
+  return null;
+}
+window.addEventListener('wheel',event=>{
+  if(event.ctrlKey||Math.abs(event.deltaX)>Math.abs(event.deltaY)*1.1)return;
+  const destination=chapterIntent(event.target,Math.sign(event.deltaY));
+  if(chapterLock){event.preventDefault();return;}
+  if(!destination)return;
+  event.preventDefault();
+  chapterWheel+=event.deltaY;
+  clearTimeout(chapterWheelReset);
+  chapterWheelReset=setTimeout(()=>chapterWheel=0,160);
+  if(Math.abs(chapterWheel)>=15){chapterWheel=0;chapterGo(destination);}
+},{passive:false});
+document.addEventListener('touchstart',event=>{
+  if(event.touches.length!==1)return;
+  const finger=event.touches[0];
+  chapterTouch={x:finger.clientX,y:finger.clientY,target:event.target,blocked:false};
+},{passive:true});
+document.addEventListener('touchmove',event=>{
+  if(!chapterTouch||event.touches.length!==1||!event.cancelable)return;
+  const finger=event.touches[0];
+  const dx=finger.clientX-chapterTouch.x,dy=finger.clientY-chapterTouch.y;
+  if(Math.abs(dy)<9||Math.abs(dy)<Math.abs(dx)*1.25)return;
+  const destination=chapterIntent(chapterTouch.target,Math.sign(-dy));
+  if(destination||chapterLock){chapterTouch.blocked=true;event.preventDefault();}
+},{passive:false});
+document.addEventListener('touchend',event=>{
+  if(!chapterTouch||!event.changedTouches.length)return;
+  const finger=event.changedTouches[0];
+  const dx=finger.clientX-chapterTouch.x,dy=finger.clientY-chapterTouch.y;
+  const target=chapterIntent(chapterTouch.target,Math.sign(-dy));
+  chapterTouch=null;
+  if(target&&Math.abs(dy)>37&&Math.abs(dy)>Math.abs(dx)*1.2)chapterGo(target);
+},{passive:true});
+document.addEventListener('touchcancel',()=>{chapterTouch=null;},{passive:true});
+document.addEventListener('keydown',event=>{
+  if(event.ctrlKey||event.metaKey||event.altKey||event.target.closest('input,textarea,select,[contenteditable]')||inProject(event.target))return;
+  const direction=['ArrowDown','PageDown',' '].includes(event.key)?1:['ArrowUp','PageUp'].includes(event.key)?-1:0;
+  if(!direction)return;
+  const target=chapterIntent(event.target,direction);
+  if(target){event.preventDefault();chapterGo(target);}
+});
+// Ordinary anchor links and direct links to a project still work as usual.
+
 function initialize(){
   sizeHeader();
   const query=new URLSearchParams(location.search).get('project');
