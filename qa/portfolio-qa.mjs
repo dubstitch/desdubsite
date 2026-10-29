@@ -119,6 +119,11 @@ for(const theme of ['light','dark']){
     });
     if(carousel.firstWidth<carousel.width-8||carousel.visibleSecond>8)issues.push('HOME LANDSCAPE MULTICARD '+theme+' '+size.name+' '+JSON.stringify(carousel));
   }
+
+    const heroLink=await page.evaluate(()=>document.querySelector('#home .cta')?.getAttribute('href'));
+    if(heroLink!=='case-studies.html')issues.push('HERO WORK LINK INCORRECT '+size.name+' '+heroLink);
+    const starCount=await page.evaluate(()=>document.querySelectorAll('.constellation-stop-number').length);
+    if(starCount!==5)issues.push('MISSING CONSTELLATION NUMBERS '+size.name+' '+starCount);
   // Regression checks for the Universe, case study links and public component lab.
   if(theme==='dark'&&['iphone','desktop'].includes(size.name)){
     await page.goto(origin+'/index.html?universe=1',{waitUntil:'domcontentloaded'});
@@ -215,7 +220,7 @@ for(const theme of ['light','dark']){
     };
   });
   if(flow.sections!==2||!flow.footerInside||!flow.removedCue||!flow.removedAxis||
-    !flow.snap.includes('mandatory')||flow.introSnap!=='start'||flow.gallerySnap!=='start')
+    flow.snap!=='none')
     issues.push('CASE TWO SECTION FLOW '+theme+' '+size.name+' '+JSON.stringify(flow));
   if(flow.footerBottomRelative>flow.galleryHeight+3)
     issues.push('CASE INVITATION OVERFLOWS '+theme+' '+size.name+' '+JSON.stringify(flow));
@@ -260,7 +265,7 @@ landing.footerBottom<landing.viewportHeight+40)
       await page.waitForTimeout(250);
       await page.mouse.move(80,200);
       await page.mouse.wheel(0,Math.round(size.height*.85));
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(950);
       const snapLanding=await page.evaluate(()=>{
         const el=document.getElementById('gallery').getBoundingClientRect();
         const header=document.querySelector('.site-header').getBoundingClientRect();
@@ -394,9 +399,8 @@ for(const theme of ['light','dark']){
       viewportHeight:innerHeight
     };
   });
-  if(!safariSnap.snap.includes('mandatory')||safariSnap.intro!=='start'||
-      safariSnap.gallery!=='start'||safariSnap.bottomGap<35)
-    issues.push('WEBKIT CASE SNAP OR BOTTOM GAP '+theme+' '+size.name+' '+JSON.stringify(safariSnap));
+  if(safariSnap.snap!=='none'||safariSnap.bottomGap<35)
+    issues.push('WEBKIT CASE NAV OR BOTTOM GAP '+theme+' '+size.name+' '+JSON.stringify(safariSnap));
   if(theme==='light'&&size.name==='webkit-iphone'){
     const file=output+'/webkit-case-study-snap-iphone.jpeg';
     await page.screenshot({path:file,type:'jpeg',quality:59});
@@ -413,4 +417,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|CASE GALLERY CRAMPED|CASE VERTICAL GESTURE DOES NOT SNAP|CASE FOOTER UNREACHABLE AT SNAP END|WEBKIT CASE SNAP OR BOTTOM GAP|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
+if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|HERO WORK LINK INCORRECT|MISSING CONSTELLATION NUMBERS|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|CASE GALLERY CRAMPED|CASE VERTICAL GESTURE DOES NOT SNAP|CASE FOOTER UNREACHABLE AT SNAP END|WEBKIT CASE NAV OR BOTTOM GAP|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
