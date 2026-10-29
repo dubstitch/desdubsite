@@ -8,6 +8,7 @@ on:
       - 'home.js'
       - 'site-shell.css'
       - 'site-shell.js'
+      - 'glow-finishing.css'
       - 'case-studies.css'
       - 'case-flow.css'
       - 'case-studies.js'
