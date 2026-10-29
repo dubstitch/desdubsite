@@ -188,3 +188,16 @@ html[data-theme="light"] .resume-action.primary-action:focus-visible svg{
   color:#fff!important;
   stroke:#fff!important;
 }
+
+
+/* Landscape phone typography follows the tighter homepage scale. */
+@media screen and (orientation:landscape) and (max-height:560px) and (max-width:1000px){
+  .resume-layout{width:calc(100% - clamp(32px,7vw,88px))!important}
+  .resume-intro h1{font-size:clamp(2.6rem,6vw,4.15rem)!important;line-height:1.04!important;margin:12px 0!important}
+  .resume-role{font-size:clamp(.96rem,1.95vw,1.2rem)!important;line-height:1.4!important;margin:9px 0!important}
+  .resume-summary,.resume-layout p{font-size:clamp(.85rem,1.75vw,1rem)!important;line-height:1.55!important}
+  .resume-section h2{font-size:clamp(1.85rem,4.25vw,2.65rem)!important;line-height:1.12!important}
+  .resume-highlights h3,.role h3{font-size:clamp(1.1rem,2.6vw,1.45rem)!important}
+  .resume-section{padding-top:28px!important;padding-bottom:36px!important}
+  .resume-intro{padding-bottom:27px!important}
+}
