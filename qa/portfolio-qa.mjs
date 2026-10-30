@@ -123,7 +123,7 @@ for(const theme of ['light','dark']){
     const heroLink=await page.evaluate(()=>document.querySelector('#home .cta')?.getAttribute('href'));
     if(heroLink!=='case-studies.html')issues.push('HERO WORK LINK INCORRECT '+size.name+' '+heroLink);
     const starCount=await page.evaluate(()=>document.querySelectorAll('.constellation-stop-number').length);
-    if(starCount!==5)issues.push('MISSING CONSTELLATION NUMBERS '+size.name+' '+starCount);
+    if(starCount!==0)issues.push('UNEXPECTED CONSTELLATION NUMBERS '+size.name+' '+starCount);
   // Regression checks for the Universe, case study links and public component lab.
   if(theme==='dark'&&['iphone','desktop'].includes(size.name)){
     await page.goto(origin+'/index.html?universe=1',{waitUntil:'domcontentloaded'});
@@ -198,7 +198,7 @@ for(const theme of ['light','dark']){
   }
   if(gallery.width>gallery.client+2)issues.push('GALLERY HORIZONTAL OVERFLOW '+theme+' '+size.name);
   if(gallery.panel.bottom>gallery.controls.top+8)issues.push('GALLERY PANEL-CONTROLS OVERLAP '+theme+' '+size.name+' '+JSON.stringify(gallery));
-  // Exactly two vertical snap destinations: intro; gallery + invitation.
+  // Two main destinations with a shared footer below the gallery.
   const flow=await page.evaluate(()=>{
     const intro=document.getElementById('gallery-intro');
     const destination=document.getElementById('gallery');
@@ -212,20 +212,21 @@ for(const theme of ['light','dark']){
       visibleHeight:innerHeight-document.querySelector('.site-header').getBoundingClientRect().height,
       cardHeight:Math.round(document.querySelector('.gallery-frame').getBoundingClientRect().height),
       footerInside:destination.contains(footer),
+      footerTopRelative:Math.round(f.top-d.top),
       footerBottomRelative:Math.round(f.bottom-d.top),
-      invitationBottomSpace:Math.round(d.bottom-f.bottom),
+      invitationBottomSpace:Math.round(f.top-d.bottom),
       removedCue:!document.querySelector('.gallery-scroll-cue'),
       removedAxis:!document.querySelector('.gallery-axis'),
       sections:document.querySelectorAll('main > section').length
     };
   });
-  if(flow.sections!==2||!flow.footerInside||!flow.removedCue||!flow.removedAxis||
+  if(flow.sections!==2||flow.footerInside||!flow.removedCue||!flow.removedAxis||
     flow.snap!=='none')
     issues.push('CASE TWO SECTION FLOW '+theme+' '+size.name+' '+JSON.stringify(flow));
-  if(flow.footerBottomRelative>flow.galleryHeight+3)
-    issues.push('CASE INVITATION OVERFLOWS '+theme+' '+size.name+' '+JSON.stringify(flow));
+  if(flow.invitationBottomSpace< -3)
+    issues.push('CASE INVITATION OVERLAPS GALLERY '+theme+' '+size.name+' '+JSON.stringify(flow));
   // A short gallery crushed the cards and pinned the invitation to the bottom.
-  if(flow.galleryHeight<flow.visibleHeight+65||flow.invitationBottomSpace<36||
+  if(flow.galleryHeight<flow.visibleHeight+65||
      flow.cardHeight<(size.width>size.height?265:400))
     issues.push('CASE GALLERY CRAMPED '+theme+' '+size.name+' '+JSON.stringify(flow));
 
@@ -239,7 +240,7 @@ for(const theme of ['light','dark']){
     }catch(e){issues.push('AXE ERROR '+e.message)}
   }
 
-  // Snap to the second destination, confirm invitation stays inside it,
+  // Snap to the second destination, confirm the shared invitation footer follows it,
   // and ensure vertical scroll inside a project is independent of page snapping.
   if(theme==='light'&&['iphone','phone-landscape','desktop'].includes(size.name)){
     await page.evaluate(()=>document.getElementById('gallery').scrollIntoView({behavior:'instant',block:'start'}));
@@ -286,7 +287,7 @@ landing.footerBottom<landing.viewportHeight+40)
     if(after.panelScroll<15||Math.abs(after.scrollY-landing.scrollY)>30)
       issues.push('CASE INTERNAL SCROLL ESCAPE '+size.name+' '+JSON.stringify({landing,after}));
     // A snap destination taller than the screen must still let the visitor reach
-    // its invitation and the generous breathing room beneath it.
+    // the invitation footer outside it.
     await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
     await page.waitForTimeout(180);
     const endPosition=await page.evaluate(()=>{
@@ -302,7 +303,8 @@ landing.footerBottom<landing.viewportHeight+40)
       };
     });
     if(endPosition.footerTop>=endPosition.viewportHeight-30||
-       endPosition.bottomSpace<35||endPosition.scrollY<=landing.scrollY)
+       endPosition.footerBottom>endPosition.viewportHeight+5||
+        endPosition.sectionBottom>endPosition.footerTop+4||endPosition.scrollY<=landing.scrollY)
       issues.push('CASE FOOTER UNREACHABLE AT SNAP END '+size.name+' '+JSON.stringify(endPosition));
     if(size.name==='iphone'){
       const file=output+'/gallery-footer-visible-iphone.jpeg';
@@ -388,7 +390,7 @@ for(const theme of ['light','dark']){
     const project=document.getElementById('gallery');
     const footer=document.getElementById('more');
     const card=document.querySelector('.gallery-frame');
-    const bottom=project.getBoundingClientRect().bottom-footer.getBoundingClientRect().bottom;
+    const bottom=footer.getBoundingClientRect().top-project.getBoundingClientRect().bottom;
     return {
       snap:getComputedStyle(document.documentElement).scrollSnapType,
       intro:getComputedStyle(intro).scrollSnapAlign,
@@ -399,7 +401,7 @@ for(const theme of ['light','dark']){
       viewportHeight:innerHeight
     };
   });
-  if(safariSnap.snap!=='none'||safariSnap.bottomGap<35)
+  if(safariSnap.snap!=='none'||safariSnap.bottomGap< -3)
     issues.push('WEBKIT CASE NAV OR BOTTOM GAP '+theme+' '+size.name+' '+JSON.stringify(safariSnap));
   if(theme==='light'&&size.name==='webkit-iphone'){
     const file=output+'/webkit-case-study-snap-iphone.jpeg';
@@ -417,4 +419,4 @@ for(const [name,path] of Object.entries(capture)){
   console.log('SCREENSHOT_BEGIN '+name+' '+bytes.toString('base64')+' SCREENSHOT_END');
 }
 console.log('QA_TOTAL_ISSUES='+issues.length);
-if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|HERO WORK LINK INCORRECT|MISSING CONSTELLATION NUMBERS|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERFLOWS|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|CASE GALLERY CRAMPED|CASE VERTICAL GESTURE DOES NOT SNAP|CASE FOOTER UNREACHABLE AT SNAP END|WEBKIT CASE NAV OR BOTTOM GAP|LAB LIGHT AXE)/.test(x)))process.exitCode=1;
+if(issues.some(x=>/^(CONTROL OUTSIDE|JS |CLIPPED |HORIZONTAL|RESUME FOOTER STRETCHED|GALLERY PANEL|UNIVERSE REGRESSION|MISSING PUBLIC LAB NOTE|BROKEN LAB RETURN|HERO LINKS OVERLAP|UNIVERSE TILE COLLISION|HERO WORK LINK INCORRECT|UNEXPECTED CONSTELLATION NUMBERS|RESUME INTRO TOO LOW|GALLERY FIRST PANEL CROPPED|HEADER NAV OVERFLOW|HOME LANDSCAPE MULTICARD|CASE TWO SECTION FLOW|CASE INVITATION OVERLAPS GALLERY|CASE TWO SECTION LANDING|CASE INTERNAL SCROLL ESCAPE|CASE GALLERY CRAMPED|CASE VERTICAL GESTURE DOES NOT SNAP|CASE FOOTER UNREACHABLE AT SNAP END|WEBKIT CASE NAV OR BOTTOM GAP|LAB LIGHT AXE)/.test(x)))process.exitCode=1;

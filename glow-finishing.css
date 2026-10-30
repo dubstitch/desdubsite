@@ -168,3 +168,11 @@ html[data-theme="light"]{--aura-close:rgba(159,72,142,.17);--aura-far:rgba(162,8
     0 0 28px rgba(206,100,187,.13),
     0 0 48px rgba(208,111,195,.06)!important;
 }
+
+/* A single, fully visible carousel card in compact landscape. */
+@media(orientation:landscape) and (max-height:680px){
+ #chapters #work .work-grid > .work{
+  flex:0 0 100%!important;
+  width:100%!important;min-width:100%!important;max-width:100%!important;
+ }
+}
