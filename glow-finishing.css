@@ -151,3 +151,20 @@ html[data-theme="light"]{--aura-close:rgba(159,72,142,.17);--aura-far:rgba(162,8
   box-shadow:none!important;border-width:2px!important;
  }
 }
+
+/* Shared header controls have deliberately specific shell rules. Override those
+   rules on the controls themselves so their soft radiance is retained. */
+.site-header-shell .site-nav-pill,
+.site-header-shell .site-nav-universe,
+.site-header-shell .theme-toggle {
+  box-shadow:0 0 8px var(--aura-close),
+    0 0 22px var(--aura-far),
+    0 0 36px rgba(209,116,187,.045)!important;
+}
+.site-header-shell .site-nav-pill:is(:hover,:focus-visible),
+.site-header-shell .site-nav-universe:is(:hover,:focus-visible),
+.site-header-shell .theme-toggle:is(:hover,:focus-visible){
+  box-shadow:0 0 12px rgba(217,112,190,.29),
+    0 0 28px rgba(206,100,187,.13),
+    0 0 48px rgba(208,111,195,.06)!important;
+}
