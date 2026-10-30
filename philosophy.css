@@ -23,3 +23,36 @@ html[data-theme="light"] body{background:#fff7fc;color:#392b42}html[data-theme="
 }
 .essay .footer-nav a.cta svg{stroke:currentColor!important}
 .essay .footer-nav a.cta:hover{background:#f8d8ec!important}
+
+/* Fill the available viewport below the navigation, but allow long content to grow. */
+#main-content>.hero{
+ min-height:calc(100svh - 74px);min-height:calc(100dvh - 74px);
+ width:100%;display:flex;flex-direction:column;justify-content:center;
+ padding:clamp(44px,8svh,105px) clamp(26px,10vw,150px);
+}
+#main-content>.hero h1{
+ max-width:100%;font-size:clamp(3.15rem,8.3vw,8.1rem);
+ position:relative;z-index:1;
+}
+#main-content>.hero p{position:relative;z-index:1}
+@media(max-width:650px){
+ #main-content>.hero{
+  min-height:calc(100svh - 65px);min-height:calc(100dvh - 65px);
+  padding:clamp(42px,7svh,85px) clamp(25px,7vw,44px);
+ }
+ #main-content>.hero h1{
+  font-size:clamp(2.8rem,12vw,4.5rem);
+  line-height:1.08;margin:clamp(21px,4svh,32px) 0;
+ }
+ #main-content>.hero p{font-size:clamp(1rem,3.7vw,1.22rem);line-height:1.55}
+ #main-content>.hero:after{right:4%;top:22%;font-size:clamp(85px,24vw,155px)}
+}
+@media(orientation:landscape) and (max-height:560px){
+ #main-content>.hero{
+  min-height:calc(100svh - 60px);
+  padding:clamp(19px,5svh,38px) clamp(29px,7vw,90px);
+ }
+ #main-content>.hero h1{font-size:clamp(2.5rem,7.8svh,5rem);margin:12px 0}
+ #main-content>.hero p{font-size:clamp(.94rem,2.5svh,1.2rem);line-height:1.42}
+ #main-content>.hero:after{font-size:clamp(80px,18vw,150px)}
+}

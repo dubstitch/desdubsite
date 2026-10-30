@@ -80,3 +80,74 @@ html[data-theme="light"]{
 @media(prefers-reduced-motion:reduce){
   .site-nav-pill,.site-nav-universe,.resume-action,.cta{transition-duration:.01ms!important}
 }
+
+/* Shared glow correction: use feathered silhouettes, never clipped track backdrops. */
+:root{--aura-close:rgba(215,115,188,.19);--aura-far:rgba(206,104,185,.075)}
+html[data-theme="light"]{--aura-close:rgba(159,72,142,.17);--aura-far:rgba(162,86,159,.07)}
+.site-header-actions,.resume-actions,.resume-next-links,.footer-nav,
+.site-footer-links,.contact-actions,.chips,.gallery-controls{filter:none!important}
+.site-nav-pill,.site-nav-universe,.site-header-shell .theme-toggle,
+.resume-action,.philosophy-link,.contact-actions a,
+.site-footer-links a,.footer-nav a,.cta,.gallery-action,.gallery-arrow,
+.lab .action,.lab .pill,#chapters .chip,.panel-pill{
+ box-shadow:0 0 8px var(--aura-close),0 0 22px var(--aura-far),
+ 0 0 36px rgba(209,116,187,.045)!important;
+}
+:is(.site-nav-pill,.site-nav-universe,.site-header-shell .theme-toggle,
+.resume-action,.philosophy-link,.contact-actions a,.site-footer-links a,
+.footer-nav a,.cta,.gallery-action,.gallery-arrow,.lab .action,.lab .pill,
+#chapters .chip,.panel-pill):is(:hover,:focus-visible){
+ box-shadow:0 0 12px rgba(217,112,190,.29),
+ 0 0 28px rgba(206,100,187,.13),0 0 48px rgba(208,111,195,.06)!important;
+}
+/* A scroll container clips its descendants. Pad *inside* the scrollport so
+   card halos finish fading before reaching the container's outer rectangle. */
+#chapters #work .work-grid{
+ box-sizing:border-box!important;
+ padding:22px 20px 24px!important;
+ background:transparent!important;
+ border:0!important;border-radius:0!important;
+ box-shadow:none!important;filter:none!important;
+ scroll-padding-left:20px!important;scroll-padding-right:20px!important;
+}
+#chapters #work .work-grid > .work{
+ box-shadow:0 0 0 1px rgba(179,104,157,.12),
+ 0 4px 16px rgba(184,93,154,.13),0 0 22px rgba(216,118,189,.11)!important;
+}
+#chapters #work .work-grid > .work:is(:hover,:focus-visible,.is-lit){
+ box-shadow:0 0 0 1px rgba(175,92,157,.24),
+ 0 7px 20px rgba(179,88,151,.17),0 0 26px rgba(209,119,185,.18)!important;
+}
+#gallery .work-panel{
+ box-sizing:border-box!important;
+ height:calc(100% - 32px)!important;
+ max-height:calc(100% - 32px)!important;
+ margin-block:16px!important;
+ box-shadow:0 0 0 1px rgba(185,109,158,.10),
+ 0 5px 17px rgba(159,85,149,.12),0 0 23px rgba(210,114,191,.09)!important;
+}
+#gallery .gallery-frame,#gallery .gallery-shell,
+#gallery #project-track{background:transparent!important;filter:none!important}
+.constellation-arc .constellation-current{
+ right:clamp(47px,8vw,70px)!important;
+ bottom:max(2px,env(safe-area-inset-bottom,0px))!important;
+ white-space:nowrap!important;
+}
+@media(max-width:650px){
+ #chapters #work .work-grid{padding:18px 19px 21px!important;scroll-padding-left:19px!important}
+ .constellation-arc .constellation-current{right:clamp(47px,12vw,62px)!important}
+}
+@media(orientation:landscape) and (max-height:680px){
+ #chapters #work .work-grid{padding:13px 14px!important;scroll-padding-left:14px!important}
+ #chapters #work .work-grid > .work{
+  flex:0 0 calc(100% - 28px)!important;
+  min-width:calc(100% - 28px)!important;
+  max-width:calc(100% - 28px)!important;
+ }
+}
+@media(prefers-contrast:more){
+ .site-nav-pill,.site-nav-universe,.site-header-shell .theme-toggle,
+ .resume-action,.site-footer-links a,.cta,#chapters .chip,.panel-pill{
+  box-shadow:none!important;border-width:2px!important;
+ }
+}
