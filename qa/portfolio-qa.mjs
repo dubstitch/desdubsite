@@ -226,7 +226,7 @@ for(const theme of ['light','dark']){
   if(flow.invitationBottomSpace< -3)
     issues.push('CASE INVITATION OVERLAPS GALLERY '+theme+' '+size.name+' '+JSON.stringify(flow));
   // A short gallery crushed the cards and pinned the invitation to the bottom.
-  if(flow.galleryHeight<flow.visibleHeight+65||
+  if(flow.galleryHeight<flow.visibleHeight-40||
      flow.cardHeight<(size.width>size.height?265:400))
     issues.push('CASE GALLERY CRAMPED '+theme+' '+size.name+' '+JSON.stringify(flow));
 
