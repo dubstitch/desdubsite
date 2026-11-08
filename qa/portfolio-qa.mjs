@@ -134,7 +134,7 @@ for(const theme of ['light','dark']){
       cards:document.querySelectorAll('.work').length,
       modals:document.querySelectorAll('.work-dialog').length
     }));
-    if(!state.visible||state.tiles!==7||!state.lab||state.cards!==3||state.modals)issues.push('UNIVERSE REGRESSION '+size.name+' '+JSON.stringify(state));
+    if(!state.visible||state.tiles!==7||!state.lab||state.cards!==5||state.modals)issues.push('UNIVERSE REGRESSION '+size.name+' '+JSON.stringify(state));
     await page.locator('#universe .hex[data-href="component-lab.html"]').click();
     await page.waitForURL('**/component-lab.html');
     if(!await page.locator('.lab-note').isVisible())issues.push('MISSING PUBLIC LAB NOTE '+size.name);
