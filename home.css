@@ -1168,3 +1168,8 @@ html[data-theme="light"] .site-header-shell .resume-pill svg{color:#4c2853!impor
 }
 
 
+
+/* Featured project cards need consistent breathing room across every viewport. */
+#work .work-grid { gap: clamp(14px, 2vw, 25px) !important; padding: 4px; }
+#work .work-grid .work { flex-shrink: 0; }
+@media(max-width:650px) { #work .work-grid { gap: 16px !important; } }
