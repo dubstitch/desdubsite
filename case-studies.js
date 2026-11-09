@@ -134,6 +134,114 @@ document.addEventListener('keydown',event=>{
   const target=chapterIntent(event.target,direction);
   if(target){event.preventDefault();chapterGo(target);}
 });
+
+// The card itself grows into a native modal. No duplicate case-study markup,
+// nested cloned content, surprise route changes or broken browser back buttons.
+const projectDialog=document.createElement('dialog');
+projectDialog.className='project-dialog';
+projectDialog.setAttribute('aria-label','Expanded project case study');
+projectDialog.innerHTML='<button type="button" class="project-dialog-close" aria-label="Close full-screen project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button><div class="project-dialog-content"></div>';
+document.body.appendChild(projectDialog);
+const dialogContent=projectDialog.querySelector('.project-dialog-content');
+const dialogClose=projectDialog.querySelector('.project-dialog-close');
+let expandedPanel=null, panelPlace=null, focusReturn=null, closingPanel=false;
+function expandProject(panel){
+  if(expandedPanel||closingPanel||!panel||!projectDialog.showModal)return;
+  focusReturn=panel.querySelector('.project-expand')||document.activeElement;
+  panelPlace=document.createElement('div');
+  panelPlace.className='work-panel-placeholder';
+  panelPlace.setAttribute('aria-hidden','true');
+  panel.before(panelPlace);
+  expandedPanel=panel;
+  const heading=panel.querySelector('h2');
+  if(heading){
+    heading.id=heading.id||'expanded-heading-'+panel.id;
+    projectDialog.setAttribute('aria-labelledby',heading.id);
+  }
+  const contentScroll=panel.querySelector('.panel-scroller');
+  if(contentScroll)contentScroll.scrollTop=0;
+  panel.inert=false;
+  dialogContent.append(panel);
+  track.inert=true;
+  document.body.classList.add('project-modal-active');
+  projectDialog.showModal();
+  requestAnimationFrame(()=>{
+    projectDialog.classList.add('is-visible');
+    dialogClose.focus({preventScroll:true});
+  });
+}
+function closeExpanded(){
+  if(!expandedPanel||closingPanel)return;
+  closingPanel=true;
+  projectDialog.classList.remove('is-visible');
+  const panel=expandedPanel, placeholder=panelPlace, returnFocus=focusReturn;
+  setTimeout(()=>{
+    if(projectDialog.open)projectDialog.close();
+    placeholder.replaceWith(panel);
+    expandedPanel=null;
+    panelPlace=null;
+    closingPanel=false;
+    track.inert=false;
+    document.body.classList.remove('project-modal-active');
+    const panelIndex=panels.indexOf(panel);
+    if(panelIndex>=0)mark(panelIndex,false);
+    returnFocus?.focus({preventScroll:true});
+  },reduced.matches?0:280);
+}
+dialogClose.addEventListener('click',closeExpanded);
+projectDialog.addEventListener('cancel',event=>{event.preventDefault();closeExpanded();});
+projectDialog.addEventListener('click',event=>{
+  if(event.target===projectDialog)closeExpanded();
+});
+// Clicking, tapping or starting to read a case study makes it immersive.
+// Vertical scroll inside the gallery activates the project, not a page jump.
+panels.forEach(panel=>{
+  const expand=panel.querySelector('.project-expand');
+  const scroller=panel.querySelector('.panel-scroller');
+  if(!expand||!scroller)return;
+  expand.addEventListener('click',()=>expandProject(panel));
+  panel.addEventListener('click',event=>{
+    if(expandedPanel||event.target.closest('a,button'))return;
+    expandProject(panel);
+  });
+  let touchStart=null,overPull=0,lastWheel=0;
+  scroller.addEventListener('touchstart',event=>{
+    if(event.touches.length!==1)return;
+    touchStart={x:event.touches[0].clientX,y:event.touches[0].clientY,atTop:scroller.scrollTop<=2};
+  },{passive:true});
+  scroller.addEventListener('touchend',event=>{
+    if(!touchStart||event.changedTouches.length!==1)return;
+    const dx=event.changedTouches[0].clientX-touchStart.x;
+    const dy=event.changedTouches[0].clientY-touchStart.y;
+    const initial=touchStart;
+    touchStart=null;
+    if(Math.abs(dy)<50||Math.abs(dy)<Math.abs(dx)*1.3)return;
+    if(expandedPanel===panel){
+      // Deliberate pull down from the very top closes. Normal reading remains native.
+      if(initial.atTop&&scroller.scrollTop<=2&&dy>110)closeExpanded();
+    }else if(!expandedPanel&&dy< -50){
+      expandProject(panel);
+    }
+  },{passive:true});
+  scroller.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
+  scroller.addEventListener('wheel',event=>{
+    if(expandedPanel===panel){
+      const now=performance.now();
+      if(now-lastWheel>700)overPull=0;
+      lastWheel=now;
+      if(scroller.scrollTop<=1&&event.deltaY<0){
+        overPull+=event.deltaY;
+        if(overPull < -180){event.preventDefault();overPull=0;closeExpanded();}
+      }else overPull=0;
+      return;
+    }
+    if(expandedPanel||event.ctrlKey||Math.abs(event.deltaY)<9||Math.abs(event.deltaX)>=Math.abs(event.deltaY))return;
+    if(event.deltaY>0){event.preventDefault();expandProject(panel);}
+  },{passive:false});
+});
+// A direct click on the visible case study, its expansion control, or a
+// vertical swipe all expose the same accessible dialog.
+
 // Ordinary anchor links and direct links to a project still work as usual.
 
 function initialize(){
@@ -161,6 +269,7 @@ document.fonts?.ready?.then(()=>{
 });
 window.addEventListener('pageshow',event=>{if(event.persisted){sizeHeader();navigate(current,true)}});
 window.addEventListener('resize',()=>{
+  if(expandedPanel)return;
   if(Math.abs(innerWidth-lastWidth)<2)return;
   lastWidth=innerWidth;
   sizeHeader();
