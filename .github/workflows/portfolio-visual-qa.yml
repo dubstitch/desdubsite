@@ -1,7 +1,7 @@
 name: Portfolio visual QA
 on:
   push:
-    branches: [main]
+    branches: [main, "feature/wcfcc-first-immersive-work"]
     paths:
       - 'index.html'
       - 'home.css'
@@ -10,6 +10,7 @@ on:
       - 'site-shell.js'
       - 'glow-finishing.css'
       - 'case-studies.css'
+      - 'work-immersive.css'
       - 'case-flow.css'
       - 'case-studies.js'
       - 'resume.css'
@@ -33,7 +34,7 @@ permissions:
 jobs:
   responsive-visual:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -49,6 +50,8 @@ jobs:
           echo $! > /tmp/portfolio-http.pid
           sleep 2
           curl -fsS http://127.0.0.1:8765/index.html >/dev/null
+      - name: Verify immersive case-study expansion and spacing
+        run: SHOW_SHOTS=1 node qa/immersive-qa.mjs
       - name: Verify responsive layouts and capture images
         run: node qa/portfolio-qa.mjs
       - name: Verify all portfolio pages and accessibility
