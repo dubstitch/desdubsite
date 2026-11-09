@@ -1205,3 +1205,61 @@ html[data-theme="light"] .site-header-shell .resume-pill svg{color:#4c2853!impor
  #work .work-grid .work {min-height:72px;}
  #work .work-grid {margin-bottom:25px;}
 }
+
+
+/* Portfolio QA refinements: one complete featured card per viewport
+   without peeking at the neighboring card or clipping its click target. */
+#chapters #work .work-grid {
+  padding-inline:0 !important;
+  scroll-padding-inline:0 !important;
+}
+#chapters #work .work-grid > .work {
+  flex:0 0 100% !important;
+  width:100% !important;
+  min-width:100% !important;
+  max-width:100% !important;
+  scroll-snap-align:start;
+}
+/* Compact portrait phones: all primary home actions remain on screen.
+   Adjust space rather than hiding a link or reducing its touch target. */
+@media (orientation:portrait) and (max-width:375px) and (max-height:700px) {
+  #chapters #home .chapter-content-inner {
+    gap:clamp(3px,.7svh,6px) !important;
+    row-gap:clamp(3px,.7svh,6px) !important;
+  }
+  #chapters #home .hero-identity {gap:1px !important;}
+  #chapters #home .hero-name {font-size:clamp(23px,7.5vw,28px) !important;}
+  #chapters #home .hero-role {
+    font-size:clamp(10px,2.7vw,11px) !important;
+    line-height:1.15 !important;
+  }
+  #chapters #home h1 {
+    font-size:clamp(34px,10.5vw,41px) !important;
+    line-height:1.01 !important;
+    margin:2px 0 !important;
+  }
+  #chapters #home .chapter-content-inner > p {
+    font-size:clamp(12px,3.6vw,13px) !important;
+    line-height:1.35 !important;
+    margin:0 !important;
+  }
+  #chapters #home .chips {
+    gap:4px !important;
+    margin:2px 0 !important;
+  }
+  #chapters #home .chip {
+    font-size:10px !important;
+    line-height:1.16 !important;
+    padding:4px 6px !important;
+  }
+  #chapters #home .cta {
+    margin-top:2px !important;
+    min-height:42px !important;
+    padding:8px 13px !important;
+  }
+  #chapters #home .hero-secondary {
+    margin-top:2px !important;
+    min-height:25px !important;
+    padding:2px 0 !important;
+  }
+}
