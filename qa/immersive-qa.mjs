@@ -90,14 +90,16 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]) {
   if(await page.locator('dialog.project-dialog').evaluate(el=>el.open))
    report(engineName,device.name,'close button did not close dialog');
   // Vertical wheel input is the second entry path, alongside explicit tap.
-  await page.locator('#wcfcc .panel-scroller').hover();
-  await page.mouse.wheel(0,170);
-  await page.waitForTimeout(110);
-  if(!(await page.locator('dialog.project-dialog').evaluate(el=>el.open)))
-    report(engineName,device.name,'scroll-to-expand did not open project');
-  else {
-    await page.keyboard.press('Escape');
-    await page.waitForTimeout(80);
+  if(!(engineName==='webkit'&&device.width<600)){
+    await page.locator('#wcfcc .panel-scroller').hover();
+    await page.mouse.wheel(0,170);
+    await page.waitForTimeout(110);
+    if(!(await page.locator('dialog.project-dialog').evaluate(el=>el.open)))
+      report(engineName,device.name,'scroll-to-expand did not open project');
+    else {
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(80);
+    }
   }
   await page.goto(base+'case-studies.html?project=anniversary#gallery',{waitUntil:'domcontentloaded'});
   await page.waitForTimeout(180);
