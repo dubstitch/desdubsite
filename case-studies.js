@@ -161,14 +161,19 @@ function expandProject(panel){
   const contentScroll=panel.querySelector('.panel-scroller');
   if(contentScroll)contentScroll.scrollTop=0;
   panel.inert=false;
+  panel.classList.remove('is-previewing','is-preview-resetting');
+  panel.style.removeProperty('--preview-grow');
+  panel.style.removeProperty('--preview-lift');
   dialogContent.append(panel);
   track.inert=true;
   document.body.classList.add('project-modal-active');
   projectDialog.showModal();
-  requestAnimationFrame(()=>{
+  // Two frames ensure a real before/after paint so the slower expansion
+  // visibly eases forward even when Safari receives the initial gesture.
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
     projectDialog.classList.add('is-visible');
     dialogClose.focus({preventScroll:true});
-  });
+  }));
 }
 function closeExpanded(){
   if(!expandedPanel||closingPanel)return;
@@ -186,7 +191,7 @@ function closeExpanded(){
     const panelIndex=panels.indexOf(panel);
     if(panelIndex>=0)mark(panelIndex,false);
     returnFocus?.focus({preventScroll:true});
-  },reduced.matches?0:280);
+  },reduced.matches?0:700);
 }
 dialogClose.addEventListener('click',closeExpanded);
 projectDialog.addEventListener('cancel',event=>{event.preventDefault();closeExpanded();});
@@ -204,26 +209,67 @@ panels.forEach(panel=>{
     if(expandedPanel||event.target.closest('a,button'))return;
     expandProject(panel);
   });
-  let touchStart=null,overPull=0,lastWheel=0;
+  let touchStart=null,overPull=0,lastWheel=0,wheelProgress=0,wheelReset=null,suppressClickUntil=0;
+  const resetPreview=(animate=true)=>{
+    panel.classList.remove('is-previewing');
+    if(animate)panel.classList.add('is-preview-resetting');
+    panel.style.removeProperty('--preview-grow');
+    panel.style.removeProperty('--preview-lift');
+    if(animate)setTimeout(()=>panel.classList.remove('is-preview-resetting'),320);
+  };
+  const showPreview=progress=>{
+    if(expandedPanel||closingPanel)return;
+    const p=Math.max(0,Math.min(1,progress));
+    panel.classList.remove('is-preview-resetting');
+    panel.classList.add('is-previewing');
+    panel.style.setProperty('--preview-grow',String(1+p*.045));
+    panel.style.setProperty('--preview-lift',(-p*8).toFixed(1)+'px');
+  };
   scroller.addEventListener('touchstart',event=>{
     if(event.touches.length!==1)return;
-    touchStart={x:event.touches[0].clientX,y:event.touches[0].clientY,atTop:scroller.scrollTop<=2};
+    const finger=event.touches[0];
+    touchStart={x:finger.clientX,y:finger.clientY,atTop:scroller.scrollTop<=2,vertical:false};
   },{passive:true});
+  scroller.addEventListener('touchmove',event=>{
+    if(!touchStart||event.touches.length!==1)return;
+    if(expandedPanel===panel)return; // Native reading inside the full dialog.
+    if(expandedPanel||closingPanel)return;
+    const dx=event.touches[0].clientX-touchStart.x;
+    const dy=event.touches[0].clientY-touchStart.y;
+    if(Math.abs(dx)>Math.abs(dy)*1.1)return; // Sideways swipe changes project.
+    if(Math.abs(dy)<7)return;
+    touchStart.vertical=true;
+    if(event.cancelable)event.preventDefault();
+    if(dy<0)showPreview(Math.abs(dy)/195);
+    else resetPreview();
+  },{passive:false});
   scroller.addEventListener('touchend',event=>{
     if(!touchStart||event.changedTouches.length!==1)return;
     const dx=event.changedTouches[0].clientX-touchStart.x;
     const dy=event.changedTouches[0].clientY-touchStart.y;
     const initial=touchStart;
     touchStart=null;
-    if(Math.abs(dy)<50||Math.abs(dy)<Math.abs(dx)*1.3)return;
+    if(Math.abs(dy)<40||Math.abs(dy)<Math.abs(dx)*1.15){
+      resetPreview();
+      return;
+    }
     if(expandedPanel===panel){
-      // Deliberate pull down from the very top closes. Normal reading remains native.
-      if(initial.atTop&&scroller.scrollTop<=2&&dy>110)closeExpanded();
-    }else if(!expandedPanel&&dy< -50){
-      expandProject(panel);
+      if(initial.atTop&&scroller.scrollTop<=2&&dy>125)closeExpanded();
+      return;
+    }
+    if(initial.vertical&&!expandedPanel){
+      suppressClickUntil=performance.now()+380;
+      if(dy< -78)expandProject(panel);
+      else resetPreview();
     }
   },{passive:true});
-  scroller.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
+  scroller.addEventListener('touchcancel',()=>{touchStart=null;resetPreview();},{passive:true});
+  scroller.addEventListener('keydown',event=>{
+    if(!expandedPanel&&(event.key==='Enter'||event.key===' ')&&event.target===scroller){
+      event.preventDefault();
+      expandProject(panel);
+    }
+  });
   scroller.addEventListener('wheel',event=>{
     if(expandedPanel===panel){
       const now=performance.now();
@@ -231,13 +277,29 @@ panels.forEach(panel=>{
       lastWheel=now;
       if(scroller.scrollTop<=1&&event.deltaY<0){
         overPull+=event.deltaY;
-        if(overPull < -180){event.preventDefault();overPull=0;closeExpanded();}
+        if(overPull< -210){event.preventDefault();overPull=0;closeExpanded();}
       }else overPull=0;
       return;
     }
-    if(expandedPanel||event.ctrlKey||Math.abs(event.deltaY)<9||Math.abs(event.deltaX)>=Math.abs(event.deltaY))return;
-    if(event.deltaY>0){event.preventDefault();expandProject(panel);}
+    if(expandedPanel||closingPanel||event.ctrlKey||
+       Math.abs(event.deltaY)<5||Math.abs(event.deltaX)>=Math.abs(event.deltaY))return;
+    event.preventDefault(); // Never partially scroll the collapsed project.
+    if(event.deltaY<0){wheelProgress=0;resetPreview();return;}
+    wheelProgress+=Math.abs(event.deltaY);
+    showPreview(wheelProgress/175);
+    clearTimeout(wheelReset);
+    if(wheelProgress>=120){
+      wheelProgress=0;
+      expandProject(panel);
+    }else wheelReset=setTimeout(()=>{wheelProgress=0;resetPreview();},360);
   },{passive:false});
+  // A swipe must not synthesize a second click after we process its release.
+  panel.addEventListener('click',event=>{
+    if(performance.now()<suppressClickUntil){
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  },true);
 });
 // A direct click on the visible case study, its expansion control, or a
 // vertical swipe all expose the same accessible dialog.
