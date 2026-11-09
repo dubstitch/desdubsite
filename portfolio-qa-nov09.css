@@ -1,0 +1,415 @@
+/*
+  Focused portfolio final QA fixes. Loaded only on the homepage and
+  selected-work gallery. The résumé page and its print rules are untouched.
+*/
+:root {
+  --portfolio-aura-near: rgba(219, 120, 198, .16);
+  --portfolio-aura-far: rgba(208, 124, 201, .045);
+}
+html[data-theme="light"] {
+  --portfolio-aura-near: rgba(155, 71, 147, .16);
+  --portfolio-aura-far: rgba(164, 81, 166, .045);
+}
+
+/* REAL legibility in light mode: the action label isn't purple on purple. */
+#gallery .work-panel > .project-expand,
+html[data-theme="light"] #gallery .work-panel > .project-expand {
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: nowrap !important;
+  width: max-content !important;
+  min-width: 0 !important;
+  max-width: min(205px, calc(100% - 28px)) !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 9px 14px !important;
+  gap: 8px !important;
+  top: 15px !important;
+  right: 17px !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: #392344 !important;
+  color: #fffafc !important;
+  border: 1.5px solid #f1bde5 !important;
+  border-radius: 999px !important;
+  font: 700 13px/1.25 'DM Sans', sans-serif !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+  cursor: zoom-in;
+  box-shadow: 0 6px 18px rgba(47, 19, 55, .19),
+    0 0 21px var(--portfolio-aura-near) !important;
+}
+#gallery .work-panel > .project-expand span {
+  display: inline !important;
+  position: static !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: #fffafc !important;
+  font: inherit !important;
+  white-space: nowrap !important;
+}
+#gallery .work-panel > .project-expand svg {
+  display: block !important;
+  opacity: 1 !important;
+  color: #fffafc !important;
+  stroke: currentColor !important;
+  width: 17px !important;
+  height: 17px !important;
+  flex: 0 0 17px !important;
+}
+#gallery .work-panel > .project-expand:hover {
+  background: #69336d !important;
+}
+#gallery .work-panel > .project-expand:focus-visible {
+  outline: 3px solid #a84798 !important;
+  outline-offset: 3px !important;
+}
+@media (max-width: 365px) {
+  #gallery .work-panel > .project-expand,
+  html[data-theme="light"] #gallery .work-panel > .project-expand {
+    height: 40px !important;
+    min-height: 40px !important;
+    top: 10px !important;
+    right: 12px !important;
+    padding: 8px 11px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Exactly five equally accessible stars, with the connector spanning ALL
+   five. The arrows occupy separate grid cells and cannot cover the stars. */
+#gallery .gallery-controls {
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: 46px minmax(0, 250px) 46px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  column-gap: clamp(10px, 2.6vw, 20px) !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: visible !important;
+  padding-inline: clamp(10px, 3vw, 22px) !important;
+}
+#gallery .gallery-controls > .gallery-arrow {
+  box-sizing: border-box !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  flex: none !important;
+  margin: 0 !important;
+  position: relative !important;
+  z-index: 3 !important;
+  place-self: center !important;
+}
+#gallery .gallery-controls > .case-grid-nav {
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 250px !important;
+  flex: none !important;
+  height: 52px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+#gallery .gallery-controls > .case-grid-nav::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 18px !important;
+  right: 18px !important;
+  width: auto !important;
+  height: 2px !important;
+  z-index: 0 !important;
+  transform: translateY(-50%) !important;
+  background: linear-gradient(90deg, #bf78af, #a454ab, #c888b5) !important;
+  box-shadow: 0 0 8px rgba(177, 95, 168, .26) !important;
+  pointer-events: none !important;
+}
+#gallery .case-grid-nav > .nav-star,
+#gallery .case-grid-nav > .nav-star[aria-current="step"] {
+  box-sizing: border-box !important;
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 38px !important;
+  min-width: 38px !important;
+  width: 38px !important;
+  max-width: 38px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  position: relative !important;
+  z-index: 1 !important;
+  transform: none !important;
+  cursor: pointer !important;
+  touch-action: manipulation;
+}
+#gallery .case-grid-nav > .nav-star svg {
+  display: block !important;
+  width: 22px !important;
+  height: 22px !important;
+  flex: none !important;
+  pointer-events: none !important;
+}
+#gallery .case-grid-nav > .nav-star[aria-current="step"] svg {
+  width: 26px !important;
+  height: 26px !important;
+}
+#gallery .case-grid-nav > .nav-star[aria-current="step"]::before {
+  inset: 1px !important;
+}
+#gallery .case-grid-nav > .nav-star[aria-current="step"]::after {
+  inset: 2px !important;
+}
+#gallery .case-grid-nav > .nav-star:focus-visible {
+  outline: 3px solid #79376c !important;
+  outline-offset: 3px !important;
+}
+@media (max-width: 380px) {
+  #gallery .gallery-controls {
+    grid-template-columns: 40px minmax(0, 1fr) 40px !important;
+    column-gap: 8px !important;
+    padding-inline: 16px !important;
+  }
+  #gallery .gallery-controls > .gallery-arrow {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+  #gallery .case-grid-nav > .nav-star,
+  #gallery .case-grid-nav > .nav-star[aria-current="step"] {
+    flex-basis: 29px !important;
+    width: 29px !important;
+    min-width: 29px !important;
+    max-width: 29px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+  }
+  #gallery .case-grid-nav > .nav-star svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+  #gallery .case-grid-nav > .nav-star[aria-current="step"] svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  #gallery .case-grid-nav::before {
+    left: 14px !important;
+    right: 14px !important;
+  }
+}
+
+/* Preview card: the vertical scrollport is locked until expansion.
+   Progress is reflected in the card itself while the finger moves. */
+#gallery #project-track > .work-panel {
+  transform-origin: center center !important;
+  transition: transform .28s ease-out, box-shadow .28s ease-out !important;
+}
+#gallery #project-track > .work-panel .panel-scroller {
+  overflow-y: hidden !important;
+  overscroll-behavior-y: none !important;
+  touch-action: pan-x !important;
+  scrollbar-width: none !important;
+}
+#gallery #project-track > .work-panel .panel-scroller::-webkit-scrollbar {display:none!important;}
+#gallery #project-track > .work-panel.is-previewing {
+  transform: scale(var(--preview-grow, 1.02)) translateY(var(--preview-lift, 0px)) !important;
+  transition: none !important;
+  z-index: 5 !important;
+  box-shadow: 0 24px 55px rgba(21, 7, 29, .22),
+    0 0 36px var(--portfolio-aura-near) !important;
+}
+#gallery #project-track > .work-panel.is-preview-resetting {
+  transition: transform .30s cubic-bezier(.2,.75,.25,1),
+    box-shadow .30s ease !important;
+}
+
+/* Progressive, slower full-screen reveal, including its discreet close.
+   The close stays INSIDE the upper-right corner of the card. */
+dialog.project-dialog {
+  opacity: 0 !important;
+  transform: scale(.91) translateY(35px) !important;
+  transform-origin: center !important;
+  transition: transform .72s cubic-bezier(.18,.76,.19,1),
+    opacity .62s ease !important;
+}
+dialog.project-dialog.is-visible {
+  opacity: 1 !important;
+  transform: scale(1) translateY(0) !important;
+}
+dialog.project-dialog .project-dialog-close {
+  top: 32px !important;
+  right: max(30px,calc((100vw - 1180px)/2 + 28px)) !important;
+  width: 39px !important;
+  height: 39px !important;
+  min-width: 39px !important;
+  min-height: 39px !important;
+  padding: 8px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid #ffcde9 !important;
+  box-shadow: 0 4px 13px rgba(0,0,0,.20) !important;
+  background: #34203f !important;
+  color: #fff !important;
+}
+dialog.project-dialog .project-dialog-close svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke-width: 2 !important;
+}
+dialog.project-dialog .project-dialog-close:focus-visible {
+  outline: 2px solid #f5b1db !important;
+  outline-offset: 3px !important;
+}
+dialog.project-dialog .work-panel .panel-scroller {
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain !important;
+  touch-action: pan-y !important;
+  scrollbar-width: thin !important;
+}
+@media (max-width: 700px) {
+  dialog.project-dialog .project-dialog-close {
+    top: 24px !important;
+    right: 25px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    min-width: 38px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  dialog.project-dialog,
+  dialog.project-dialog.is-visible,
+  #gallery #project-track > .work-panel,
+  #gallery #project-track > .work-panel.is-previewing {
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Home screen: enough air around the identity without clipping actions. */
+@media (min-height: 740px) {
+  #chapters #home .hero-identity {
+    margin-top: clamp(12px, 2svh, 25px) !important;
+  }
+}
+@media (max-height: 739px) {
+  #chapters #home .hero-identity {
+    margin-top: clamp(4px, .9svh, 10px) !important;
+  }
+}
+
+/* ONE coherent action group, no overlapping buttons in landscape and
+   no compounded top margins causing a portrait gap. */
+#chapters #approach .approach-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  align-content: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 12px 15px !important;
+  width: min(100%, 720px) !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 9px 0 0 !important;
+  padding: 9px 8px 10px !important;
+  grid-area: auto;
+}
+#chapters #approach .approach-links > .philosophy-link {
+  position: relative !important;
+  display: inline-flex !important;
+  flex: 0 1 auto !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  align-self: center !important;
+  justify-self: start !important;
+  grid-area: auto !important;
+  white-space: normal !important;
+  text-align: center !important;
+}
+@media (orientation:landscape) and (max-height:680px) {
+  #chapters #approach .approach-links {
+    grid-area: 3 / 2 / 4 / 3 !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-self: start !important;
+    gap: 8px 10px !important;
+    margin: 0 !important;
+    padding: 3px 3px 9px !important;
+  }
+  #chapters #approach .approach-links > .philosophy-link {
+    font-size: clamp(10px, 1.5vw, 12px) !important;
+    min-height: 35px !important;
+    padding: 7px 10px !important;
+  }
+}
+@media (orientation:portrait) and (max-width:650px) {
+  #chapters #approach .approach-links {
+    margin-top: 3px !important;
+    gap: 10px !important;
+    padding: 7px 4px 10px !important;
+  }
+}
+
+/* No visible rectangular glow containers. Use multiple soft rings with
+   a low-opacity far halo; no pseudo-element box behind the pills. */
+#chapters .chip,
+#chapters .cta,
+#chapters .philosophy-link,
+#chapters .contact-actions a,
+.site-header-shell .site-nav-pill,
+.site-header-shell .site-nav-universe,
+.site-header-shell .theme-toggle {
+  filter: none !important;
+  box-shadow: 0 0 10px var(--portfolio-aura-near),
+    0 0 23px var(--portfolio-aura-far),
+    0 0 42px rgba(207,121,199,.027) !important;
+}
+#chapters .chips,
+#chapters .approach-links,
+#chapters .contact-actions,
+.site-header-shell .site-header-actions {
+  overflow: visible !important;
+}
+#chapters #work .work-grid {
+  padding-block: 16px 20px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+#chapters #work .work-grid > .work {
+  box-shadow: 0 0 10px var(--portfolio-aura-near),
+    0 0 20px var(--portfolio-aura-far),
+    0 0 1px rgba(173,86,156,.16) !important;
+}
+
+/* True four-point twinkling stars, never just floating washed-out dots.
+   Normal blend mode keeps lavender stars legible over pale backgrounds. */
+html body #stardust {
+  position: fixed !important;
+  z-index: 6 !important;
+  pointer-events: none !important;
+  opacity: .78 !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+}
+html[data-theme="light"] body #stardust {
+  opacity: .91 !important;
+  mix-blend-mode: multiply !important;
+}
+@media (prefers-contrast: more) {
+  #stardust {opacity: .65 !important;}
+}
