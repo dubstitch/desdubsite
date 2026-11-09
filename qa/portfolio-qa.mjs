@@ -191,7 +191,7 @@ for(const theme of ['light','dark']){
   if(size.width>size.height){
     const position=await page.evaluate(()=>{
       const frame=document.querySelector('.gallery-frame').getBoundingClientRect();
-      const first=document.querySelector('.work-panel').getBoundingClientRect();
+      const first=(document.querySelector('.work-panel.is-revealed') || document.querySelector('.work-panel')).getBoundingClientRect();
       return {left:Math.round(first.left-frame.left),right:Math.round(frame.right-first.right),frameWidth:Math.round(frame.width),panelWidth:Math.round(first.width)};
     });
     if(position.left<-4||position.right<-4)issues.push('GALLERY FIRST PANEL CROPPED '+theme+' '+size.name+' '+JSON.stringify(position));
@@ -380,7 +380,7 @@ for(const theme of ['light','dark']){
   await page.goto(origin+'/case-studies.html?project=anniversary#gallery',{waitUntil:'domcontentloaded'});
   await page.waitForTimeout(100);
   const overlapping=await page.evaluate(()=>{
-    const panel=document.querySelector('.work-panel').getBoundingClientRect();
+    const panel=(document.querySelector('.work-panel.is-revealed') || document.querySelector('.work-panel')).getBoundingClientRect();
     const controls=document.querySelector('.gallery-controls').getBoundingClientRect();
     return panel.bottom>controls.top+8;
   });
