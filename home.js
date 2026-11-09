@@ -28,7 +28,20 @@ animFrame=requestAnimationFrame(tick);
 function step(direction){if(universe.classList.contains('open')||locked)return;goTo(current+direction)}
 pages.forEach((page,i)=>{
 
-if(i<pages.length-1){const link=page.querySelector('.next-section')||document.createElement('a');link.className='next-section';link.href='#'+pages[i+1].id;link.setAttribute('aria-label','Go to next section');link.innerHTML='Explore next <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></span>';if(!link.isConnected)page.append(link)}
+if(i<pages.length-1){
+  const nextCopy={
+    home:'See what I built',
+    work:'Meet the mind behind the work',
+    story:'Explore how I think',
+    approach:'Let’s make something happen'
+  };
+  const link=page.querySelector('.next-section')||document.createElement('a');
+  link.className='next-section';
+  link.href='#'+pages[i+1].id;
+  link.setAttribute('aria-label',nextCopy[page.id]||'Go to the next chapter');
+  link.innerHTML=(nextCopy[page.id]||'Continue the story')+' <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></span>';
+  if(!link.isConnected)page.append(link);
+}
 });
 surface.addEventListener('wheel',e=>{if(universe.classList.contains('open'))return;if(e.target.closest('button,input,textarea,select'))return;if(e.target.closest('.work-grid')&&Math.abs(e.deltaX)>Math.abs(e.deltaY))return;e.preventDefault();if(locked)return;wheelTotal+=e.deltaY;clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>wheelTotal=0,170);if(Math.abs(wheelTotal)>=15){step(Math.sign(wheelTotal));wheelTotal=0}},{passive:false});
 surface.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;gestureStart={x:e.touches[0].clientX,y:e.touches[0].clientY,horizontal:!!e.target.closest('.work-grid')}},{passive:true});
@@ -60,14 +73,95 @@ const initial=pages.findIndex(p=>p.id===decodeURIComponent(location.hash.slice(1
 // Direct links from project pages can open the Universe immediately.
 if(new URLSearchParams(location.search).get('universe')==='1'){history.replaceState(null,'',location.pathname+location.hash);openUniverse();}
 
-// Calm ambient oil-and-glitter particle field. Pointer forces are soft and spring back.
-const canvas=document.getElementById('stardust'),ctx=canvas.getContext('2d',{alpha:true});
-if(ctx){let W=0,H=0,dpr=1,stars=[],px=-999,py=-999,lastInput=0;const count=48;
-function sizeStars(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);if(!stars.length)stars=Array.from({length:count},(_,i)=>({x:(i*97.7%100)/100*W,y:(i*61.3%100)/100*H,vx:0,vy:0,r:.65+(i%4)*.42,seed:i*2.39}));}
-sizeStars();addEventListener('resize',sizeStars);
-function push(x,y){px=x;py=y;lastInput=performance.now();}
-addEventListener('pointermove',e=>push(e.clientX,e.clientY),{passive:true});addEventListener('touchmove',e=>{if(e.touches[0])push(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
-let t=0;function draw(){ctx.clearRect(0,0,W,H);t+=.008;for(const s of stars){if(!reduced){const dx=s.x-px,dy=s.y-py,dist=Math.hypot(dx,dy)||1;if(performance.now()-lastInput<450&&dist<125){const power=(1-dist/125)*.42;s.vx+=dx/dist*power;s.vy+=dy/dist*power;}s.vx=s.vx*.94+Math.sin(t+s.seed)*.008;s.vy=s.vy*.94+Math.cos(t*.75+s.seed)*.007;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;}ctx.beginPath();ctx.fillStyle='rgba(255,223,244,.58)';ctx.shadowBlur=8;ctx.shadowColor='#f4b6e4';ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}if(!reduced)requestAnimationFrame(draw)}draw()}
+// Four-point glistening stars, not dots. The field gently responds to
+// fingers and pointer movement and remains readable in both themes.
+const canvas=document.getElementById('stardust');
+const ctx=canvas?.getContext('2d',{alpha:true});
+if(ctx){
+  let W=0,H=0,dpr=1,t=0,stars=[],px=-500,py=-500,lastInput=0;
+  const count=innerWidth<540?34:52;
+  const build=(i)=>({
+    x:((i*73.27+17)%100)/100*W,
+    y:((i*41.83+23)%100)/100*H,
+    vx:0,vy:0,
+    size:2.45+(i%6)*.56,
+    seed:i*1.73,
+    rotation:(i%5)*.19
+  });
+  function sizeStars(){
+    const oldW=W||innerWidth,oldH=H||innerHeight;
+    W=innerWidth;H=innerHeight;
+    dpr=Math.min(devicePixelRatio||1,2);
+    canvas.width=Math.max(1,Math.round(W*dpr));
+    canvas.height=Math.max(1,Math.round(H*dpr));
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    if(!stars.length)stars=Array.from({length:count},(_,i)=>build(i));
+    else stars.forEach(star=>{star.x*=W/oldW;star.y*=H/oldH;});
+  }
+  sizeStars();
+  addEventListener('resize',sizeStars,{passive:true});
+  function point(x,y){px=x;py=y;lastInput=performance.now();}
+  addEventListener('pointermove',e=>point(e.clientX,e.clientY),{passive:true});
+  addEventListener('touchmove',e=>{
+    if(e.touches[0])point(e.touches[0].clientX,e.touches[0].clientY);
+  },{passive:true});
+  function glint(star,light,glimmer){
+    const outer=star.size*(.83+.22*glimmer);
+    const inner=outer*.16;
+    ctx.save();
+    ctx.translate(star.x,star.y);
+    ctx.rotate(star.rotation+Math.sin(t*.27+star.seed)*.05);
+    ctx.beginPath();
+    for(let i=0;i<8;i++){
+      const angle=-Math.PI/2+i*Math.PI/4;
+      const radius=i%2===0?outer*1.86:inner;
+      const x=Math.cos(angle)*radius,y=Math.sin(angle)*radius;
+      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    const alpha=(.55+.36*glimmer).toFixed(3);
+    ctx.fillStyle=light?'rgba(111,46,126,'+alpha+')':'rgba(255,227,247,'+alpha+')';
+    ctx.shadowColor=light?'rgba(191,81,176,.65)':'rgba(255,178,231,.67)';
+    ctx.shadowBlur=light?8:12;
+    ctx.fill();
+    ctx.shadowBlur=0;
+    // Tiny luminous center preserves the recognizable four-point sparkle.
+    ctx.beginPath();
+    ctx.arc(0,0,Math.max(.5,outer*.23),0,Math.PI*2);
+    ctx.fillStyle=light?'rgba(255,252,255,.85)':'rgba(255,255,255,.95)';
+    ctx.fill();
+    ctx.restore();
+  }
+  function draw(){
+    if(!W||!H)return;
+    ctx.clearRect(0,0,W,H);
+    t+=.019;
+    const light=document.documentElement.dataset.theme==='light';
+    const active=performance.now()-lastInput<800;
+    for(const star of stars){
+      if(!reduced){
+        const dx=star.x-px,dy=star.y-py,dist=Math.hypot(dx,dy)||1;
+        if(active&&dist<170){
+          const strength=Math.pow(1-dist/170,2)*.52;
+          star.vx+=(dx/dist)*strength;
+          star.vy+=(dy/dist)*strength;
+        }
+        star.vx=star.vx*.90+Math.sin(t*.55+star.seed)*.010;
+        star.vy=star.vy*.90+Math.cos(t*.4+star.seed)*.009;
+        star.x+=star.vx;star.y+=star.vy;
+        const pad=12;
+        if(star.x< -pad)star.x=W+pad;
+        if(star.x>W+pad)star.x= -pad;
+        if(star.y< -pad)star.y=H+pad;
+        if(star.y>H+pad)star.y= -pad;
+      }
+      const shimmer=.5+.5*Math.sin(t*(.68+(star.seed%3)*.1)+star.seed);
+      glint(star,light,shimmer);
+    }
+    if(!reduced)requestAnimationFrame(draw);
+  }
+  draw();
+}
 
 const featured=document.querySelector('#work .work-grid'),featuredCards=featured?[...featured.querySelectorAll('.work')]:[],featuredControls=document.querySelector('#work .work-controls');
 if(featured&&featuredCards.length&&featuredControls){
