@@ -1,0 +1,200 @@
+/* Immersive selected-work gallery.
+   Keep each slide visibly separate, then expand the same actual case study.
+   Content is reparented to the native dialog, not cloned or duplicated. */
+#project-track.panels {
+  --card-width:min(78vw,1120px) !important;
+  box-sizing:border-box !important;
+  display:flex !important;
+  align-items:stretch !important;
+  gap:clamp(24px,3.4vw,54px) !important;
+  padding-inline:max(26px,calc((100vw - var(--card-width)) / 2)) !important;
+  padding-block:10px 13px !important;
+  scroll-padding-inline:max(26px,calc((100vw - var(--card-width)) / 2));
+  scroll-snap-type:x mandatory;
+  overscroll-behavior-x:contain;
+}
+#project-track .work-panel {
+  position:relative;
+  flex:0 0 var(--card-width) !important;
+  width:var(--card-width) !important;
+  max-width:var(--card-width) !important;
+  margin:0 !important;
+  border:1.5px solid #edbadc9c !important;
+  border-radius:25px;
+  box-shadow:0 16px 32px rgba(5,2,9,.26);
+  isolation:isolate;
+}
+#project-track .work-panel.is-revealed {
+  border-color:#ffcfed !important;
+  box-shadow:0 17px 38px rgba(5,2,9,.31),0 0 0 1px rgba(255,215,242,.19);
+}
+#project-track .work-panel-placeholder {
+  flex:0 0 var(--card-width);
+  width:var(--card-width);
+  max-width:var(--card-width);
+  min-height:100%;
+  scroll-snap-align:center;
+  pointer-events:none;
+}
+.project-expand {
+  position:absolute;
+  z-index:4;
+  top:14px;
+  right:17px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  min-height:43px;
+  padding:10px 15px;
+  border-radius:100px;
+  border:1px solid #ffd5f1;
+  color:var(--ink);
+  background:rgba(46,21,59,.91);
+  box-shadow:0 7px 19px rgba(10,3,17,.23);
+  backdrop-filter:blur(10px);
+  font-size:12px;
+  font-weight:700;
+  cursor:zoom-in;
+  transition:background .2s ease,transform .2s ease;
+}
+.project-expand svg {width:18px;height:18px;flex:none;}
+.project-expand:hover {background:#6c2f70;transform:translateY(-2px);}
+.project-expand:focus-visible {outline:3px solid #ffe5f6;outline-offset:4px;}
+/* Avoid the expand action covering the card's heading on shorter screens. */
+#project-track .work-panel > .panel-scroller {
+  padding-top:clamp(59px,7svh,85px) !important;
+}
+dialog.project-dialog {
+  box-sizing:border-box;
+  position:fixed;
+  inset:0;
+  margin:0;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  max-width:none;
+  max-height:none;
+  padding:clamp(14px,2.6vw,36px);
+  border:0;
+  background:linear-gradient(155deg,rgba(24,12,36,.98),rgba(50,25,59,.97));
+  color:var(--ink);
+  opacity:0;
+  transform:scale(.965) translateY(12px);
+  transition:opacity .36s ease,transform .43s cubic-bezier(.2,.7,.2,1);
+  overflow:hidden;
+}
+dialog.project-dialog::backdrop {
+  background:rgba(5,1,13,.76);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+dialog.project-dialog.is-visible {
+  opacity:1;
+  transform:scale(1) translateY(0);
+}
+.project-dialog-content {
+  box-sizing:border-box;
+  position:relative;
+  height:100%;
+  width:min(100%,1180px);
+  max-width:1180px;
+  margin:0 auto;
+  padding:clamp(13px,2.1vw,26px) 0 0;
+}
+dialog.project-dialog .work-panel {
+  position:relative !important;
+  flex:none !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  overflow:hidden !important;
+  border:1px solid #f5c8ed !important;
+  border-radius:clamp(15px,2vw,28px) !important;
+  box-shadow:0 25px 90px rgba(0,0,0,.4) !important;
+  transform:none !important;
+  opacity:1 !important;
+}
+dialog.project-dialog #wcfcc {background:var(--panel4);}
+dialog.project-dialog #anniversary {background:var(--panel1);}
+dialog.project-dialog #collaborate {background:var(--panel2);}
+dialog.project-dialog #asce2027 {background:var(--panel3);}
+dialog.project-dialog #dublist {background:var(--panel2);}
+dialog.project-dialog .work-panel .panel-scroller {
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  max-height:100%;
+  overflow-y:auto !important;
+  overscroll-behavior-y:contain;
+  padding:clamp(66px,7vw,95px) clamp(22px,6vw,90px) 65px !important;
+  scrollbar-width:thin;
+  -webkit-overflow-scrolling:touch;
+}
+dialog.project-dialog .work-panel .project-expand {display:none !important;}
+.project-dialog-close {
+  position:absolute;
+  top:clamp(8px,2vw,26px);
+  right:max(clamp(8px,2vw,26px),calc((100vw - 1180px) / 2 + 23px));
+  z-index:10;
+  display:grid;
+  place-items:center;
+  width:48px;height:48px;
+  border-radius:50%;
+  border:2px solid #ffdaef;
+  background:#301b3b;
+  color:#fff;
+  opacity:0;
+  transform:translateY(-5px);
+  transition:opacity .22s ease .22s,transform .22s ease .22s;
+  cursor:pointer;
+}
+.project-dialog-close svg {width:24px;height:24px;}
+dialog.project-dialog.is-visible .project-dialog-close {
+  opacity:1;
+  transform:translateY(0);
+}
+.project-dialog-close:hover {background:#9b367b;}
+.project-dialog-close:focus-visible {
+  outline:3px solid #fff;
+  outline-offset:4px;
+  opacity:1;
+}
+body.project-modal-active {overflow:hidden !important;}
+@media(max-width:700px) {
+  #project-track.panels {
+    --card-width:calc(100vw - 62px) !important;
+    gap:22px !important;
+    padding-inline:31px !important;
+    padding-block:10px 12px !important;
+  }
+  #project-track .work-panel {border-radius:20px !important;}
+  .project-expand {
+    min-height:42px;
+    top:10px;
+    right:12px;
+    padding:10px 12px;
+  }
+  .project-expand span {font-size:11px;}
+  dialog.project-dialog {padding:9px;}
+  .project-dialog-content {width:100%;padding:4px 0 0;}
+  dialog.project-dialog .work-panel {border-radius:16px !important;}
+  dialog.project-dialog .work-panel .panel-scroller {
+    padding:68px 22px 52px !important;
+  }
+  .project-dialog-close {top:17px;right:19px;width:44px;height:44px;}
+}
+@media(orientation:landscape) and (max-height:550px) {
+  #project-track.panels {--card-width:min(78vw,830px) !important;}
+  dialog.project-dialog {padding:7px 15px;}
+  .project-dialog-content {padding-top:0;}
+  dialog.project-dialog .panel-scroller {padding-top:65px !important;}
+}
+@media(prefers-reduced-motion:reduce) {
+  dialog.project-dialog,
+  .project-dialog-close,
+  .project-expand {transition:none !important;transform:none !important;}
+}
