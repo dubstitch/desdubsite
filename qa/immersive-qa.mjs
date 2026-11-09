@@ -46,10 +46,15 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]) {
    report(engineName,device.name,'case study order '+JSON.stringify(metrics));
   if(metrics.gap<18||!metrics.expand)report(engineName,device.name,'no breathing room '+JSON.stringify(metrics));
   if(metrics.totalWidth>metrics.viewport+3)report(engineName,device.name,'horizontal body overflow '+JSON.stringify(metrics));
+  if(device.name==='iphone'&&process.env.SHOW_SHOTS==='1'){
+    const shot=await page.screenshot({type:'jpeg',quality:43});
+    console.log('GALLERY_SHOT_BASE64:'+engineName+':'+shot.toString('base64'));
+  }
   const trigger=page.locator('#wcfcc .project-expand');
   await trigger.click();
   const dialog=page.locator('dialog.project-dialog');
   await dialog.waitFor({state:'visible'});
+  await page.waitForTimeout(110);
   const state=await page.evaluate(()=>{
    const dlg=document.querySelector('dialog.project-dialog');
    const p=dlg.querySelector('.work-panel');
@@ -84,6 +89,16 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]) {
   await page.waitForTimeout(70);
   if(await page.locator('dialog.project-dialog').evaluate(el=>el.open))
    report(engineName,device.name,'close button did not close dialog');
+  // Vertical wheel input is the second entry path, alongside explicit tap.
+  await page.locator('#wcfcc .panel-scroller').hover();
+  await page.mouse.wheel(0,170);
+  await page.waitForTimeout(110);
+  if(!(await page.locator('dialog.project-dialog').evaluate(el=>el.open)))
+    report(engineName,device.name,'scroll-to-expand did not open project');
+  else {
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(80);
+  }
   await page.goto(base+'case-studies.html?project=anniversary#gallery',{waitUntil:'domcontentloaded'});
   await page.waitForTimeout(180);
   const direct=await page.locator('#anniversary').evaluate(el=>el.classList.contains('is-revealed'));
