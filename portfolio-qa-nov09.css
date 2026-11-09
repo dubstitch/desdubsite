@@ -413,3 +413,23 @@ html[data-theme="light"] body #stardust {
 @media (prefers-contrast: more) {
   #stardust {opacity: .65 !important;}
 }
+
+
+/* The final active star must never spill over the Next button.
+   Keep the active halo visible but stationary and within its hit area. */
+#gallery .case-grid-nav > .nav-star::before,
+#gallery .case-grid-nav > .nav-star::after {
+  pointer-events: none !important;
+}
+#gallery .case-grid-nav > .nav-star[aria-current="step"]::after {
+  animation: none !important;
+  transform: none !important;
+  opacity: .95 !important;
+  border: 1px solid rgba(255,223,247,.9) !important;
+  box-shadow: 0 0 7px rgba(197,115,189,.36) !important;
+}
+#gallery .case-grid-nav > .nav-star[aria-current="step"]::before {
+  animation: none !important;
+  transform: none !important;
+  opacity: .86 !important;
+}
