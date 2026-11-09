@@ -397,24 +397,104 @@ dialog.project-dialog .work-panel .panel-scroller {
     0 0 1px rgba(173,86,156,.16) !important;
 }
 
-/* True four-point twinkling stars, never just floating washed-out dots.
-   Normal blend mode keeps lavender stars legible over pale backgrounds. */
-html body #stardust {
-  position: fixed !important;
-  z-index: 6 !important;
-  pointer-events: none !important;
-  opacity: .78 !important;
-  mix-blend-mode: normal !important;
-  filter: none !important;
+
+/* Fine star sand is a static background texture, never a foreground overlay. */
+#chapters .chapter {
+  isolation:isolate;
+  position:relative;
 }
-html[data-theme="light"] body #stardust {
-  opacity: .91 !important;
-  mix-blend-mode: multiply !important;
+#chapters .chapter::before {
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  inset:0 !important;
+  z-index:0 !important;
+  pointer-events:none !important;
+  background-image:url("assets/portfolio-stardust.svg") !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+  background-size:cover !important;
+  opacity:.48 !important;
+  filter:none !important;
+  mix-blend-mode:normal !important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 60%,rgba(0,0,0,.2) 73%,black 94%);
+  mask-image:linear-gradient(90deg,transparent 0%,transparent 60%,rgba(0,0,0,.2) 73%,black 94%);
 }
-@media (prefers-contrast: more) {
-  #stardust {opacity: .65 !important;}
+#chapters .chapter .chapter-content {position:relative;z-index:2;}
+html[data-theme="light"] #chapters .chapter::before {
+  opacity:.16 !important;
+  filter:brightness(.65) saturate(.55) !important;
+  mix-blend-mode:multiply !important;
+}
+@media(max-width:900px){
+ #chapters .chapter::before {
+  opacity:.32 !important;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.35) 12%,transparent 24%,transparent 100%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.35) 12%,transparent 24%,transparent 100%);
+ }
+ html[data-theme="light"] #chapters .chapter::before {opacity:.12 !important;}
+}
+@media(forced-colors:active){#chapters .chapter::before {display:none !important;}}
+
+/* Requested additional 15px above the full Des Wade identity. */
+@media(min-height:740px){
+ #chapters #home .hero-identity {margin-top:calc(clamp(12px,2svh,25px) + 15px) !important;}
+}
+@media(max-height:739px){
+ #chapters #home .hero-identity {margin-top:calc(clamp(4px,.9svh,10px) + 15px) !important;}
 }
 
+/* Long chapter cues get a real second row for their arrows. */
+#chapters #work .next-section,
+#chapters #approach .next-section {
+ box-sizing:border-box !important;
+ display:inline-flex !important;
+ flex-direction:column !important;
+ align-items:flex-start !important;
+ justify-content:flex-start !important;
+ gap:6px !important;
+ width:max-content !important;
+ max-width:min(290px,calc(100vw - 100px)) !important;
+ white-space:normal !important;
+ text-align:left !important;
+}
+#chapters #work .next-section .next-section-label,
+#chapters #approach .next-section .next-section-label {
+ display:block !important;
+ max-width:100% !important;
+ font:inherit !important;
+ font-weight:600 !important;
+ line-height:1.35 !important;
+}
+#chapters #work .next-section > span[aria-hidden],
+#chapters #approach .next-section > span[aria-hidden] {
+ display:grid !important;
+ flex:0 0 32px !important;
+}
+@media(max-width:900px){
+ #chapters #work .next-section,
+ #chapters #approach .next-section {
+  max-width:min(280px,calc(100vw - 255px)) !important;
+ }
+}
+@media(max-width:650px){
+ #chapters #work .next-section,
+ #chapters #approach .next-section {
+  max-width:max(100px,calc(100vw - 235px)) !important;
+  font-size:11px !important;
+ }
+}
+@media(max-width:380px){
+ #chapters #work .next-section,
+ #chapters #approach .next-section {
+  font-size:10px !important;
+  bottom:124px !important;
+ }
+}
+@media(orientation:landscape) and (max-height:620px) {
+ #chapters #work .next-section,
+ #chapters #approach .next-section {bottom:119px !important;}
+}
 
 /* The final active star must never spill over the Next button.
    Keep the active halo visible but stationary and within its hit area. */
