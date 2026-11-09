@@ -251,7 +251,8 @@ dialog.project-dialog.is-visible {
   transform: scale(1) translateY(0) !important;
 }
 dialog.project-dialog .project-dialog-close {
-  top: 32px !important;
+  /* Position relative to the inset card, not the viewport's top edge. */
+  top: calc(clamp(14px,2.6vw,36px) + clamp(13px,2.1vw,26px) + 12px) !important;
   right: max(30px,calc((100vw - 1180px)/2 + 28px)) !important;
   width: 39px !important;
   height: 39px !important;
@@ -281,7 +282,7 @@ dialog.project-dialog .work-panel .panel-scroller {
 }
 @media (max-width: 700px) {
   dialog.project-dialog .project-dialog-close {
-    top: 24px !important;
+    top: 30px !important;
     right: 25px !important;
     width: 38px !important;
     height: 38px !important;
@@ -432,4 +433,8 @@ html[data-theme="light"] body #stardust {
   animation: none !important;
   transform: none !important;
   opacity: .86 !important;
+}
+
+@media (orientation:landscape) and (max-height:550px) {
+  dialog.project-dialog .project-dialog-close {top:19px !important;right:29px !important;}
 }
