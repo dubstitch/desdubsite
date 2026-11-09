@@ -11,6 +11,7 @@ on:
       - 'glow-finishing.css'
       - 'case-studies.css'
       - 'work-immersive.css'
+      - 'portfolio-finish.css'
       - 'case-flow.css'
       - 'case-studies.js'
       - 'resume.css'
