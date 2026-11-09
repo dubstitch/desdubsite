@@ -1,7 +1,7 @@
 name: Portfolio visual QA
 on:
   push:
-    branches: [main, "feature/wcfcc-first-immersive-work"]
+    branches: [main, "feature/wcfcc-first-immersive-work", "fix/portfolio-qa-nov09"]
     paths:
       - 'index.html'
       - 'home.css'
@@ -12,6 +12,7 @@ on:
       - 'case-studies.css'
       - 'work-immersive.css'
       - 'portfolio-finish.css'
+      - 'portfolio-qa-nov09.css'
       - 'case-flow.css'
       - 'case-studies.js'
       - 'resume.css'
@@ -51,6 +52,8 @@ jobs:
           echo $! > /tmp/portfolio-http.pid
           sleep 2
           curl -fsS http://127.0.0.1:8765/index.html >/dev/null
+      - name: Verify targeted UX fixes in both themes
+        run: SHOW_SHOTS=1 node qa/portfolio-nov09-qa.mjs
       - name: Verify immersive case-study expansion and spacing
         run: SHOW_SHOTS=1 node qa/immersive-qa.mjs
       - name: Verify responsive layouts and capture images
