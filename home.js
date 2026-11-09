@@ -39,7 +39,7 @@ if(i<pages.length-1){
   link.className='next-section';
   link.href='#'+pages[i+1].id;
   link.setAttribute('aria-label',nextCopy[page.id]||'Go to the next chapter');
-  link.innerHTML=(nextCopy[page.id]||'Continue the story')+' <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></span>';
+  link.innerHTML='<strong class="next-section-label">'+(nextCopy[page.id]||'Continue the story')+'</strong> <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></span>';
   if(!link.isConnected)page.append(link);
 }
 });
@@ -73,96 +73,7 @@ const initial=pages.findIndex(p=>p.id===decodeURIComponent(location.hash.slice(1
 // Direct links from project pages can open the Universe immediately.
 if(new URLSearchParams(location.search).get('universe')==='1'){history.replaceState(null,'',location.pathname+location.hash);openUniverse();}
 
-// Four-point glistening stars, not dots. The field gently responds to
-// fingers and pointer movement and remains readable in both themes.
-const canvas=document.getElementById('stardust');
-const ctx=canvas?.getContext('2d',{alpha:true});
-if(ctx){
-  let W=0,H=0,dpr=1,t=0,stars=[],px=-500,py=-500,lastInput=0;
-  const count=innerWidth<540?34:52;
-  const build=(i)=>({
-    x:((i*73.27+17)%100)/100*W,
-    y:((i*41.83+23)%100)/100*H,
-    vx:0,vy:0,
-    size:2.45+(i%6)*.56,
-    seed:i*1.73,
-    rotation:(i%5)*.19
-  });
-  function sizeStars(){
-    const oldW=W||innerWidth,oldH=H||innerHeight;
-    W=innerWidth;H=innerHeight;
-    dpr=Math.min(devicePixelRatio||1,2);
-    canvas.width=Math.max(1,Math.round(W*dpr));
-    canvas.height=Math.max(1,Math.round(H*dpr));
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    if(!stars.length)stars=Array.from({length:count},(_,i)=>build(i));
-    else stars.forEach(star=>{star.x*=W/oldW;star.y*=H/oldH;});
-  }
-  sizeStars();
-  addEventListener('resize',sizeStars,{passive:true});
-  function point(x,y){px=x;py=y;lastInput=performance.now();}
-  addEventListener('pointermove',e=>point(e.clientX,e.clientY),{passive:true});
-  addEventListener('touchmove',e=>{
-    if(e.touches[0])point(e.touches[0].clientX,e.touches[0].clientY);
-  },{passive:true});
-  function glint(star,light,glimmer){
-    const outer=star.size*(.83+.22*glimmer);
-    const inner=outer*.16;
-    ctx.save();
-    ctx.translate(star.x,star.y);
-    ctx.rotate(star.rotation+Math.sin(t*.27+star.seed)*.05);
-    ctx.beginPath();
-    for(let i=0;i<8;i++){
-      const angle=-Math.PI/2+i*Math.PI/4;
-      const radius=i%2===0?outer*1.86:inner;
-      const x=Math.cos(angle)*radius,y=Math.sin(angle)*radius;
-      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-    }
-    ctx.closePath();
-    const alpha=(.55+.36*glimmer).toFixed(3);
-    ctx.fillStyle=light?'rgba(111,46,126,'+alpha+')':'rgba(255,227,247,'+alpha+')';
-    ctx.shadowColor=light?'rgba(191,81,176,.65)':'rgba(255,178,231,.67)';
-    ctx.shadowBlur=light?8:12;
-    ctx.fill();
-    ctx.shadowBlur=0;
-    // Tiny luminous center preserves the recognizable four-point sparkle.
-    ctx.beginPath();
-    ctx.arc(0,0,Math.max(.5,outer*.23),0,Math.PI*2);
-    ctx.fillStyle=light?'rgba(255,252,255,.85)':'rgba(255,255,255,.95)';
-    ctx.fill();
-    ctx.restore();
-  }
-  function draw(){
-    if(!W||!H)return;
-    ctx.clearRect(0,0,W,H);
-    t+=.019;
-    const light=document.documentElement.dataset.theme==='light';
-    const active=performance.now()-lastInput<800;
-    for(const star of stars){
-      if(!reduced){
-        const dx=star.x-px,dy=star.y-py,dist=Math.hypot(dx,dy)||1;
-        if(active&&dist<170){
-          const strength=Math.pow(1-dist/170,2)*.52;
-          star.vx+=(dx/dist)*strength;
-          star.vy+=(dy/dist)*strength;
-        }
-        star.vx=star.vx*.90+Math.sin(t*.55+star.seed)*.010;
-        star.vy=star.vy*.90+Math.cos(t*.4+star.seed)*.009;
-        star.x+=star.vx;star.y+=star.vy;
-        const pad=12;
-        if(star.x< -pad)star.x=W+pad;
-        if(star.x>W+pad)star.x= -pad;
-        if(star.y< -pad)star.y=H+pad;
-        if(star.y>H+pad)star.y= -pad;
-      }
-      const shimmer=.5+.5*Math.sin(t*(.68+(star.seed%3)*.1)+star.seed);
-      glint(star,light,shimmer);
-    }
-    if(!reduced)requestAnimationFrame(draw);
-  }
-  draw();
-}
-
+// Static, decorative stars are now behind each chapter in the stylesheet.
 const featured=document.querySelector('#work .work-grid'),featuredCards=featured?[...featured.querySelectorAll('.work')]:[],featuredControls=document.querySelector('#work .work-controls');
 if(featured&&featuredCards.length&&featuredControls){
  const prev=featuredControls.querySelector('.work-back'),next=featuredControls.querySelector('.work-forward'),status=featuredControls.querySelector('.work-position');
