@@ -101,7 +101,8 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]){
    await page.locator('#wcfcc .project-expand').click();
    const dlg=page.locator('dialog.project-dialog');
    await dlg.waitFor({state:'visible'});
-   await page.waitForTimeout(95);
+   await page.locator('dialog.project-dialog.is-visible').waitFor({state:'attached',timeout:2500});
+   await page.waitForTimeout(55);
    const modal=await page.evaluate(()=>{
     const d=document.querySelector('dialog.project-dialog');
     const panel=d.querySelector('.work-panel').getBoundingClientRect();
