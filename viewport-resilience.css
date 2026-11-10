@@ -1,0 +1,239 @@
+/*
+ Responsive resilience pass, November 10 2026.
+ Respect the existing portfolio designs, but never trade readable text for a
+ desktop-width panel on a short or rotated screen.
+*/
+:where(main,.chapters,.chapter,.chapter-content,.chapter-content-inner,
+ .gallery-shell,.gallery-frame,.panels,.work-panel,.panel-scroller,
+ .artifact-preview,.artifact-summary,.story-details,.story-details section,
+ .project-links,.project-dialog-content,.resume-layout,.resume-section,
+ .resume-highlights,.skills-grid,.essay,.lab,.component,.demo) {
+ min-inline-size:0;
+}
+:where(.work-panel,.panel-scroller,.artifact-preview,.artifact-summary,
+ .story-details,.story-details section,.project-links,
+ .project-dialog-content,.resume-layout,.resume-section,.component,.lab-note) {
+ max-inline-size:100%;
+}
+:where(.work-panel h2,.work-panel h3,.work-panel p,.artifact-summary strong,
+ .artifact-summary p,.panel-pill,.project-links a,.resume-layout p,
+ .resume-layout h1,.resume-layout h2,.resume-layout h3,
+ .essay h1,.essay h2,.essay p,.component p) {
+ overflow-wrap:break-word;
+}
+:where(.artifact-preview,.artifact-summary,.story-details,.project-links) {
+ inline-size:100%;
+}
+:where(.panel-pills,.project-links,.resume-next-links,.contact-actions) {
+ flex-wrap:wrap;
+}
+:where(.work-panel img,.resume-layout img,.component img,.essay img) {
+ max-inline-size:100%;
+ block-size:auto;
+}
+
+/* Native dialog and its scrolling layer must resize together when Safari's
+ visual viewport changes during rotation or on return from the background. */
+dialog.project-dialog {
+ inset:0 !important;
+ box-sizing:border-box !important;
+ width:100% !important;
+ max-width:100% !important;
+ height:var(--project-dialog-height,100dvh) !important;
+ max-height:var(--project-dialog-height,100dvh) !important;
+ overflow:hidden !important;
+}
+dialog.project-dialog .project-dialog-content {
+ box-sizing:border-box !important;
+ width:min(100%,1180px) !important;
+ max-width:100% !important;
+ min-width:0 !important;
+ min-height:0 !important;
+}
+dialog.project-dialog .work-panel {
+ box-sizing:border-box !important;
+ width:100% !important;
+ max-width:100% !important;
+ min-width:0 !important;
+ min-height:0 !important;
+}
+dialog.project-dialog .work-panel .panel-scroller {
+ box-sizing:border-box !important;
+ display:block !important;
+ width:100% !important;
+ min-width:0 !important;
+ max-width:100% !important;
+ min-height:0 !important;
+ overflow-x:hidden !important;
+ overflow-y:auto !important;
+ touch-action:pan-y !important;
+ overscroll-behavior-y:contain;
+ -webkit-overflow-scrolling:touch;
+ padding-inline:clamp(18px,4.5vw,68px) !important;
+}
+dialog.project-dialog .work-panel .panel-scroller > * {
+ max-inline-size:100%;
+ min-inline-size:0;
+}
+dialog.project-dialog.is-visible.scroll-ready {
+ transform:none !important;
+ will-change:auto;
+}
+.work-panel .story-details {
+ display:grid;
+ width:100%;
+ min-width:0;
+ max-width:100%;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.work-panel .story-details > section {min-width:0;overflow-wrap:anywhere}
+.work-panel .panel-pill {max-width:100%;white-space:normal}
+.work-panel .project-links > a {min-width:0;max-width:100%;white-space:normal}
+
+/* Critical fix: each case-study story must fit the *real screen*, not an
+ imagined desktop layout. The previous two columns were cut off in landscape. */
+@media(max-width:1100px) {
+ .work-panel .story-details {
+   grid-template-columns:minmax(0,1fr) !important;
+   gap:clamp(14px,2.5vw,22px) !important;
+ }
+ .work-panel .story-details > section {width:100%}
+ dialog.project-dialog .work-panel .panel-scroller {
+   padding-inline:clamp(18px,4vw,42px) !important;
+ }
+ dialog.project-dialog .artifact-preview {
+   margin-block:clamp(18px,3vw,28px);
+ }
+ dialog.project-dialog .artifact-summary {
+   min-height:0;
+   padding:clamp(17px,3.4vw,27px);
+ }
+}
+
+/* Both the modal and the gallery carousel adapt to phone landscape.
+ Never rely on the parent gallery's fixed card width inside the dialog. */
+@media(orientation:landscape) and (max-height:680px) {
+ #gallery #project-track.panels {
+   --responsive-gutter:clamp(14px,3vw,30px);
+   --card-width:calc(100% - var(--responsive-gutter) * 2) !important;
+   min-width:0 !important;
+   max-width:100% !important;
+   padding-inline:var(--responsive-gutter) !important;
+   scroll-padding-inline:var(--responsive-gutter) !important;
+ }
+ #gallery #project-track > .work-panel,
+ #gallery #project-track > .work-panel-placeholder {
+   box-sizing:border-box !important;
+   flex:0 0 var(--card-width) !important;
+   width:var(--card-width) !important;
+   max-width:var(--card-width) !important;
+   min-width:0 !important;
+ }
+ #gallery #project-track .panel-scroller {
+   padding-inline:clamp(16px,3vw,32px) !important;
+   overflow-x:hidden !important;
+ }
+ #gallery .work-panel h2 {
+   font-size:clamp(1.65rem,5.4svh,2.75rem) !important;
+   line-height:1.15 !important;
+ }
+ #gallery .panel-pills {gap:7px;margin-block:14px}
+ #gallery .panel-pill {padding:6px 10px;font-size:clamp(10px,1.5vw,12px)}
+ dialog.project-dialog {
+   padding:max(7px,env(safe-area-inset-top,0px))
+     max(9px,env(safe-area-inset-right,0px))
+     max(7px,env(safe-area-inset-bottom,0px))
+     max(9px,env(safe-area-inset-left,0px)) !important;
+ }
+ dialog.project-dialog .project-dialog-content {
+   width:100% !important;
+   height:100% !important;
+   padding:0 !important;
+ }
+ dialog.project-dialog .work-panel {
+   height:100% !important;
+   max-height:100% !important;
+ }
+ dialog.project-dialog .work-panel .panel-scroller {
+   height:100% !important;
+   max-height:100% !important;
+   padding:clamp(55px,12svh,68px) clamp(17px,4vw,40px)
+     clamp(30px,6svh,42px) !important;
+ }
+ dialog.project-dialog .project-dialog-close {
+   top:max(16px,env(safe-area-inset-top,0px)) !important;
+   right:max(20px,env(safe-area-inset-right,0px)) !important;
+ }
+ dialog.project-dialog .work-panel h2 {
+   font-size:clamp(1.7rem,5.4svh,2.65rem) !important;
+   line-height:1.13 !important;
+   margin-block:9px 13px !important;
+ }
+ dialog.project-dialog .work-panel p {
+   font-size:clamp(.9rem,2.7svh,1.03rem) !important;
+   line-height:1.55 !important;
+   max-width:100% !important;
+ }
+ dialog.project-dialog .panel-pills {gap:8px;margin-block:17px}
+ dialog.project-dialog .panel-pill {padding:7px 11px;font-size:11px}
+ dialog.project-dialog .artifact-preview {margin-block:19px}
+ dialog.project-dialog .artifact-summary {padding:18px}
+ dialog.project-dialog .artifact-summary strong {
+   font-size:clamp(1.5rem,4.6svh,2rem);
+   line-height:1.2;
+ }
+ dialog.project-dialog .story-details {gap:13px !important}
+ dialog.project-dialog .story-details h3 {margin-block:10px 7px}
+ dialog.project-dialog .story-details section {padding-top:9px}
+}
+
+/* Portrait should still show the card design, with usable inner scrolling. */
+@media(orientation:portrait) and (max-width:700px) {
+ dialog.project-dialog {
+   padding:max(8px,env(safe-area-inset-top,0px))
+     max(8px,env(safe-area-inset-right,0px))
+     max(8px,env(safe-area-inset-bottom,0px))
+     max(8px,env(safe-area-inset-left,0px)) !important;
+ }
+ dialog.project-dialog .work-panel .panel-scroller {
+   padding:68px clamp(17px,5vw,25px) 46px !important;
+ }
+ dialog.project-dialog .project-dialog-close {
+   top:26px !important;
+   right:23px !important;
+ }
+ .work-panel .panel-pills {gap:7px}
+ .work-panel .panel-pill {font-size:11px;padding:7px 10px}
+}
+@media(max-width:400px) {
+ .work-panel h2 {font-size:clamp(1.95rem,9.5vw,2.8rem) !important}
+ .artifact-summary strong {font-size:clamp(1.55rem,8vw,2.2rem)}
+ .gallery-hero h1 {overflow-wrap:break-word}
+ .component .demo,.component .code {min-width:0}
+}
+
+/* Shared portfolio pages: fluid grid and links instead of horizontal crop. */
+@media(max-width:850px) {
+ .resume-highlights,.skills-grid,.lab {
+   grid-template-columns:minmax(0,1fr) !important;
+ }
+ .site-footer .site-footer-links,
+ .resume-next-links,.project-links {max-width:100%}
+ .project-links .gallery-action {max-width:100%}
+ .lab .component {min-width:0}
+}
+@media(orientation:landscape) and (max-height:560px) {
+ .resume-layout,.essay,.lab {max-width:100%}
+ .resume-layout .resume-highlights,
+ .resume-layout .skills-grid {grid-template-columns:minmax(0,1fr) !important}
+ .site-footer .site-footer-links {flex-wrap:wrap}
+ .gallery-hero p,.work-panel .panel-intro {
+   max-width:100%;
+ }
+}
+@media(prefers-reduced-motion:reduce) {
+ dialog.project-dialog,dialog.project-dialog.is-visible,
+ dialog.project-dialog.scroll-ready {
+   transition:none !important;
+ }
+}
