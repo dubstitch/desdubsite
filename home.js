@@ -26,6 +26,15 @@ if(x<1){animFrame=requestAnimationFrame(tick)}else{surface.scrollTop=to;locked=f
 animFrame=requestAnimationFrame(tick);
 }
 function step(direction){if(universe.classList.contains('open')||locked)return;goTo(current+direction)}
+/* The Home chapter has its own natural vertical scroll area as a fallback for
+   short Safari viewports. Let readers reach both links before a swipe advances. */
+const homeScrollBox=document.querySelector('#home .chapter-content');
+function homeCanScroll(direction){
+ if(current!==0||!homeScrollBox||Math.abs(direction)<1)return false;
+ const remaining=homeScrollBox.scrollHeight-homeScrollBox.clientHeight;
+ if(remaining<3)return false;
+ return direction>0 ? homeScrollBox.scrollTop<remaining-2 : homeScrollBox.scrollTop>2;
+}
 pages.forEach((page,i)=>{
 
 if(i<pages.length-1){
@@ -43,10 +52,10 @@ if(i<pages.length-1){
   if(!link.isConnected)page.append(link);
 }
 });
-surface.addEventListener('wheel',e=>{if(universe.classList.contains('open'))return;if(e.target.closest('button,input,textarea,select'))return;if(e.target.closest('.work-grid')&&Math.abs(e.deltaX)>Math.abs(e.deltaY))return;e.preventDefault();if(locked)return;wheelTotal+=e.deltaY;clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>wheelTotal=0,170);if(Math.abs(wheelTotal)>=15){step(Math.sign(wheelTotal));wheelTotal=0}},{passive:false});
-surface.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;gestureStart={x:e.touches[0].clientX,y:e.touches[0].clientY,horizontal:!!e.target.closest('.work-grid')}},{passive:true});
-surface.addEventListener('touchmove',e=>{if(!gestureStart||locked)return;const dx=e.touches[0].clientX-gestureStart.x,dy=e.touches[0].clientY-gestureStart.y;if(gestureStart.horizontal&&Math.abs(dx)>Math.abs(dy)*1.15)return;if(Math.abs(dy)>7){e.preventDefault();const desired=pages[current].offsetTop-dy*.28;surface.scrollTop=Math.min(pages.at(-1).offsetTop,Math.max(0,desired));}},{passive:false});
-surface.addEventListener('touchend',e=>{if(!gestureStart)return;const starting=gestureStart,dx=e.changedTouches[0].clientX-starting.x,dy=e.changedTouches[0].clientY-starting.y;gestureStart=null;if(starting.horizontal&&Math.abs(dx)>Math.abs(dy))return;if(Math.abs(dy)>35&&Math.abs(dy)>Math.abs(dx)*1.2)step(dy<0?1:-1);else if(!locked)goTo(current)},{passive:true});
+surface.addEventListener('wheel',e=>{if(universe.classList.contains('open'))return;if(e.target.closest('button,input,textarea,select'))return;if(e.target.closest('.work-grid')&&Math.abs(e.deltaX)>Math.abs(e.deltaY))return;if(e.target.closest('#home .chapter-content')&&homeCanScroll(e.deltaY))return;e.preventDefault();if(locked)return;wheelTotal+=e.deltaY;clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>wheelTotal=0,170);if(Math.abs(wheelTotal)>=15){step(Math.sign(wheelTotal));wheelTotal=0}},{passive:false});
+surface.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;gestureStart={x:e.touches[0].clientX,y:e.touches[0].clientY,horizontal:!!e.target.closest('.work-grid'),withinHome:!!e.target.closest('#home .chapter-content'),internalScroll:false}},{passive:true});
+surface.addEventListener('touchmove',e=>{if(!gestureStart||locked)return;const dx=e.touches[0].clientX-gestureStart.x,dy=e.touches[0].clientY-gestureStart.y;if(gestureStart.horizontal&&Math.abs(dx)>Math.abs(dy)*1.15)return;if(gestureStart.withinHome&&(gestureStart.internalScroll||homeCanScroll(-dy))){gestureStart.internalScroll=true;return;}if(Math.abs(dy)>7){e.preventDefault();const desired=pages[current].offsetTop-dy*.28;surface.scrollTop=Math.min(pages.at(-1).offsetTop,Math.max(0,desired));}},{passive:false});
+surface.addEventListener('touchend',e=>{if(!gestureStart)return;const starting=gestureStart,dx=e.changedTouches[0].clientX-starting.x,dy=e.changedTouches[0].clientY-starting.y;gestureStart=null;if(starting.internalScroll)return;if(starting.horizontal&&Math.abs(dx)>Math.abs(dy))return;if(Math.abs(dy)>35&&Math.abs(dy)>Math.abs(dx)*1.2)step(dy<0?1:-1);else if(!locked)goTo(current)},{passive:true});
 document.addEventListener('keydown',e=>{if(universe.classList.contains('open')){if(e.key==='Escape'){closeUniverse();return}if(e.key==='Tab'){const focusable=[closer,...hexes];const idx=focusable.indexOf(document.activeElement);if(e.shiftKey&&idx===0){e.preventDefault();focusable.at(-1).focus()}else if(!e.shiftKey&&idx===focusable.length-1){e.preventDefault();focusable[0].focus()}}return}if(e.target.closest('input,textarea,select,[contenteditable]'))return;if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();step(1)}else if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();step(-1)}else if(e.key==='Home'){e.preventDefault();goTo(0)}else if(e.key==='End'){e.preventDefault();goTo(pages.length-1)}});
 document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',e=>{const id=link.getAttribute('href').slice(1);const index=pages.findIndex(p=>p.id===id);if(index<0)return;e.preventDefault();goTo(index)}));
 function openUniverse(){if(universeBusy)return;lastFocus=document.activeElement;universe.classList.add('open');universe.setAttribute('aria-hidden','false');opener.setAttribute('aria-expanded','true');surface.inert=true;closer.focus()}
