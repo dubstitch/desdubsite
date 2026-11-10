@@ -161,6 +161,13 @@ function sizeProjectDialog(){
   if(Number.isFinite(height)&&height>160){
     projectDialog.style.setProperty('--project-dialog-height',Math.round(height)+'px');
   }
+  // On rotated iPhones the layout viewport can retain an older width.
+  // Use the *visible* CSS-pixel width at normal zoom, not 100vw.
+  if(vv&&vv.scale<=1.01&&vv.width>240){
+    projectDialog.style.setProperty('--project-dialog-width',Math.round(vv.width)+'px');
+  }else{
+    projectDialog.style.removeProperty('--project-dialog-width');
+  }
 }
 function recoverProjectScroll(){
   if(!projectDialog.open||!expandedPanel||closingPanel)return;
@@ -239,6 +246,7 @@ function closeExpanded(){
   setTimeout(()=>{
     if(projectDialog.open)projectDialog.close();
     projectDialog.style.removeProperty('--project-dialog-height');
+    projectDialog.style.removeProperty('--project-dialog-width');
     placeholder.replaceWith(panel);
     expandedPanel=null;
     panelPlace=null;
@@ -389,7 +397,7 @@ function initialize(){
 }
 initialize();
 document.fonts?.ready?.then(()=>{
-  navigate(current,true);
+  if(!expandedPanel)navigate(current,true);
 });
 window.addEventListener('pageshow',event=>{
   if(!event.persisted)return;
