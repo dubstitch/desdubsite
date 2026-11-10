@@ -66,16 +66,24 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]){
       issues.push(tag+' modal is not vertically scrollable '+JSON.stringify(before.scrollport));
     if(!before.singleColumn&&size.width<=1100)
       issues.push(tag+' story not stacked in reading order');
-    await page.mouse.move(
-      Math.min(before.viewport-40,Math.max(45,(before.scrollport.left+before.scrollport.right)/2)),
-      Math.floor(size.height/2)
-    );
-    await page.mouse.wheel(0,250);
-    await sleep(130);
-    const after=await page.locator('dialog.project-dialog .panel-scroller').evaluate(el=>el.scrollTop);
-    if(after<=before.scrollport.top+5)
-      issues.push(tag+' scroll stopped after resume/rotation ('+before.scrollport.top+' -> '+after+')');
-    metrics.push({browser:engineName,theme,screen:tag,scrollBefore:before.scrollport.top,scrollAfter:after});
+    // Mobile WebKit has no mouse-wheel input. Verify the actual scrollport
+    // accepts scrolling and document listeners do not cancel a touch gesture.
+    const scrolling=await page.locator('dialog.project-dialog .panel-scroller').evaluate(el=>{
+      const start=el.scrollTop;
+      const t1=new Touch({identifier:1,target:el,clientX:90,clientY:200});
+      const t2=new Touch({identifier:1,target:el,clientX:90,clientY:95});
+      el.dispatchEvent(new TouchEvent('touchstart',{touches:[t1],targetTouches:[t1],
+        changedTouches:[t1],bubbles:true,cancelable:true}));
+      const gesture=new TouchEvent('touchmove',{touches:[t2],targetTouches:[t2],
+        changedTouches:[t2],bubbles:true,cancelable:true});
+      el.dispatchEvent(gesture);
+      el.scrollBy({top:250,behavior:'instant'});
+      return {start,after:el.scrollTop,cancelled:gesture.defaultPrevented,
+        overflow:getComputedStyle(el).overflowY};
+    });
+    if(scrolling.after<=scrolling.start+5||scrolling.cancelled||scrolling.overflow!=='auto')
+      issues.push(tag+' modal scrolling blocked '+JSON.stringify(scrolling));
+    metrics.push({browser:engineName,theme,screen:tag,scrollBefore:scrolling.start,scrollAfter:scrolling.after});
    }
    await page.locator('.project-dialog-close').click();
    await sleep(50);
