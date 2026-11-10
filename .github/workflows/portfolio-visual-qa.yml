@@ -6,6 +6,7 @@ on:
       - 'index.html'
       - 'home.css'
       - 'home.js'
+      - 'hero-mobile-fit.css'
       - 'site-shell.css'
       - 'site-shell.js'
       - 'glow-finishing.css'
@@ -52,6 +53,8 @@ jobs:
           echo $! > /tmp/portfolio-http.pid
           sleep 2
           curl -fsS http://127.0.0.1:8765/index.html >/dev/null
+      - name: Verify homepage hero CTAs and viewport fit
+        run: SHOW_SHOTS=1 node qa/hero-mobile-fit.mjs
       - name: Verify mobile modal scroll after resume and rotation
         run: node qa/mobile-modal-resilience.mjs
       - name: Verify targeted UX fixes in both themes
