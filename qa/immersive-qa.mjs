@@ -54,7 +54,12 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]) {
   await trigger.click();
   const dialog=page.locator('dialog.project-dialog');
   await dialog.waitFor({state:'visible'});
-  await page.waitForTimeout(110);
+  // WebKit can defer requestAnimationFrame during layout after showModal.
+  // Wait for the real animation class instead of assuming 110 ms is enough.
+  await page.waitForFunction(
+    ()=>document.querySelector('dialog.project-dialog')?.classList.contains('is-visible'),
+    null,{timeout:2300}
+  );
   const state=await page.evaluate(()=>{
    const dlg=document.querySelector('dialog.project-dialog');
    const p=dlg.querySelector('.work-panel');
