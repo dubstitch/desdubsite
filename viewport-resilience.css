@@ -37,7 +37,7 @@
 dialog.project-dialog {
  inset:0 !important;
  box-sizing:border-box !important;
- width:100% !important;
+ width:var(--project-dialog-width,100%) !important;
  max-width:100% !important;
  height:var(--project-dialog-height,100dvh) !important;
  max-height:var(--project-dialog-height,100dvh) !important;
