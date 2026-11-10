@@ -52,6 +52,8 @@ jobs:
           echo $! > /tmp/portfolio-http.pid
           sleep 2
           curl -fsS http://127.0.0.1:8765/index.html >/dev/null
+      - name: Verify mobile modal scroll after resume and rotation
+        run: node qa/mobile-modal-resilience.mjs
       - name: Verify targeted UX fixes in both themes
         run: SHOW_SHOTS=1 node qa/portfolio-nov09-qa.mjs
       - name: Verify immersive case-study expansion and spacing
