@@ -180,11 +180,12 @@ function recoverProjectScroll(){
   // is backgrounded, resumed, or rotated. Recreate that layer without
   // discarding the reader's position or collapsing the modal.
   scroller.style.setProperty('-webkit-overflow-scrolling','auto');
-  scroller.style.setProperty('overflow-y','hidden','important');
+  // Never change overflow to hidden, even for a single frame: a suspended
+  // Safari tab can pause rAF and leave that transient state stuck forever.
+  scroller.style.setProperty('overflow-y','auto','important');
+  void scroller.offsetHeight;
   dialogRefreshFrame=requestAnimationFrame(()=>{
     if(!projectDialog.open||closingPanel)return;
-    void scroller.offsetHeight;
-    scroller.style.setProperty('overflow-y','auto','important');
     scroller.scrollTop=Math.max(0,Math.min(savedTop,scroller.scrollHeight-scroller.clientHeight));
     dialogRefreshFrame=requestAnimationFrame(()=>{
       scroller.style.removeProperty('overflow-y');
