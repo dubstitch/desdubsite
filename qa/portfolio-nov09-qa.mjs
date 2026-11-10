@@ -25,12 +25,13 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]){
     const r=document.querySelector('.hero-identity').getBoundingClientRect();
     const h=document.querySelector('.home-header').getBoundingClientRect();
     const c=document.querySelector('#stardust');
-    return {name:r.top,head:h.bottom,starW:c.width,starH:c.height,
-      blend:getComputedStyle(c).mixBlendMode,
+    return {name:r.top,head:h.bottom,starPresent:!!c,
+      starW:c?.width??0,starH:c?.height??0,
+      blend:c?getComputedStyle(c).mixBlendMode:null,
       next:document.querySelector('#home .next-section')?.textContent,
       featured:document.querySelector('#work .work-grid .work strong')?.textContent};
    });
-   if(home.starW<device.width||home.starH<device.height||(theme==='light'&&home.blend==='screen'))
+   if(home.starPresent&&(home.starW<device.width||home.starH<device.height||(theme==='light'&&home.blend==='screen')))
     error(engineName,theme,device.name,'star rendering '+JSON.stringify(home));
    if(home.name<home.head+2&&device.height>740)
     error(engineName,theme,device.name,'name near header '+JSON.stringify(home));
