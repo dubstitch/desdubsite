@@ -89,12 +89,15 @@ function chapterGo(el){
 const nearGalleryStart=()=>Math.abs(window.scrollY-chapterTop(gallery))<42;
 const inProject=target=>!!target.closest('.panel-scroller,#project-track,.work-panel');
 function chapterIntent(target,direction){
+  // The dialog lives outside the gallery DOM. Never intercept its scrolling.
+  if(document.body.classList.contains('project-modal-active'))return null;
   if(inProject(target))return null;
   if(direction>0&&window.scrollY<chapterTop(gallery)-32)return gallery;
   if(direction<0&&nearGalleryStart())return intro;
   return null;
 }
 window.addEventListener('wheel',event=>{
+  if(document.body.classList.contains('project-modal-active'))return;
   if(event.ctrlKey||Math.abs(event.deltaX)>Math.abs(event.deltaY)*1.1)return;
   const destination=chapterIntent(event.target,Math.sign(event.deltaY));
   if(chapterLock){event.preventDefault();return;}
@@ -111,6 +114,7 @@ document.addEventListener('touchstart',event=>{
   chapterTouch={x:finger.clientX,y:finger.clientY,target:event.target,blocked:false};
 },{passive:true});
 document.addEventListener('touchmove',event=>{
+  if(document.body.classList.contains('project-modal-active'))return;
   if(!chapterTouch||event.touches.length!==1||!event.cancelable)return;
   const finger=event.touches[0];
   const dx=finger.clientX-chapterTouch.x,dy=finger.clientY-chapterTouch.y;
@@ -119,6 +123,7 @@ document.addEventListener('touchmove',event=>{
   if(destination||chapterLock){chapterTouch.blocked=true;event.preventDefault();}
 },{passive:false});
 document.addEventListener('touchend',event=>{
+  if(document.body.classList.contains('project-modal-active')){chapterTouch=null;return;}
   if(!chapterTouch||!event.changedTouches.length)return;
   const finger=event.changedTouches[0];
   const dx=finger.clientX-chapterTouch.x,dy=finger.clientY-chapterTouch.y;
@@ -145,6 +150,47 @@ document.body.appendChild(projectDialog);
 const dialogContent=projectDialog.querySelector('.project-dialog-content');
 const dialogClose=projectDialog.querySelector('.project-dialog-close');
 let expandedPanel=null, panelPlace=null, focusReturn=null, closingPanel=false;
+let dialogRecoveryTimer=0, dialogRefreshFrame=0;
+
+function sizeProjectDialog(){
+  if(!projectDialog.open||!expandedPanel)return;
+  const vv=window.visualViewport;
+  // At normal zoom use the actual visual viewport, especially after rotation
+  // or returning to Safari. Preserve browser pinch zoom behavior.
+  const height=vv&&vv.scale<=1.01?vv.height:window.innerHeight;
+  if(Number.isFinite(height)&&height>160){
+    projectDialog.style.setProperty('--project-dialog-height',Math.round(height)+'px');
+  }
+}
+function recoverProjectScroll(){
+  if(!projectDialog.open||!expandedPanel||closingPanel)return;
+  sizeProjectDialog();
+  const scroller=expandedPanel.querySelector('.panel-scroller');
+  if(!scroller)return;
+  const savedTop=scroller.scrollTop;
+  cancelAnimationFrame(dialogRefreshFrame);
+  // WebKit can retain a stale overflow scrolling layer when a native dialog
+  // is backgrounded, resumed, or rotated. Recreate that layer without
+  // discarding the reader's position or collapsing the modal.
+  scroller.style.setProperty('-webkit-overflow-scrolling','auto');
+  scroller.style.setProperty('overflow-y','hidden','important');
+  dialogRefreshFrame=requestAnimationFrame(()=>{
+    if(!projectDialog.open||closingPanel)return;
+    void scroller.offsetHeight;
+    scroller.style.setProperty('overflow-y','auto','important');
+    scroller.scrollTop=Math.max(0,Math.min(savedTop,scroller.scrollHeight-scroller.clientHeight));
+    dialogRefreshFrame=requestAnimationFrame(()=>{
+      scroller.style.removeProperty('overflow-y');
+      scroller.style.removeProperty('-webkit-overflow-scrolling');
+    });
+  });
+}
+function scheduleProjectRecovery(delay=140){
+  if(!projectDialog.open||!expandedPanel)return;
+  sizeProjectDialog();
+  clearTimeout(dialogRecoveryTimer);
+  dialogRecoveryTimer=setTimeout(recoverProjectScroll,delay);
+}
 function expandProject(panel){
   if(expandedPanel||closingPanel||!panel||!projectDialog.showModal)return;
   focusReturn=panel.querySelector('.project-expand')||document.activeElement;
@@ -168,6 +214,14 @@ function expandProject(panel){
   track.inert=true;
   document.body.classList.add('project-modal-active');
   projectDialog.showModal();
+  sizeProjectDialog();
+  projectDialog.classList.remove('scroll-ready');
+  setTimeout(()=>{
+    if(projectDialog.open&&expandedPanel===panel&&!closingPanel){
+      projectDialog.classList.add('scroll-ready');
+      scheduleProjectRecovery(0);
+    }
+  },reduced.matches?0:780);
   // Two frames ensure a real before/after paint so the slower expansion
   // visibly eases forward even when Safari receives the initial gesture.
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -178,10 +232,13 @@ function expandProject(panel){
 function closeExpanded(){
   if(!expandedPanel||closingPanel)return;
   closingPanel=true;
-  projectDialog.classList.remove('is-visible');
+  projectDialog.classList.remove('is-visible','scroll-ready');
+  clearTimeout(dialogRecoveryTimer);
+  cancelAnimationFrame(dialogRefreshFrame);
   const panel=expandedPanel, placeholder=panelPlace, returnFocus=focusReturn;
   setTimeout(()=>{
     if(projectDialog.open)projectDialog.close();
+    projectDialog.style.removeProperty('--project-dialog-height');
     placeholder.replaceWith(panel);
     expandedPanel=null;
     panelPlace=null;
@@ -189,7 +246,12 @@ function closeExpanded(){
     track.inert=false;
     document.body.classList.remove('project-modal-active');
     const panelIndex=panels.indexOf(panel);
-    if(panelIndex>=0)mark(panelIndex,false);
+    if(panelIndex>=0){
+      mark(panelIndex,false);
+      // The card's previous offset is stale after a portrait/landscape swap.
+      requestAnimationFrame(()=>track.scrollTo({left:panelOffset(panelIndex),behavior:'instant'}));
+    }
+    lastWidth=window.innerWidth;
     returnFocus?.focus({preventScroll:true});
   },reduced.matches?0:700);
 }
@@ -329,9 +391,45 @@ initialize();
 document.fonts?.ready?.then(()=>{
   navigate(current,true);
 });
-window.addEventListener('pageshow',event=>{if(event.persisted){sizeHeader();navigate(current,true)}});
+window.addEventListener('pageshow',event=>{
+  if(!event.persisted)return;
+  sizeHeader();
+  if(expandedPanel)scheduleProjectRecovery(70);
+  else navigate(current,true);
+});
+// On return from the background, cancel any chapter transition whose
+// animation frame was paused by the browser, then revive the modal scrollport.
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState!=='visible')return;
+  cancelAnimationFrame(chapterFrame);
+  chapterLock=false;
+  chapterTouch=null;
+  chapterWheel=0;
+  if(expandedPanel){
+    scheduleProjectRecovery(80);
+    setTimeout(()=>scheduleProjectRecovery(0),350);
+  }
+});
+window.addEventListener('focus',()=>{
+  if(expandedPanel)scheduleProjectRecovery(120);
+});
+window.addEventListener('orientationchange',()=>{
+  if(expandedPanel){
+    scheduleProjectRecovery(100);
+    setTimeout(()=>scheduleProjectRecovery(0),380);
+  }
+},{passive:true});
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize',()=>{
+    if(expandedPanel)scheduleProjectRecovery(180);
+  },{passive:true});
+}
 window.addEventListener('resize',()=>{
-  if(expandedPanel)return;
+  if(expandedPanel){
+    sizeHeader();
+    scheduleProjectRecovery(160);
+    return;
+  }
   if(Math.abs(innerWidth-lastWidth)<2)return;
   lastWidth=innerWidth;
   sizeHeader();
