@@ -201,7 +201,7 @@
   opacity:.65;
   transform:rotate(-24deg);
 }
-#universe .planet[data-ring] .planet-sphere::before {
+#universe .planet-sphere[data-ring]::before {
   content:"";
   position:absolute;
   z-index:2;
