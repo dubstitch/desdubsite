@@ -1,5 +1,5 @@
 (()=>{
-const pages=[...document.querySelectorAll('.chapter')],surface=document.getElementById('chapters'),universe=document.getElementById('universe'),opener=document.getElementById('open-universe'),closer=document.getElementById('close-universe'),hexes=[...document.querySelectorAll('.hex')],reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pages=[...document.querySelectorAll('.chapter')],surface=document.getElementById('chapters'),universe=document.getElementById('universe'),opener=document.getElementById('open-universe'),closer=document.getElementById('close-universe'),hexes=[...document.querySelectorAll('.planet')],reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let current=0,locked=false,universeBusy=false,lastFocus=null,gestureStart=null,wheelTotal=0,wheelTimer=0;
 const position=()=>Math.max(0,Math.min(pages.length-1,Math.round(surface.scrollTop/Math.max(1,surface.clientHeight))));
 
