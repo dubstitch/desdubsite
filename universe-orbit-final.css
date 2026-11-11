@@ -1,0 +1,120 @@
+/* A seven point circle, not an approximation or mobile grid. All seven
+   planet centres sit at equal angular intervals on one round orbit. */
+#universe.universe {
+  display:grid !important;
+  place-items:center !important;
+  padding:0 !important;
+  overflow:hidden !important;
+}
+#universe .solar-system {
+  --orbit-d:min(calc(100vw - 38px),calc(100svh - 175px),680px);
+  position:relative !important;
+  display:block !important;
+  flex:none !important;
+  width:var(--orbit-d) !important;
+  height:var(--orbit-d) !important;
+  min-height:0 !important;
+  aspect-ratio:1 !important;
+  margin:clamp(68px,14svh,105px) auto 0 !important;
+  padding:0 !important;
+  max-width:none !important;
+  max-height:none !important;
+}
+#universe .solar-system::before,
+#universe .solar-system::after {
+  z-index:-1 !important;
+  top:50% !important;
+  left:50% !important;
+  border-radius:50% !important;
+  transform:translate(-50%,-50%) !important;
+}
+#universe .solar-system::before {
+  width:82% !important;
+  height:82% !important;
+  border:1px solid rgba(250,201,243,.27) !important;
+}
+#universe .solar-system::after {
+  width:64% !important;
+  height:64% !important;
+  border:1px dashed rgba(250,201,243,.14) !important;
+}
+#universe .solar-system > .planet {
+  position:absolute !important;
+  left:var(--cx) !important;
+  top:var(--cy) !important;
+  width:clamp(65px,min(21vw,18svh),142px) !important;
+  max-width:none !important;
+  min-width:0 !important;
+  height:clamp(78px,min(28vw,25svh),166px) !important;
+  max-height:none !important;
+  min-height:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:clamp(2px,.7svh,8px) !important;
+  transform:translate(-50%,-50%) !important;
+  text-align:center;
+  background:none !important;
+}
+#universe .solar-system > .planet:hover {
+  transform:translate(-50%,-50%) translateY(-3px) !important;
+}
+#universe .solar-system > .planet .planet-sphere {
+  width:clamp(38px,min(17vw,12svh),112px) !important;
+  height:clamp(38px,min(17vw,12svh),112px) !important;
+}
+#universe .solar-system > .planet .planet-info {gap:2px !important}
+#universe .solar-system > .planet .planet-index {font-size:clamp(8px,.85svh,10px)}
+#universe .solar-system > .planet strong {
+  max-width:100% !important;
+  font-size:clamp(10px,min(2.7vw,1.8svh),15px) !important;
+  line-height:1.16 !important;
+  overflow-wrap:normal !important;
+}
+/* Unit circle at radius 41%, every 360 / 7 degrees, clockwise from top. */
+#universe .solar-system > .planet:nth-child(1) {--cx:50%;--cy:9%}
+#universe .solar-system > .planet:nth-child(2) {--cx:82.05%;--cy:24.44%}
+#universe .solar-system > .planet:nth-child(3) {--cx:89.97%;--cy:59.12%}
+#universe .solar-system > .planet:nth-child(4) {--cx:67.79%;--cy:86.94%}
+#universe .solar-system > .planet:nth-child(5) {--cx:32.21%;--cy:86.94%}
+#universe .solar-system > .planet:nth-child(6) {--cx:10.03%;--cy:59.12%}
+#universe .solar-system > .planet:nth-child(7) {--cx:17.95%;--cy:24.44%}
+html[data-theme="light"] #universe .solar-system::before {border-color:rgba(116,64,121,.36) !important}
+html[data-theme="light"] #universe .solar-system::after {border-color:rgba(116,64,121,.2) !important}
+/* High contrast keyboard focus, not pastel pink against a pastel sky. */
+html[data-theme="light"] #universe.universe .close:focus-visible {
+  outline:4px solid #54214d !important;
+  outline-offset:5px !important;
+  box-shadow:0 0 0 2px #fff !important;
+}
+html[data-theme="light"] #universe.universe .close:focus-visible svg {stroke:#321638 !important}
+@media(orientation:landscape) and (max-height:650px) {
+  #universe .solar-system {
+    --orbit-d:min(calc(100vw - 40px),calc(100svh - 98px),650px);
+    margin:35px auto 0 !important;
+  }
+  #universe .solar-system > .planet {
+    width:clamp(56px,min(15vw,20svh),102px) !important;
+    height:clamp(63px,min(21vw,24svh),111px) !important;
+    gap:2px !important;
+  }
+  #universe .solar-system > .planet .planet-sphere {
+    width:clamp(36px,min(11vw,13svh),68px) !important;
+    height:clamp(36px,min(11vw,13svh),68px) !important;
+  }
+  #universe .solar-system > .planet strong {font-size:clamp(9px,min(1.8vw,2.8svh),13px) !important}
+  #universe .solar-system > .planet .planet-index {font-size:8px !important}
+}
+@media(orientation:landscape) and (max-height:360px) {
+  #universe .solar-system {margin:31px auto 0 !important}
+  #universe .solar-system > .planet {width:56px !important;height:63px !important;gap:1px !important}
+  #universe .solar-system > .planet .planet-sphere {width:36px !important;height:36px !important}
+  #universe .solar-system > .planet strong {font-size:9px !important}
+  #universe .solar-system > .planet .planet-index {font-size:8px !important}
+}
+@media(prefers-reduced-motion:reduce) {
+  #universe .solar-system > .planet {transition:none !important}
+}
