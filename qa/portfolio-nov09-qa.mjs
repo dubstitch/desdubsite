@@ -85,7 +85,7 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]){
    const collision=nav.stars.some((r,i)=>i&&r.left<nav.stars[i-1].right-1)||
       nav.stars[0]?.left<=nav.arrowLeftRight+1||
       nav.stars.at(-1)?.right>=nav.arrowRightLeft-2;
-   if(nav.n!==5||collision)error(engineName,theme,device.name,'constellation collision '+JSON.stringify(nav));
+   if(nav.n!==4||collision)error(engineName,theme,device.name,'constellation collision '+JSON.stringify(nav));
    if(nav.labelColor!=='rgb(255, 250, 252)'||nav.labelVisible!=='visible'||
       nav.buttonWidth>220||nav.scroller!=='hidden')
     error(engineName,theme,device.name,'collapsed card and text '+JSON.stringify(nav));
