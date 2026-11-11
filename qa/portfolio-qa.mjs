@@ -83,8 +83,8 @@ for(const theme of ['light','dark']){
     await page.waitForTimeout(70);
     const geometry=await page.evaluate(()=>{
       const universe=document.getElementById('universe');
-      const hexes=[...universe.querySelectorAll('.hex')];
-      const rectangles=hexes.map(el=>el.getBoundingClientRect());
+      const planets=[...universe.querySelectorAll('.planet')];
+      const rectangles=planets.map(el=>el.getBoundingClientRect());
       const intersects=(a,b)=>Math.max(0,Math.min(a.right,b.right)-Math.max(a.left,b.left))*Math.max(0,Math.min(a.bottom,b.bottom)-Math.max(a.top,b.top));
       let worst=0,which='';
       for(let i=0;i<rectangles.length;i++)for(let j=i+1;j<rectangles.length;j++){
@@ -129,13 +129,13 @@ for(const theme of ['light','dark']){
     await page.goto(origin+'/index.html?universe=1',{waitUntil:'domcontentloaded'});
     const state=await page.evaluate(()=>({
       visible:document.getElementById('universe')?.classList.contains('open'),
-      tiles:document.querySelectorAll('#universe .hex').length,
-      lab:!!document.querySelector('#universe .hex[data-href="component-lab.html"]'),
+      tiles:document.querySelectorAll('#universe .planet').length,
+      lab:!!document.querySelector('#universe .planet[data-href="component-lab.html"]'),
       cards:document.querySelectorAll('.work').length,
       modals:document.querySelectorAll('.work-dialog').length
     }));
-    if(!state.visible||state.tiles!==7||!state.lab||state.cards!==5||state.modals)issues.push('UNIVERSE REGRESSION '+size.name+' '+JSON.stringify(state));
-    await page.locator('#universe .hex[data-href="component-lab.html"]').click();
+    if(!state.visible||state.tiles!==7||!state.lab||state.cards!==4||state.modals)issues.push('UNIVERSE REGRESSION '+size.name+' '+JSON.stringify(state));
+    await page.locator('#universe .planet[data-href="component-lab.html"]').click();
     await page.waitForURL('**/component-lab.html');
     if(!await page.locator('.lab-note').isVisible())issues.push('MISSING PUBLIC LAB NOTE '+size.name);
     await page.getByRole('link',{name:'Universe'}).click();
