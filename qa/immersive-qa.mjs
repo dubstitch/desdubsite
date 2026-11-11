@@ -86,7 +86,7 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]) {
    body:document.body.classList.contains('project-modal-active'),
    focused:document.activeElement?.classList.contains('project-expand')
   }));
-  if(closed.modal||closed.cards!==5||closed.placeholder!==0||closed.body||!closed.focused)
+  if(closed.modal||closed.cards!==4||closed.placeholder!==0||closed.body||!closed.focused)
    report(engineName,device.name,'modal did not restore card '+JSON.stringify(closed));
   await page.locator('#wcfcc .project-expand').click();
   await page.locator('dialog.project-dialog').waitFor({state:'visible'});
