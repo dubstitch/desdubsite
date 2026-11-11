@@ -355,7 +355,7 @@ html[data-theme="light"] #universe .planet:focus-visible {outline-color:#7d327b!
   #universe .planet strong {font-size:clamp(11px,3vw,13px)}
 }
 @media(orientation:landscape) and (max-height:650px) {
-  #universe.universe {padding:56px 12px 8px;justify-content:center}
+  #universe.universe {padding:48px 12px 6px;justify-content:center}
   #universe.universe .universe-title {
     top:clamp(9px,2svh,20px)!important;
     left:clamp(20px,4vw,48px)!important;
@@ -375,9 +375,9 @@ html[data-theme="light"] #universe .planet:focus-visible {outline-color:#7d327b!
     justify-items:center;
     gap:0 8px;
     width:min(96vw,830px);
-    height:calc(100svh - 68px);
+    height:calc(100svh - 102px);
     min-height:0;
-    margin:40px 0 0;
+    margin:36px 0 0;
   }
   #universe .solar-system::before {width:86%;height:78%}
   #universe .solar-system::after {width:65%;height:56%}
@@ -402,7 +402,7 @@ html[data-theme="light"] #universe .planet:focus-visible {outline-color:#7d327b!
   #universe.universe .universe-footnote {display:none}
 }
 @media(orientation:landscape) and (max-height:360px) {
-  #universe .solar-system {height:calc(100svh - 58px);margin-top:42px}
+  #universe .solar-system {height:calc(100svh - 100px);margin-top:34px}
   #universe .planet-sphere {width:38px;height:38px}
   #universe .planet {gap:0}
   #universe .planet strong {font-size:11px;line-height:1.08}
