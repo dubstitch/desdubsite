@@ -1,0 +1,161 @@
+/*
+  Des Wade | Celestial theme switch
+  A tiny luminous orbit, not an unlabeled Unicode sun icon.
+  Applied consistently to home, gallery, resume, philosophy and lab.
+*/
+.site-header-shell button.theme-toggle[data-theme-toggle] {
+  display:inline-grid !important;
+  place-items:center !important;
+  position:relative;
+  flex:0 0 42px !important;
+  width:42px !important;
+  min-width:42px !important;
+  height:42px !important;
+  min-height:42px !important;
+  padding:0 !important;
+  border-radius:50% !important;
+  overflow:visible !important;
+  border:1px solid rgba(250,201,239,.78) !important;
+  background:
+    radial-gradient(circle at 27% 18%,rgba(255,245,255,.22),transparent 42%),
+    linear-gradient(142deg,rgba(72,46,94,.88),rgba(36,24,61,.94)) !important;
+  color:#f9e1f5 !important;
+  box-shadow:0 0 0 1px rgba(247,192,233,.12),
+    inset 0 1px 0 rgba(255,255,255,.23),
+    0 0 15px rgba(225,138,215,.24) !important;
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  cursor:pointer;
+  transform:none;
+  transition:background .25s ease,box-shadow .25s ease,transform .25s ease;
+}
+.site-header-shell button.theme-toggle[data-theme-toggle]::before {
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border:1px solid rgba(255,226,248,.24);
+  border-radius:50%;
+  pointer-events:none;
+}
+.site-header-shell button.theme-toggle[data-theme-toggle]::after {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-5px;
+  border-radius:50%;
+  background:rgba(212,126,215,.14);
+  filter:blur(8px);
+  pointer-events:none;
+}
+.site-header-shell .theme-orbit {
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  min-width:30px;
+  border:1px solid rgba(246,208,241,.36);
+  border-radius:50%;
+  background:radial-gradient(circle at 25% 20%,rgba(255,255,255,.18),transparent 60%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+}
+.site-header-shell .theme-orbit::before {
+  content:"";
+  position:absolute;
+  inset:3px;
+  border:1px dashed rgba(252,219,245,.28);
+  border-radius:50%;
+  pointer-events:none;
+}
+.site-header-shell .theme-glyph {
+  position:absolute;
+  width:19px;
+  height:19px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:opacity .27s ease,transform .4s ease;
+}
+html[data-theme="dark"] .site-header-shell .theme-glyph--moon {
+  opacity:1;
+  transform:rotate(-12deg) scale(1);
+  stroke:#ffddf8;
+  filter:drop-shadow(0 0 5px rgba(243,176,243,.42));
+}
+html[data-theme="dark"] .site-header-shell .theme-glyph--sun {
+  opacity:0;
+  transform:rotate(-65deg) scale(.5);
+}
+html[data-theme="light"] .site-header-shell button.theme-toggle[data-theme-toggle] {
+  color:#513356 !important;
+  border-color:rgba(136,87,146,.71) !important;
+  background:
+    radial-gradient(circle at 20% 15%,rgba(255,255,255,.92),transparent 54%),
+    linear-gradient(145deg,#fff5fa,#eac5e4 72%,#cda4d7) !important;
+  box-shadow:0 0 0 1px rgba(118,76,135,.09),
+    inset 0 1px 0 rgba(255,255,255,.85),
+    0 0 17px rgba(160,92,149,.2) !important;
+}
+html[data-theme="light"] .site-header-shell .theme-orbit {
+  border-color:rgba(139,77,143,.23);
+  background:radial-gradient(circle at 25% 15%,rgba(255,255,255,.86),transparent 70%);
+}
+html[data-theme="light"] .site-header-shell .theme-orbit::before {border-color:rgba(117,71,135,.32)}
+html[data-theme="light"] .site-header-shell .theme-glyph--sun {
+  opacity:1;
+  transform:rotate(0) scale(1);
+  stroke:#8e4f66;
+  filter:drop-shadow(0 0 5px rgba(216,157,94,.2));
+}
+html[data-theme="light"] .site-header-shell .theme-glyph--moon {
+  opacity:0;
+  transform:rotate(52deg) scale(.55);
+}
+.site-header-shell button.theme-toggle[data-theme-toggle]:is(:hover,:focus-visible) {
+  transform:translateY(-1px) scale(1.035) !important;
+  box-shadow:0 0 0 1px rgba(251,212,249,.27),
+    0 0 16px rgba(242,159,226,.4),
+    0 0 33px rgba(208,119,217,.19) !important;
+}
+.site-header-shell button.theme-toggle[data-theme-toggle]:focus-visible {
+  outline:3px solid #ffb8ec !important;
+  outline-offset:4px !important;
+}
+html[data-theme="light"] .site-header-shell button.theme-toggle[data-theme-toggle]:focus-visible {
+  outline-color:#75416e !important;
+}
+@media(max-width:650px){
+  .site-header-shell button.theme-toggle[data-theme-toggle] {
+    width:37px !important;
+    min-width:37px !important;
+    height:37px !important;
+    min-height:37px !important;
+    flex-basis:37px !important;
+  }
+  .site-header-shell .theme-orbit {width:28px;height:28px;min-width:28px}
+  .site-header-shell .theme-glyph {width:18px;height:18px}
+}
+@media(max-width:390px){
+  .site-header-shell button.theme-toggle[data-theme-toggle] {
+    width:34px !important;
+    min-width:34px !important;
+    height:34px !important;
+    min-height:34px !important;
+    flex-basis:34px !important;
+  }
+  .site-header-shell .theme-orbit {width:26px;height:26px;min-width:26px}
+  .site-header-shell .theme-glyph {width:17px;height:17px}
+}
+@media(orientation:landscape) and (max-height:560px){
+  .site-header-shell button.theme-toggle[data-theme-toggle] {
+    width:38px!important;height:38px!important;
+    min-width:38px!important;min-height:38px!important;
+    flex-basis:38px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .site-header-shell .theme-glyph,
+  .site-header-shell button.theme-toggle[data-theme-toggle] {transition:none!important}
+}
