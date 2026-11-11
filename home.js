@@ -64,8 +64,16 @@ starStops.forEach(b=>b.addEventListener('click',()=>goTo(pages.findIndex(p=>p.id
 // Move gently between destinations without enlarging the chosen tile.
 hexes.forEach(hex=>hex.addEventListener('click',()=>{
  if(universeBusy)return;
- universeBusy=true;
  const destination=hex.dataset.href;
+ // Opening an email app may be cancelled: never leave the navigation faded
+ // or locked when the reader returns to the same browser page.
+ if(destination?.startsWith('mailto:')){
+  closeUniverse();
+  universeBusy=false;
+  window.location.href=destination;
+  return;
+ }
+ universeBusy=true;
  const index=pages.findIndex(page=>page.id===hex.dataset.target);
  universe.classList.add('leaving');
  setTimeout(()=>{
