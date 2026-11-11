@@ -42,7 +42,7 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]) {
     navFirst:document.querySelector('.case-grid-nav button')?.getAttribute('aria-label')
    };
   });
-  if(metrics.firstId!=='wcfcc'||metrics.count!==5||!metrics.navFirst?.includes('WCFCC'))
+  if(metrics.firstId!=='wcfcc'||metrics.count!==4||!metrics.navFirst?.includes('WCFCC'))
    report(engineName,device.name,'case study order '+JSON.stringify(metrics));
   if(metrics.gap<18||!metrics.expand)report(engineName,device.name,'no breathing room '+JSON.stringify(metrics));
   if(metrics.totalWidth>metrics.viewport+3)report(engineName,device.name,'horizontal body overflow '+JSON.stringify(metrics));
