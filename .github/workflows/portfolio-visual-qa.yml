@@ -5,6 +5,8 @@ on:
     paths:
       - 'index.html'
       - 'home.css'
+      - 'universe-planets.css'
+      - 'theme-control.css'
       - 'home.js'
       - 'hero-mobile-fit.css'
       - 'site-shell.css'
@@ -53,6 +55,8 @@ jobs:
           echo $! > /tmp/portfolio-http.pid
           sleep 2
           curl -fsS http://127.0.0.1:8765/index.html >/dev/null
+      - name: Verify planets and celestial theme controls
+        run: SHOW_SHOTS=1 node qa/planets-theme-qa.mjs
       - name: Verify homepage hero CTAs and viewport fit
         run: SHOW_SHOTS=1 node qa/hero-mobile-fit.mjs
       - name: Verify mobile modal scroll after resume and rotation
