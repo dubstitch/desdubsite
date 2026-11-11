@@ -1,30 +1,57 @@
-<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Des Wade's interactive front-end component lab, with live demos and code."><title>Component Lab | Des Wade</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet"><script>try{document.documentElement.dataset.theme=(localStorage.getItem("des-theme")==="light"?"light":"dark")}catch(e){document.documentElement.dataset.theme="dark"}</script><link rel="stylesheet" href="component-lab.css"><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="site-shell.css"><link rel="stylesheet" href="component-lab-light.css"><link rel="stylesheet" href="glow-finishing.css?v=20261030"><link rel="stylesheet" href="viewport-resilience.css?v=20261110a"><link rel="stylesheet" href="theme-control.css?v=20261110planets1"></head><body><a class="site-skip" href="#main-content">Skip to content</a><header class="site-header-shell"><a class="brand" href="index.html" aria-label="Des Wade home">des<span>.</span></a><nav class="site-header-actions" aria-label="Portfolio navigation"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="site-nav-pill site-nav-back" href="index.html#home" aria-label="Back to portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 7 7 16M7 9v7h7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="nav-back-long">Back to portfolio</span><span class="nav-back-short">Portfolio</span></a><a class="resume-pill site-nav-pill" href="resume.html">Résumé <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="site-nav-universe" href="index.html?universe=1"><span class="site-sparkle" aria-hidden="true">✧</span>Universe</a></nav></header><main id="main-content"><div class="eyebrow">An evolving collection / Built to be used</div><h1>My component<br><em style="color:#f5b8df">playground.</em></h1><p class="lead">I like knowing how things work, and I like making them better. This is where I collect the little pieces that make an experience feel like an experience: navigation, motion, layouts, and interactions. Try them. Open the code. That's the point.</p><aside class="lab-note" aria-label="About this playground"><strong>A working sketchbook, not a finished component library.</strong><p>These are public experiments, early concepts and interaction ideas that I am actively refining. They are here to explore, test and learn from, not as examples of final client deliverables. For completed projects, <a href="case-studies.html">explore my selected work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a>.</p></aside><div class="lab">
-<article class="component"><div class="eyebrow">01 / Navigation</div><h2>Constellation path</h2><p>A visual navigation idea from this portfolio. Stars connect the steps instead of presenting another ordinary list.</p><div class="demo"><div class="stars" aria-label="Five connected stars in an upward path"><svg viewBox="0 0 440 150" role="img" aria-label="Constellation of five stars"><path d="M30 125 L118 95 L208 111 L303 52 L410 22"/><circle cx="30" cy="125" r="5"/><circle cx="118" cy="95" r="5"/><circle cx="208" cy="111" r="5"/><circle cx="303" cy="52" r="5"/><circle cx="410" cy="22" r="5"/></svg></div></div><div class="code"><details><summary>See the animation code</summary><pre>path { stroke-dasharray: 340;
-  animation: trace 4s ease-in-out infinite alternate; }
-@keyframes trace {
-  from { stroke-dashoffset: 340; }
-  to { stroke-dashoffset: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  path { animation: none; }
-}</pre></details></div></article>
-<article class="component"><div class="eyebrow">02 / Horizontal discovery</div><h2>Swipeable cards</h2><p>Card-based exploration with native horizontal scrolling and scroll snapping. No library required.</p><div class="demo"><div class="slider" role="region" aria-label="Swipeable component examples" tabindex="0"><div class="slide">A little discovery ✧</div><div class="slide">Another idea ✧</div><div class="slide">And another ✧</div></div></div><div class="code"><details><summary>See the CSS</summary><pre>.slider { display: flex; overflow-x: auto;
-  scroll-snap-type: x mandatory; gap: 1rem; }
-.slide { flex: 0 0 75%;
-  scroll-snap-align: center; }</pre></details></div></article>
-<article class="component"><div class="eyebrow">03 / Wayfinding</div><h2>Breadcrumbs</h2><p>Inspired by the wayfinding work I handled in Higher Logic. The labels and paths below are a standalone demo, not a copy of proprietary code.</p><div class="demo"><nav class="crumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><a href="case-studies.html">Work</a><span aria-hidden="true">/</span><span aria-current="page">Component lab</span></nav></div><div class="code"><details><summary>See the markup</summary><pre>&lt;nav aria-label="Breadcrumb"&gt;
-  &lt;a href="/"&gt;Home&lt;/a&gt;
-  &lt;span aria-hidden="true"&gt;/&lt;/span&gt;
-  &lt;span aria-current="page"&gt;Component lab&lt;/span&gt;
-&lt;/nav&gt;</pre></details></div></article>
-<article class="component"><div class="eyebrow">04 / Progressive disclosure</div><h2>Accordions</h2><p>Sometimes the right interaction is the one the browser already understands.</p><div class="demo"><details><summary>What's behind the design?</summary><p>A lot of testing, a little obsession, and a willingness to rethink the first idea.</p></details><details><summary>Why native details?</summary><p>Built-in keyboard interaction, simple semantics, and less JavaScript to maintain.</p></details></div><div class="code"><details><summary>See the markup</summary><pre>&lt;details&gt;
-  &lt;summary&gt;What's behind the design?&lt;/summary&gt;
-  &lt;p&gt;A little more context.&lt;/p&gt;
-&lt;/details&gt;</pre></details></div></article>
-<article class="component"><div class="eyebrow">05 / Presentation</div><h2>Hero + action</h2><p>A hero should tell you where you are, why you should care, and what to do next.</p><div class="demo"><div class="hero-demo"><strong>Make it<br>make sense.</strong><a class="action" href="case-studies.html">See the work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div></div><div class="code"><details><summary>See the layout approach</summary><pre>.hero { display: grid; place-items: center;
-  padding: clamp(2rem, 6vw, 5rem);
-  text-align: center; }</pre></details></div></article>
-<article class="component"><div class="eyebrow">06 / Reusable details</div><h2>Pills and labels</h2><p>Small elements that make a big difference in content hierarchy. Tags are labels; actions are links or buttons.</p><div class="demo"><div class="chips"><span class="pill">Enterprise CMS</span><span class="pill">UX</span><span class="pill">Accessibility</span><span class="pill">Front end</span></div></div><div class="code"><details><summary>See the CSS</summary><pre>.pill { display: inline-flex; align-items: center;
-  border: 1px solid currentColor;
-  border-radius: 999px; padding: .6rem 1rem; }</pre></details></div></article>
-</div><p class="foot">This lab is a living collection of independent demonstrations. For the actual portfolio implementation, explore the <a href="https://github.com/dubstitch/desdubsite" target="_blank" rel="noopener noreferrer">source repository</a>. Professional CMS examples are described without exposing internal code.</p></main><footer class="site-footer" id="more" role="contentinfo"><div class="site-footer-title"><span class="site-footer-kicker">The invitation</span><h2>Let’s make something make sense.</h2></div><nav class="site-footer-links" aria-label="Footer links"><a href="mailto:desireewade5@gmail.com">Let’s talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="case-studies.html">Selected work</a><a href="philosophy.html">My philosophy</a></nav></footer><script src="theme.js?v=20261110planets1" defer></script><script src="site-shell.js" defer></script></body></html>
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Des Wade's component library in progress, featuring a working accessible constellation navigation and real implementation source."><title>Component Lab | Des Wade</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet"><script>try{document.documentElement.dataset.theme=(localStorage.getItem("des-theme")==="light"?"light":"dark")}catch(e){document.documentElement.dataset.theme="dark"}</script><link rel="stylesheet" href="component-lab.css"><link rel="stylesheet" href="theme.css"><link rel="stylesheet" href="site-shell.css"><link rel="stylesheet" href="component-lab-light.css"><link rel="stylesheet" href="glow-finishing.css?v=20261030"><link rel="stylesheet" href="viewport-resilience.css?v=20261110a"><link rel="stylesheet" href="theme-control.css?v=20261110planets1"><link rel="stylesheet" href="constellation-lab-finish.css?v=20261111a"></head><body><a class="site-skip" href="#main-content">Skip to content</a><header class="site-header-shell"><a class="brand" href="index.html" aria-label="Des Wade home">des<span>.</span></a><nav class="site-header-actions" aria-label="Portfolio navigation"><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light experience"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">Light mode</span></button><a class="site-nav-pill site-nav-back" href="index.html#home" aria-label="Back to portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 7 7 16M7 9v7h7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="nav-back-long">Back to portfolio</span><span class="nav-back-short">Portfolio</span></a><a class="resume-pill site-nav-pill" href="resume.html">Résumé <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a class="site-nav-universe" href="index.html?universe=1"><span class="site-sparkle" aria-hidden="true">✧</span>Universe</a></nav></header><main id="main-content" class="lab-workbench">
+  <span class="lab-wip">Work in progress</span>
+  <h1>The component<br><em>library.</em></h1>
+  <p class="lead lab-lead">This library is being rebuilt around the actual components and interactions I design and engineer. I would rather show one functioning, carefully documented system than a collection of generic examples.</p>
+  <aside class="lab-note" aria-label="Component library status">
+    <strong>Currently in development.</strong>
+    <p>The component showcase is not complete. The constellation navigation below is a working demonstration of an interaction used throughout my portfolio. Other components will be added only when their implementations and documentation are ready. <a href="case-studies.html">See finished project work</a>.</p>
+  </aside>
+  <article class="component lab-feature" id="constellation-component">
+    <div class="lab-head">
+      <div>
+        <div class="eyebrow">01 / Navigation system</div>
+        <h2>Constellation path</h2>
+        <p class="lab-description">Five connected destinations, one continuous path. Selecting a star updates the active step, highlights the journey and reveals where you are without changing pages.</p>
+      </div>
+      <span class="lab-head-note">Live, keyboard accessible demo</span>
+    </div>
+    <div class="lab-stage" data-constellation-demo>
+      <div class="lab-arc" role="group" aria-label="Explore five constellation stages">
+        <svg viewBox="0 0 300 240" aria-hidden="true" focusable="false">
+          <path class="lab-arc-halo" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24"/>
+          <path class="lab-arc-path" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24"/>
+          <path class="lab-arc-progress" data-progress-line pathLength="100" d="M32 212 Q80 213 118 180 Q150 162 171 117 Q201 72 275 24"/>
+        </svg>
+        <button type="button" data-step="0" aria-label="01 Arrival" aria-current="step"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.2 14.1 9.9 21.8 12 14.1 14.1 12 21.8 9.9 14.1 2.2 12 9.9 9.9Z"/></svg></button><button type="button" data-step="1" aria-label="02 Selected work"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.2 14.1 9.9 21.8 12 14.1 14.1 12 21.8 9.9 14.1 2.2 12 9.9 9.9Z"/></svg></button><button type="button" data-step="2" aria-label="03 My story"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.2 14.1 9.9 21.8 12 14.1 14.1 12 21.8 9.9 14.1 2.2 12 9.9 9.9Z"/></svg></button><button type="button" data-step="3" aria-label="04 My approach"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.2 14.1 9.9 21.8 12 14.1 14.1 12 21.8 9.9 14.1 2.2 12 9.9 9.9Z"/></svg></button><button type="button" data-step="4" aria-label="05 Contact"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.2 14.1 9.9 21.8 12 14.1 14.1 12 21.8 9.9 14.1 2.2 12 9.9 9.9Z"/></svg></button>
+      </div>
+      <div class="lab-current">
+        <span class="lab-current-count" data-step-count>01 / 05</span>
+        <h3 data-step-title>Arrival</h3>
+        <p data-step-description aria-live="polite" aria-atomic="true">Set the context and invite the visitor in.</p>
+        <div class="lab-step-controls">
+          <button type="button" data-step-previous disabled>Previous</button>
+          <button type="button" data-step-next>Next step</button>
+        </div>
+      </div>
+    </div>
+    <p class="lab-help">Choose a star, use Previous and Next, or move between stars with the arrow keys. Home and End jump to the first or last destination. Reduced motion settings are respected.</p>
+    <details class="lab-source-details" data-source-details>
+      <summary>Explore the actual implementation and code</summary>
+      <div class="lab-source-content">
+        <p class="lab-description">This source viewer reads the real HTML, CSS and JavaScript used on this page, rather than showing a disconnected example.</p>
+        <div class="lab-source-switch" role="group" aria-label="Choose source code file">
+          <button type="button" data-source-file="constellation-demo.js" aria-pressed="true">JavaScript</button>
+          <button type="button" data-source-file="constellation-lab-finish.css" aria-pressed="false">CSS</button>
+          <button type="button" data-source-file="component-lab.html" aria-pressed="false">HTML</button>
+        </div>
+        <pre tabindex="0"><code data-source-code>Open a source tab to inspect the implementation.</code></pre>
+        <div class="lab-source-links">
+          <a href="https://github.com/dubstitch/desdubsite/blob/main/constellation-demo.js" target="_blank" rel="noopener noreferrer">Full JavaScript source</a>
+          <a href="https://github.com/dubstitch/desdubsite/blob/main/constellation-lab-finish.css" target="_blank" rel="noopener noreferrer">Full CSS source</a>
+          <a href="https://github.com/dubstitch/desdubsite/blob/main/component-lab.html" target="_blank" rel="noopener noreferrer">Full HTML markup</a>
+        </div>
+      </div>
+    </details>
+  </article>
+  <p class="foot">This page contains only implementations I can explain and demonstrate accurately. The complete professional work lives in the <a href="case-studies.html">case studies</a>, while any private employer code stays private.</p>
+</main><footer class="site-footer" id="more" role="contentinfo"><div class="site-footer-title"><span class="site-footer-kicker">The invitation</span><h2>Let’s make something make sense.</h2></div><nav class="site-footer-links" aria-label="Footer links"><a href="mailto:desireewade5@gmail.com">Let’s talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 16 17 7M10 7h7v7" stroke-linecap="round" stroke-linejoin="round"/></svg></a><a href="case-studies.html">Selected work</a><a href="philosophy.html">My philosophy</a></nav></footer><script src="theme.js?v=20261110planets1" defer></script><script src="site-shell.js" defer></script><script src="constellation-demo.js?v=20261111a" defer></script></body></html>
