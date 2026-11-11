@@ -6,6 +6,9 @@ on:
       - 'index.html'
       - 'home.css'
       - 'universe-planets.css'
+      - 'universe-orbit-final.css'
+      - 'constellation-lab-finish.css'
+      - 'constellation-demo.js'
       - 'theme-control.css'
       - 'home.js'
       - 'hero-mobile-fit.css'
@@ -55,6 +58,8 @@ jobs:
           echo $! > /tmp/portfolio-http.pid
           sleep 2
           curl -fsS http://127.0.0.1:8765/index.html >/dev/null
+      - name: Verify circular navigation, feature order and live constellation lab
+        run: node qa/portfolio-final-pass.mjs
       - name: Verify planets and celestial theme controls
         run: SHOW_SHOTS=1 node qa/planets-theme-qa.mjs
       - name: Verify homepage hero CTAs and viewport fit
