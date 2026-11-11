@@ -89,10 +89,10 @@ for(const [engineName,engine] of [['chromium',chromium],['webkit',webkit]]){
    if(nav.labelColor!=='rgb(255, 250, 252)'||nav.labelVisible!=='visible'||
       nav.buttonWidth>220||nav.scroller!=='hidden')
     error(engineName,theme,device.name,'collapsed card and text '+JSON.stringify(nav));
-   await page.locator('.case-grid-nav .nav-star').nth(4).click();
+   await page.locator('.case-grid-nav .nav-star').nth(3).click();
    await page.waitForTimeout(85);
-   if(await page.locator('.case-grid-nav .nav-star').nth(4).getAttribute('aria-current')!=='step')
-    error(engineName,theme,device.name,'fifth star failed to navigate');
+   if(await page.locator('.case-grid-nav .nav-star').nth(3).getAttribute('aria-current')!=='step')
+    error(engineName,theme,device.name,'fourth star failed to navigate');
    await page.locator('.case-grid-nav .nav-star').first().click();
    await page.waitForTimeout(85);
    if(process.env.SHOW_SHOTS==='1'&&theme==='light'&&engineName==='chromium'&&device.name==='phone'){
