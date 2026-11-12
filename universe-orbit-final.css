@@ -128,3 +128,11 @@ html[data-theme="light"] #universe.universe .close:focus-visible svg {stroke:#32
 @media(orientation:landscape) and (min-height:361px) and (max-height:440px) {
   #universe .solar-system > .planet {width:64px !important}
 }
+
+/* The artwork stays the same size. These slightly narrower invisible hit
+   boxes prevent neighboring planets from sharing touch pixels on phones. */
+@media(orientation:portrait) and (max-width:500px) {
+  #universe .solar-system > .planet {
+    width:clamp(60px,19.3vw,90px) !important;
+  }
+}
